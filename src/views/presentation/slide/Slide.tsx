@@ -30,7 +30,6 @@ function Slide({ slide, scale, elementSelection }: SlideProps) {
     switch (slide.background.type) {
         case "solid":
             slideStyles = {
-                position: "relative",
                 backgroundColor: slide.background.color,
                 width: `${SLIDE_WIDTH * scale}px`,
                 height: `${SLIDE_HEIGHT * scale}px`,
@@ -38,7 +37,6 @@ function Slide({ slide, scale, elementSelection }: SlideProps) {
             break
         case "image":
             slideStyles = {
-                position: "relative",
                 backgroundImage: `url(${slide.background.src})`,
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
@@ -79,25 +77,3 @@ export {
     SLIDE_WIDTH,
     SLIDE_HEIGHT
 }
-
-
-
-
-// switch (object.type) {
-//     case "text":
-//         return <TextObject
-//             key={object.id}
-//             object={object}
-//             scale={scale}
-//             isSelected={isElementSelected(elementSelection, object.id)}
-//         />
-//     case "image":
-//         return <ImageObject
-//             key={object.id}
-//             object={object}
-//             scale={scale}
-//             isSelected={isElementSelected(elementSelection, object.id)}
-//         />
-//     default:
-//         throw new Error(`Unknown slide-object type: ${object}`)
-// }
