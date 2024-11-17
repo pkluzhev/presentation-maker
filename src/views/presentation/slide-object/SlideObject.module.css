@@ -1,23 +1,12 @@
-.textObjectInput {
-    all: initial;
-    cursor: pointer;
-    resize: none;
-    border: solid 0.5px transparent;
-    overflow: hidden;
-}
-
-.textObjectInput:hover {
-    border: solid 0.5px #4071db;
-}
-
-.textObjectDiv {
-    all: initial;
+.slideObject {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
     cursor: grab;
-    resize: none;
     border: solid 0.5px transparent;
-    overflow: hidden;
 }
 
-.textObjectDiv:hover {
+.slideObject:hover {
     border: solid 0.5px #4071db;
 }

@@ -1,50 +1,15 @@
 import { type ImageObject } from "../../../../store/types/PresentationTypes.ts";
-// import { type Position } from "../../../store/types/PresentationTypes";
-
 import styles from './ImageObject.module.css'
-import { selectOneElement } from "../../../../store/setSelection.ts";
-import { addToElementSelection } from "../../../../store/setSelection.ts";
-import { dispatch } from "../../../../store/editor.ts";
-
-import { CSSProperties } from "react";
 
 type ImageProps = {
-    object: ImageObject,
-    scale: number,
-    isSelected?: boolean
+    src: string
 }
 
-function ImageObject({ object, scale, isSelected}: ImageProps) {
-    const imageStyles: CSSProperties = {
-        position: "absolute",
-        boxSizing: "border-box",
-        display: "block",
-        top: `${object.position.x * scale}px`,
-        left: `${object.position.y * scale}px`,
-        width: `${object.size.width * scale}px`,
-    }
-    if (isSelected) {
-        imageStyles.border = "solid 0.5px #4071db"
-    }
-
-    const onElementMouseDown = (object: ImageObject, event: React.MouseEvent) => {
-        if (!isSelected) {
-            if (event.ctrlKey) {
-                dispatch(addToElementSelection, object.id)
-            } else {
-                dispatch(selectOneElement, object.id)
-            }
-            console.log(event.pageX)
-            console.log(event.pageY)
-        }
-    }
-
+function ImageObject(props: ImageProps) {
     return (
-        <img 
-            style={imageStyles} 
-            className={styles.imageObject} 
-            onMouseDown={(event) => { onElementMouseDown(object, event) }}
-            src={object.src}
+        <img
+            className={styles.imageObject}
+            src={props.src}
         />
     )
 }

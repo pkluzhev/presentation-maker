@@ -1,13 +1,10 @@
-import { type TextObject } from "../../../store/types/PresentationTypes.ts";
-import { type ImageObject } from "../../../store/types/PresentationTypes.ts";
-
-import styles from './TextObject.module.css'
+import { CSSProperties } from "react";
+import { TextObject } from "../slide-object/text-object/TextObject.tsx";
+import { ImageObject } from "../slide-object/image-object/ImageObject.tsx";
 import { dispatch } from "../../../store/editor.ts";
-import { changeTextValue } from "../../../store/changeTextValue.ts";
 import { selectOneElement } from "../../../store/setSelection.ts";
 import { addToElementSelection } from "../../../store/setSelection.ts";
-
-import { CSSProperties, useState } from "react";
+import styles from './SlideObject.module.css'
 
 type SlideObjectProps = {
     object: TextObject | ImageObject,
@@ -16,62 +13,59 @@ type SlideObjectProps = {
 }
 
 function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
-    const textStyles: CSSProperties = {
-        position: "absolute",
-        boxSizing: "border-box",
-        padding: 0,
-        margin: 0,
+    const slideObjectStyles: CSSProperties = {
         top: `${object.position.x * scale}px`,
         left: `${object.position.y * scale}px`,
         width: `${object.size.width * scale}px`,
         height: `${object.size.height * scale}px`,
-        transform: `rotate(${object.position.angle}deg)`,
-        fontFamily: `${object.fontFamily}`,
-        fontSize: `${object.fontSize * scale}px`,
-        fontWeight: object.fontWeight,
-        color: `${object.fontColor}`,
-        backgroundColor: "transparent"
-    }
-    if (isSelected) {
-        textStyles.border = "solid 0.5px #4071db"
     }
 
-    const onElementClick = (elemId: string, event: React.MouseEvent) => {
-        if (event.ctrlKey) {
-            dispatch(addToElementSelection, elemId)
-        } else {
-            dispatch(selectOneElement, elemId)
+    const onElementMouseDown = (object: ImageObject | TextObject, event: React.MouseEvent) => {
+        if (!isSelected) {
+            if (event.ctrlKey) {
+                dispatch(addToElementSelection, object.id)
+            } else {
+                dispatch(selectOneElement, object.id)
+            }
+            console.log(event.pageX)
+            console.log(event.pageY)
         }
     }
 
-    const [editMode, setEditMode] = useState(false)
+    if (isSelected) {
+        slideObjectStyles.border = "solid 0.5px #4071db"
+    }
 
-    return (
-        <div>
-            {!editMode &&
+    switch (object.type) {
+        case "text":
+            return (
                 <div
-                    style={textStyles}
-                    className={styles.textObjectDiv}
-                    onClick={(event) => { onElementClick(object.id, event) }}
-                    onDoubleClick={() => {setEditMode(true)}}
+                    style={slideObjectStyles}
+                    className={styles.slideObject}
+                    onMouseDown={(event) => { onElementMouseDown(object, event) }}
                 >
-                    {object.value}
+                    <TextObject 
+                        value={object.value}
+                        fontFamily={object.fontFamily}
+                        fontSize={object.fontSize * scale}
+                        fontWeight={object.fontWeight}
+                        fontColor={object.fontColor}
+                    />
                 </div>
-            }
-            {editMode &&
-                <textarea
-                    style={textStyles}
-                    className={styles.textObjectInput}
-                    wrap="soft"
-                    onChange={(event) => {
-                        dispatch(changeTextValue, (event.target as HTMLTextAreaElement).value)
-                    }}
-                    onBlur={() => {setEditMode(false)}}
-                    value={object.value}
-                />
-            }
-        </div>
-    )
+            )
+        case "image":
+            return (
+                <div
+                    style={slideObjectStyles}
+                    className={styles.slideObject}
+                    onMouseDown={(event) => { onElementMouseDown(object, event) }}
+                >
+                    <ImageObject src={object.src} />
+                </div>
+            )
+        default:
+            throw new Error(`Unknown slide-object type: ${object}`)
+    }
 }
 
 export {

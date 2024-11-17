@@ -1,12 +1,9 @@
-import { type Slide } from "../../../store/types/PresentationTypes.ts";
-import { ImageObject } from "../slide-object/image-object/ImageObject.tsx";
-import { TextObject } from "../slide-object/text-object/TextObject.tsx";
-import { dispatch } from "../../../store/editor.ts";
-// import { selectOneElement } from "../../../store/setSelection.ts";
-import { clearElementSelection } from "../../../store/setSelection.ts";
-
-import styles from './Slide.module.css'
 import { CSSProperties } from "react";
+import { type Slide } from "../../../store/types/PresentationTypes.ts";
+import { SlideObject } from "../slide-object/SlideObject.tsx";
+import { dispatch } from "../../../store/editor.ts";
+import { clearElementSelection } from "../../../store/setSelection.ts";
+import styles from './Slide.module.css'
 
 const SLIDE_WIDTH = 935
 const SLIDE_HEIGHT = 525
@@ -18,7 +15,7 @@ type SlideProps = {
 }
 
 function Slide({ slide, scale, elementSelection }: SlideProps) {
-    
+
     const isElementSelected = (array: string[] | undefined, objectId: string): boolean | undefined => {
         let selected: boolean = false
         array?.forEach((element) => {
@@ -59,28 +56,18 @@ function Slide({ slide, scale, elementSelection }: SlideProps) {
             dispatch(clearElementSelection)
         }
     }
-        
+
     return (
-        <div style={slideStyles} className={styles.slide} onClick={ onClearElementSelection }>
+        <div style={slideStyles} className={styles.slide} onClick={onClearElementSelection}>
             {slide.objects.map(object => {
-                switch (object.type) {
-                    case "text":
-                        return <TextObject
-                            key={object.id}
-                            object={object}
-                            scale={scale}
-                            isSelected={isElementSelected(elementSelection, object.id)}
-                        />
-                    case "image":
-                        return <ImageObject
-                            key={object.id}
-                            object={object}
-                            scale={scale}
-                            isSelected={isElementSelected(elementSelection, object.id)}
-                        />
-                    default:
-                        throw new Error(`Unknown slide-object type: ${object}`)
-                }
+                return (
+                    <SlideObject
+                        key={object.id}
+                        object={object}
+                        scale={scale}
+                        isSelected={isElementSelected(elementSelection, object.id)}
+                    />
+                )
             }
             )}
         </div>
@@ -92,3 +79,25 @@ export {
     SLIDE_WIDTH,
     SLIDE_HEIGHT
 }
+
+
+
+
+// switch (object.type) {
+//     case "text":
+//         return <TextObject
+//             key={object.id}
+//             object={object}
+//             scale={scale}
+//             isSelected={isElementSelected(elementSelection, object.id)}
+//         />
+//     case "image":
+//         return <ImageObject
+//             key={object.id}
+//             object={object}
+//             scale={scale}
+//             isSelected={isElementSelected(elementSelection, object.id)}
+//         />
+//     default:
+//         throw new Error(`Unknown slide-object type: ${object}`)
+// }

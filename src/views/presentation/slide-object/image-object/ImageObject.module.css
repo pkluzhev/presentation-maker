@@ -1,11 +1,7 @@
 .imageObject {
     all: initial;
     cursor: grab;
-    resize: none;
-    border: solid 0.5px transparent;
-    overflow: hidden;
-}
-
-.imageObject:hover {
-    border: solid 0.5px #4071db;
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
 }
