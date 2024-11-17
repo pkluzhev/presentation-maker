@@ -1,0 +1,77 @@
+.editBar {
+  position: relative;
+  margin-left: 15px;
+  text-align: center;
+  border: solid 0.5px #009090;
+}
+
+.editBarTitle {
+  text-align: center;
+  font: 400 16px/22px Montserrat, sans-serif;
+  padding: 8px 16px;
+  background-color: #e4e4e4;
+}
+
+/* .button:hover:first-child {
+  background-color: #e4e4e4;
+  font-weight: 700;
+} */
+
+.inputColorTitle {
+  all: initial;
+  font: 400 16px/22px Montserrat, sans-serif;
+  cursor: default;
+  padding: 8px 5px 8px 16px;
+}
+
+.inputColor {
+  border: none;
+  height: 34px;
+  width: 34px;
+  margin-left: 2px;
+  margin-right: 2px;
+  cursor: pointer;
+}
+
+.inputColor:hover {
+  background-color: #e4e4e4;
+}
+
+.buttonsContainer {
+  display: flex;
+  align-items: center;
+}
+
+.inputImage {
+  all: initial;
+  position: relative;
+  display: inline-block;
+  font: 400 16px/22px Montserrat, sans-serif;
+  padding: 8px 16px;
+}
+
+.inputImage:hover {
+  background-color: #e4e4e4;
+}
+
+.hiddenInput {
+  cursor: pointer;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  left: 0px;
+  bottom: 0;
+  opacity: 0;
+}
+
+.selectButton {
+  all: initial;
+  font: 400 16px/22px Montserrat, sans-serif;
+  cursor: pointer;
+  padding: 8px 6px;
+}
+
+.selectButton:hover {
+  background-color: #e4e4e4;
+}

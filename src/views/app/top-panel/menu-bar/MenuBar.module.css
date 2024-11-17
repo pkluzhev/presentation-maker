@@ -1,0 +1,14 @@
+.menuBar {
+  display: flex;
+  justify-content: flex-start;
+  text-align: left;
+  border: solid 0.5px #009090;
+  border-bottom: none;
+}
+
+.button:hover {
+  background-color: #e4e4e4;
+  font-weight: 700;
+}
+
+

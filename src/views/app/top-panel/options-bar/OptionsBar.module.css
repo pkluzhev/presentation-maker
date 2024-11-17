@@ -1,0 +1,14 @@
+.optionsBar {
+  display: flex;
+  width: 670px;
+  justify-content: flex-start;
+  background-color: #e4e4e4;
+  text-align: left;
+  border: solid 0.5px #009090;
+  border-top: none;
+}
+
+.button:hover {
+  font-weight: 700;
+}
+

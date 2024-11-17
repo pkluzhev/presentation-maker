@@ -1,0 +1,15 @@
+.slide {
+    position: relative;
+}
+
+.slideObject {
+    /* all: initial; */
+    cursor: grab;
+    /* resize: none; */
+    border: solid 0.5px transparent;
+    /* overflow: hidden; */
+}
+
+.slideObject:hover {
+    border: solid 0.5px #4071db;
+}

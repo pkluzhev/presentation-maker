@@ -1,0 +1,23 @@
+.textObjectInput {
+    all: initial;
+    cursor: pointer;
+    resize: none;
+    border: solid 0.5px transparent;
+    overflow: hidden;
+}
+
+.textObjectInput:hover {
+    border: solid 0.5px #4071db;
+}
+
+.textObjectDiv {
+    all: initial;
+    cursor: grab;
+    resize: none;
+    border: solid 0.5px transparent;
+    overflow: hidden;
+}
+
+.textObjectDiv:hover {
+    border: solid 0.5px #4071db;
+}
