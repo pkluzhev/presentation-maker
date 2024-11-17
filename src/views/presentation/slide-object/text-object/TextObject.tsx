@@ -23,7 +23,6 @@ function TextObject({ object, scale, isSelected }: TextProps) {
         left: `${object.position.y * scale}px`,
         width: `${object.size.width * scale}px`,
         height: `${object.size.height * scale}px`,
-        // transform: `rotate(${object.position.angle}deg)`,
         fontFamily: `${object.fontFamily}`,
         fontSize: `${object.fontSize * scale}px`,
         fontWeight: object.fontWeight,

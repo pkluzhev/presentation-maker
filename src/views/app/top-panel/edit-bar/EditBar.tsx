@@ -9,9 +9,6 @@ import { setSlideBackgroundImage } from '../../../../store/setSlideBackgroundIma
 import { changeImage } from '../../../../store/changeImage'
 import { incSlideObjectLayer } from '../../../../store/incSlideObjectLayer'
 
-
-
-
 type EditBarProps = {
     type: EditBarState
 }

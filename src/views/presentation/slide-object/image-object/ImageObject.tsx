@@ -22,8 +22,6 @@ function ImageObject({ object, scale, isSelected}: ImageProps) {
         top: `${object.position.x * scale}px`,
         left: `${object.position.y * scale}px`,
         width: `${object.size.width * scale}px`,
-        // height: `${object.size.height * scale}px`,
-        // transform: `rotate(${object.position.angle}deg)`,
     }
     if (isSelected) {
         imageStyles.border = "solid 0.5px #4071db"

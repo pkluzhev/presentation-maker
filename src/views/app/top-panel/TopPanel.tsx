@@ -6,8 +6,6 @@ import { EditBar } from './edit-bar/EditBar'
 import { type EditBarState } from './../../../store/types/EditorTypes'
 import { type OptionsBarState } from './../../../store/types/EditorTypes'
 
-
-
 type TopPanelProps = {
     optionsBarState: OptionsBarState,
     editBarState: EditBarState,

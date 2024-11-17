@@ -14,14 +14,9 @@ function changePresentationTitle(presentation: Presentation, newTitle: string): 
 
 type Slide = {     
     id: string,
-    background: Background,
+    background: SolidBackground | ImageBackground,
     objects: Array<TextObject | ImageObject>
 }
-
-//добавить функцию генерации дефолтного слайда - возвращает слайд
-
-//добавить функцию генерации скопированного слайда - возвращает слайд
-
 
 function addSlide(presentation: Presentation, newSlide: Slide): Presentation {
     const newSlides = [...presentation.slides]
@@ -382,9 +377,7 @@ function changeSlideObjectImageSrc(presentation: Presentation, newSrc: string, o
     }
 }
 
-type Background = {
-    type: SolidBackground | ImageBackground
-}
+// type Background =  SolidBackground | ImageBackground
 
 type SolidBackground = {
     type: "solid",
@@ -396,77 +389,75 @@ type ImageBackground = {
     src: string,
 }
 
-function setSlideBackgroundType(presentation: Presentation, backgroundType: string, currentSlideId: string, isForAll?: boolean): Presentation {
-    function setBackground(background: string): Background {
-        if (background === "solid") {
-            return {
-                type: { type: "solid", color: "#ffffff" }
-            }
-        } else {
-            return {
-                type: { type: "image", src: "path/to/default/image" }
-            }
-        }
-    }
-    return {
-        ...presentation,
-        slides: presentation.slides.map((slide) => {
-            if (!isForAll && slide.id !== currentSlideId) {
-                return slide
-            }
-            return {
-                ...slide,
-                background: setBackground(backgroundType)
-            }
-        })
-    }
-}
+// function setSlideBackgroundType(presentation: Presentation, backgroundType: string, currentSlideId: string, isForAll?: boolean): Presentation {
+//     function setBackground(background: string): Background {
+//         if (background === "solid") {
+//             return {
+//                 type: "solid", 
+//                 color: "#ffffff"
+//             }
+//         } else {
+//             return {
+//                 type: "image", 
+//                 src: "path/to/default/image"
+//             }
+//         }
+//     }
+//     return {
+//         ...presentation,
+//         slides: presentation.slides.map((slide) => {
+//             if (!isForAll && slide.id !== currentSlideId) {
+//                 return slide
+//             }
+//             return {
+//                 ...slide,
+//                 background: setBackground(backgroundType)
+//             }
+//         })
+//     }
+// }
 
-function setSlideBackgroundColor(presentation: Presentation, backgroundColor: string, currentSlideId: string, isForAll?: boolean): Presentation {
-    function setBackground(colorStr: string): Background {
-        return {
-            type: {
-                type: "solid",
-                color: colorStr
-            }
-        }
-    }
-    return {
-        ...presentation,
-        slides: presentation.slides.map((slide) => {
-            if (!isForAll && slide.id !== currentSlideId) {
-                return slide
-            }
-            return {
-                ...slide,
-                background: setBackground(backgroundColor)
-            }
-        })
-    }
-}
+// function setSlideBackgroundColor(presentation: Presentation, backgroundColor: string, currentSlideId: string, isForAll?: boolean): Presentation {
+//     function setBackground(colorStr: string): SolidBackground {
+//         return {
+//             type: "solid",
+//             color: colorStr
+//         }
+//     }
+//     return {
+//         ...presentation,
+//         slides: presentation.slides.map((slide) => {
+//             if (!isForAll && slide.id !== currentSlideId) {
+//                 return slide
+//             }
+//             return {
+//                 ...slide,
+//                 background: setBackground(backgroundColor)
+//             }
+//         })
+//     }
+// }
 
-function setSlideBackgroundImage(presentation: Presentation, imageSrc: string, currentSlideId: string, isForAll?: boolean): Presentation {
-    function setBackground(imageStr: string): Background {
-        return {
-            type: {
-                type: "image",
-                src: imageStr
-            }
-        }
-    }
-    return {
-        ...presentation,
-        slides: presentation.slides.map((slide) => {
-            if (!isForAll && slide.id !== currentSlideId) {
-                return slide
-            }
-            return {
-                ...slide,
-                background: setBackground(imageSrc)
-            }
-        })
-    }
-}
+// function setSlideBackgroundImage(presentation: Presentation, imageSrc: string, currentSlideId: string, isForAll?: boolean): Presentation {
+//     function setBackground(imageStr: string): Background {
+//         return {
+//             type: "image",
+//             src: imageStr
+//         }
+//     }
+//     return {
+//         ...presentation,
+//         slides: presentation.slides.map((slide) => {
+//             if (!isForAll && slide.id !== currentSlideId) {
+//                 return slide
+//             }
+//             return {
+//                 ...slide,
+//                 background: setBackground(imageSrc)
+//             }
+//         })
+//     }
+// }
 
 const defaultImageElement: ImageObject = {
     type: "image",
@@ -488,7 +479,7 @@ export {
     type Slide,
     type TextObject,
     type ImageObject,
-    type Background,
+    // type Background,
     type SolidBackground,
     type ImageBackground,
     type Position,
@@ -509,9 +500,9 @@ export {
     changeSlideObjectFontWeight,
     changeSlideObjectFontColor,
     changeSlideObjectImageSrc,
-    setSlideBackgroundType,
-    setSlideBackgroundColor,
-    setSlideBackgroundImage,
+    // setSlideBackgroundType,
+    // setSlideBackgroundColor,
+    // setSlideBackgroundImage,
 
     defaultImageElement
 }

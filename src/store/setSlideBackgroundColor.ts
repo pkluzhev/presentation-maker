@@ -1,14 +1,12 @@
 import { type Editor } from "./types/EditorTypes";
-import { type Background } from "./types/PresentationTypes";
+import { type SolidBackground } from "./types/PresentationTypes";
 
 
 function setSlideBackgroundColor(editor: Editor, backgroundColor: string): Editor {
-    function setBackground(colorStr: string): Background {
+    function setBackground(colorStr: string): SolidBackground {
         return {
-            type: {
-                type: "solid",
-                color: colorStr
-            }
+            type: "solid",
+            color: colorStr
         }
     }
     const newSlides = structuredClone(editor.presentation.slides)

@@ -2,8 +2,8 @@ import { type Slide } from "../../../store/types/PresentationTypes.ts";
 import { ImageObject } from "../slide-object/image-object/ImageObject.tsx";
 import { TextObject } from "../slide-object/text-object/TextObject.tsx";
 import { dispatch } from "../../../store/editor.ts";
-import { selectOneElement } from "../../../store/setSelection.ts";
-import { addToElementSelection, clearElementSelection } from "../../../store/setSelection.ts";
+// import { selectOneElement } from "../../../store/setSelection.ts";
+import { clearElementSelection } from "../../../store/setSelection.ts";
 
 import styles from './Slide.module.css'
 import { CSSProperties } from "react";
@@ -18,7 +18,8 @@ type SlideProps = {
 }
 
 function Slide({ slide, scale, elementSelection }: SlideProps) {
-    function isElementSelected(array: string[] | undefined, objectId: string): boolean | undefined {
+    
+    const isElementSelected = (array: string[] | undefined, objectId: string): boolean | undefined => {
         let selected: boolean = false
         array?.forEach((element) => {
             if (element === objectId) {
@@ -29,11 +30,11 @@ function Slide({ slide, scale, elementSelection }: SlideProps) {
     }
 
     let slideStyles: CSSProperties = {}
-    switch (slide.background.type.type) {
+    switch (slide.background.type) {
         case "solid":
             slideStyles = {
                 position: "relative",
-                backgroundColor: slide.background.type.color,
+                backgroundColor: slide.background.color,
                 width: `${SLIDE_WIDTH * scale}px`,
                 height: `${SLIDE_HEIGHT * scale}px`,
             }
@@ -41,7 +42,7 @@ function Slide({ slide, scale, elementSelection }: SlideProps) {
         case "image":
             slideStyles = {
                 position: "relative",
-                backgroundImage: `url(${slide.background.type.src})`,
+                backgroundImage: `url(${slide.background.src})`,
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
@@ -50,32 +51,19 @@ function Slide({ slide, scale, elementSelection }: SlideProps) {
             }
             break
         default:
-            throw new Error(`Unknown background type: ${slide.background.type}`)
+            throw new Error(`Unknown background type on slide: ${slide.id}`)
     }
 
-    // const MouseDownHandler = (object: ImageObject | TextObject, event: React.MouseEvent) => {
-    //     if (!isElementSelected(elementSelection, object.id)) {
-    //         if (event.ctrlKey) {
-    //             dispatch(addToElementSelection, object.id)
-    //         } else {
-    //             dispatch(selectOneElement, object.id)
-    //         }
-    //         console.log(event.pageX)
-    //         console.log(event.pageY)
-    //     }
-    // }
-
-    const onClickHandler = (event: React.MouseEvent) => {
+    const onClearElementSelection = (event: React.MouseEvent) => {
         if (event.altKey) {
             dispatch(clearElementSelection)
         }
     }
         
     return (
-        <div style={slideStyles} className={styles.slide} onClick={ onClickHandler }>
+        <div style={slideStyles} className={styles.slide} onClick={ onClearElementSelection }>
             {slide.objects.map(object => {
                 switch (object.type) {
-                    //оборачивать в компонент Selectable-resizeble-moveable-object
                     case "text":
                         return <TextObject
                             key={object.id}

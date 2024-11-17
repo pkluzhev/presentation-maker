@@ -1,4 +1,6 @@
 import { type TextObject } from "../../../store/types/PresentationTypes.ts";
+import { type ImageObject } from "../../../store/types/PresentationTypes.ts";
+
 import styles from './TextObject.module.css'
 import { dispatch } from "../../../store/editor.ts";
 import { changeTextValue } from "../../../store/changeTextValue.ts";
@@ -8,7 +10,7 @@ import { addToElementSelection } from "../../../store/setSelection.ts";
 import { CSSProperties, useState } from "react";
 
 type SlideObjectProps = {
-    object: TextObject,
+    object: TextObject | ImageObject,
     scale: number,
     isSelected?: boolean
 }
