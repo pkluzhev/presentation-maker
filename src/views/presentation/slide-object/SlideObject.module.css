@@ -4,9 +4,98 @@
     padding: 0;
     display: block;
     cursor: grab;
-    border: solid 0.5px transparent;
+    border: solid 1px transparent;
 }
 
 .slideObject:hover {
-    border: solid 0.5px #4071db;
+    border: solid 1px #4071db;
+}
+
+
+.resizePointLT {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #4071db;
+    border: solid 1px #000000;
+    bottom: calc(100% - 4px);
+    left: -6px;
+    cursor: nwse-resize;
+}
+
+.resizePointLM {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #4071db;
+    border: solid 1px #000000;
+    bottom: calc(50% - 4px);
+    left: -6px;
+    cursor: ew-resize;
+}
+
+.resizePointLB {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #4071db;
+    border: solid 1px #000000;
+    bottom: -5px;
+    left: -6px;
+    cursor: nesw-resize;
+}
+
+.resizePointRT {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #4071db;
+    border: solid 1px #000000;
+    bottom: calc(100% - 4px);
+    left: calc(100% - 4px);
+    cursor: nesw-resize;
+}
+
+.resizePointRM {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #4071db;
+    border: solid 1px #000000;
+    bottom: calc(50% - 4px);
+    left: calc(100% - 4px);
+    cursor: ew-resize;
+}
+
+.resizePointRB {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #4071db;
+    border: solid 1px #000000;
+    bottom: -5px;
+    left: calc(100% - 4px);
+    cursor: nwse-resize;
+}
+
+.resizePointMT {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #4071db;
+    border: solid 1px #000000;
+    bottom: calc(100% - 4px);
+    left: calc(50% - 4px);
+    cursor: ns-resize;
+}
+
+.resizePointMB {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #4071db;
+    border: solid 1px #000000;
+    bottom: -5px;
+    left: calc(50% - 4px);
+    cursor: ns-resize;
 }

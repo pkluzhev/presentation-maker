@@ -1,5 +1,5 @@
-import { CSSProperties } from "react";
-import { type Slide } from "../../../store/types/PresentationTypes.ts";
+import { CSSProperties, useEffect, useRef } from "react";
+import { Position, type Slide } from "../../../store/types/PresentationTypes.ts";
 import { SlideObject } from "../slide-object/SlideObject.tsx";
 import { dispatch } from "../../../store/editor.ts";
 import { clearElementSelection } from "../../../store/setSelection.ts";
@@ -14,6 +14,12 @@ type SlideProps = {
     elementSelection?: string[]
 }
 
+let slideStart: Position = {
+    x: 0,
+    y: 0,
+    angle: 0
+}
+
 function Slide({ slide, scale, elementSelection }: SlideProps) {
 
     const isElementSelected = (array: string[] | undefined, objectId: string): boolean | undefined => {
@@ -25,6 +31,15 @@ function Slide({ slide, scale, elementSelection }: SlideProps) {
         })
         return selected
     }
+    const slideRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        let rect = slideRef.current?.getBoundingClientRect()
+        if (rect) {
+            slideStart.x = rect.x
+            slideStart.y = rect.y
+        }
+    }, []) ///////////////////////////////////////////////////
 
     let slideStyles: CSSProperties = {}
     switch (slide.background.type) {
@@ -49,14 +64,15 @@ function Slide({ slide, scale, elementSelection }: SlideProps) {
             throw new Error(`Unknown background type on slide: ${slide.id}`)
     }
 
-    const onClearElementSelection = (event: React.MouseEvent) => {
-        if (event.altKey) {
-            dispatch(clearElementSelection)
-        }
+    const onClearElementSelection = (event: React.KeyboardEvent) => {
+        console.log(event)
+        // if (event) {
+            // dispatch(clearElementSelection)
+        // }
     }
 
     return (
-        <div style={slideStyles} className={styles.slide} onClick={onClearElementSelection}>
+        <div ref={slideRef} style={slideStyles} className={styles.slide} onKeyDown={onClearElementSelection}>
             {slide.objects.map(object => {
                 return (
                     <SlideObject
@@ -75,5 +91,6 @@ function Slide({ slide, scale, elementSelection }: SlideProps) {
 export {
     Slide,
     SLIDE_WIDTH,
-    SLIDE_HEIGHT
+    SLIDE_HEIGHT,
+    slideStart
 }

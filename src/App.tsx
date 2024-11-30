@@ -10,6 +10,15 @@ type AppProps = {
 }
 
 function App({ editor }: AppProps) {
+
+  // useEffect(() => {
+  //   function handleScroll(e) {
+  //     console.log(window.scrollX, window.scrollY);
+  //   }
+  //   window.addEventListener('scroll', handleScroll);
+  //   return () => window.removeEventListener('scroll', handleScroll);
+  // }, []);
+
   return (
     <div>
       <TopPanel optionsBarState={editor.interfaceState.optionsBarState} editBarState={editor.interfaceState.editBarState} buffer={editor.interfaceState.buffer} />

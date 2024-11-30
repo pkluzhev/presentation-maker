@@ -62,7 +62,7 @@ const elem4: ImageObject = {
     id: "4",
     position: {
         x: 30,
-        y: 430,
+        y: 230,
         angle: 0
     },
     size: {
@@ -98,7 +98,7 @@ const elem6: TextObject = {
     id: "6",
     position: {
         x: 200,
-        y: 500,
+        y: 300,
         angle: 0
     },
     size: {
