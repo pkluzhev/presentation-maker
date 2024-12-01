@@ -11,8 +11,7 @@ const elem1: ImageObject = {
     id: "1",
     position: {
         x: 80,
-        y: 230,
-        angle: 0
+        y: 230
     },
     size: {
         width: 150,
@@ -29,8 +28,7 @@ const elem2: TextObject = {
     id: "2",
     position: {
         x: 180,
-        y: 200,
-        angle: 0
+        y: 200
     },
     size: {
         width: 200,
@@ -47,8 +45,7 @@ const elem3: TextObject = {
     id: "3",
     position: {
         x: 130,
-        y: 100,
-        angle: 0
+        y: 100
     },
     size: {
         width: 200,
@@ -62,8 +59,7 @@ const elem4: ImageObject = {
     id: "4",
     position: {
         x: 30,
-        y: 230,
-        angle: 0
+        y: 230
     },
     size: {
         width: 150,
@@ -80,8 +76,7 @@ const elem5: TextObject = {
     id: "5",
     position: {
         x: 300,
-        y: 50,
-        angle: 0
+        y: 50
     },
     size: {
         width: 200,
@@ -98,8 +93,7 @@ const elem6: TextObject = {
     id: "6",
     position: {
         x: 200,
-        y: 300,
-        angle: 0
+        y: 300
     },
     size: {
         width: 200,
@@ -112,8 +106,7 @@ const elem7: ImageObject = {
     id: "7",
     position: {
         x: 270,
-        y: 130,
-        angle: 0
+        y: 130
     },
     size: {
         width: 80,

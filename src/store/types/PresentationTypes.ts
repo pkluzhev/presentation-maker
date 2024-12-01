@@ -89,8 +89,7 @@ type SlideObjectProperties = {
 
 type Position = {
     x: number,
-    y: number,
-    angle: number,
+    y: number
 }
 
 type Size = {
@@ -180,11 +179,10 @@ function decSlideObjectLayer(presentation: Presentation, objectId: string, curre
     }
 }
 
-function changeSlideObjectPosition(presentation: Presentation, newPosX: number, newPosY: number, newAngle: number, objectId: string, currentSlideId: string): Presentation {
-    function modifyPosition(object: Position, newX: number, newY: number, newAngle: number): Position {
+function changeSlideObjectPosition(presentation: Presentation, newPosX: number, newPosY: number, objectId: string, currentSlideId: string): Presentation {
+    function modifyPosition(object: Position, newX: number, newY: number): Position {
         object.x = newX
         object.y = newY
-        object.angle = newAngle
         return object
     }
     return {
@@ -201,7 +199,7 @@ function changeSlideObjectPosition(presentation: Presentation, newPosX: number, 
                     }
                     return {
                         ...object,
-                        position: modifyPosition(structuredClone(object.position), newPosX, newPosY, newAngle)
+                        position: modifyPosition(structuredClone(object.position), newPosX, newPosY)
                     }
 
                 })
@@ -232,7 +230,6 @@ function changeSlideObjectSize(presentation: Presentation, newWidth: number, new
                         ...object,
                         size: modifySize(structuredClone(object.size), newWidth, newHeight)
                     }
-
                 })
             }
         })
@@ -465,8 +462,7 @@ const defaultImageElement: ImageObject = {
     id: "",
     position: {
         x: 0,
-        y: 0,
-        angle: 0
+        y: 0
     },
     size: {
         width: 200,
@@ -484,8 +480,7 @@ const defaultTextElement: TextObject = {
     id: "",
     position: {
         x: 0,
-        y: 0,
-        angle: 0
+        y: 0
     },
     size: {
         width: 140,

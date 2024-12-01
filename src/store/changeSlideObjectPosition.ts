@@ -5,7 +5,6 @@ function changeSlideObjectPosition(editor: Editor, newPosition: Position): Edito
     function modifyPosition(position: Position, newPos: Position): Position {
         position.x = newPos.x
         position.y = newPos.y
-        position.angle = 0
         return position
     }
     return {
