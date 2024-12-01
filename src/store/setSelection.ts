@@ -18,7 +18,6 @@ function addToSlideSelection(editor: Editor, selectedSlide: string): Editor {
 }
 
 function selectOneSlide(editor: Editor, selectedSlide: string): Editor {
-    console.log(editor)
     return {
         ...editor,
         slideSelection: [selectedSlide],

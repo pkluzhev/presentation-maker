@@ -502,6 +502,9 @@ export {
     type SolidBackground,
     type ImageBackground,
     type Position,
+    type Size,
+
+
 
     changePresentationTitle,
     addSlide,

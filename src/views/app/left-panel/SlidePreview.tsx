@@ -6,7 +6,7 @@ import { selectOneSlide } from "../../../store/setSelection.ts";
 import { CSSProperties, useState, useCallback, useEffect, useRef, PointerEventHandler } from "react";
 import { Slide } from "../../presentation/slide/Slide.tsx";
 import styles from './SlidePreview.module.css'
-// import { swapSlides } from "../../../store/types/PresentationTypes.ts";
+import { Position } from "../../../store/types/PresentationTypes.ts";
 
 const SLIDE_PREVIEW_SCALE = 0.2
 
@@ -17,12 +17,16 @@ type SlidePreviewProps = {
 }
 
 function SlidePreview(props: SlidePreviewProps) {
-    const onSelectionStyle: CSSProperties = {}
+    const onSelecionStyle: CSSProperties = {}
+
     if (props.isSelected) {
-        onSelectionStyle.backgroundColor = "#e4e4e4"
+        onSelecionStyle.backgroundColor = "#e4e4e4"
     }
 
+    let finalObjectPos: { left: number, top: number }
+
     const dragSlideRef = useRef<HTMLDivElement>(null)
+    const startPointerPosInsideElem = useRef<{ left: number, top: number }>()
     const [dragging, setDragging] = useState(false);
 
     const handleDragStart = useCallback<PointerEventHandler>((event) => {
@@ -31,22 +35,47 @@ function SlidePreview(props: SlidePreviewProps) {
             return
         }
         dispatch(selectOneSlide, props.slide.id)
-        
+
         if (!dragSlideRef.current) return
-        setDragging(true)
+        const dragElementRect = dragSlideRef.current?.getBoundingClientRect();
+        startPointerPosInsideElem.current = {
+            left: dragElementRect.left - event.pageX,
+            top: dragElementRect.top - event.pageY
+        }
+
+        console.log('start')
+        // setDragging(true)
     }, [])
 
     const handleDragMove = useCallback((event: PointerEvent) => {
-        if (!dragSlideRef.current) return
+        if (!dragSlideRef.current || !startPointerPosInsideElem.current) return
+
+        // const { left, top } = startPointerPosInsideElem.current
+        const dragElementRect = dragSlideRef.current?.getBoundingClientRect();
+
+        console.log('move')
+        console.log('dragging: ', dragging)
+
+
+
+
+        // const deeperElementUnderItem = document.elementFromPoint(
+        //     event.clientX + left + dragElementRect.width / 2,
+        //     event.clientY + top + dragElementRect.height / 2,
+        // )
+        // const closestSlidePreviewElement = deeperElementUnderItem?.closest('slidePreviewContainer')
+        // if (!closestSlidePreviewElement) return
     }, [])
 
     const handleDragEnd = useCallback(() => {
+        console.log('end')
         setDragging(false)
-        // dispatch(changeSlideObjectPosition, finalObjectPos)
+        dispatch(selectOneSlide, props.slide.id)
     }, [])
 
     useEffect(() => {
         if (dragging) {
+            console.log('useEffect')
             window.addEventListener('pointermove', handleDragMove)
             window.addEventListener('pointerup', handleDragEnd)
         }
@@ -61,7 +90,7 @@ function SlidePreview(props: SlidePreviewProps) {
         <div
             ref={dragSlideRef}
             onPointerDown={handleDragStart}
-            style={onSelectionStyle}
+            style={onSelecionStyle}
             className={styles.slidePreviewContainer}
         >
             <p className={styles.slideIndex}>
@@ -71,7 +100,7 @@ function SlidePreview(props: SlidePreviewProps) {
                 slide={props.slide}
                 scale={SLIDE_PREVIEW_SCALE}
             />
-            <div draggable={true} className={styles.slidePreviewContainerGuard}/>
+            <div draggable={true} className={styles.slidePreviewContainerGuard} />
         </div>
     )
 }

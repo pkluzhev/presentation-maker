@@ -7,4 +7,5 @@
   cursor: grab;
   resize: none;
   overflow: hidden;
+  user-select: none;
 }

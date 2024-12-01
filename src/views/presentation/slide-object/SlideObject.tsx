@@ -2,12 +2,16 @@ import { CSSProperties, PointerEventHandler, useCallback, useEffect, useRef, use
 import { TextObject } from "../slide-object/text-object/TextObject.tsx";
 import { ImageObject } from "../slide-object/image-object/ImageObject.tsx";
 import { dispatch } from "../../../store/editor.ts";
-import { clearElementSelection, selectOneElement } from "../../../store/setSelection.ts";
+import { selectOneElement } from "../../../store/setSelection.ts";
 import { changeSlideObjectPosition } from "../../../store/changeSlideObjectPosition.ts";
+import { changeSlideObjectSize } from "../../../store/changeSlideObjectSize.ts";
 import { addToElementSelection } from "../../../store/setSelection.ts";
 import { slideStart, SLIDE_WIDTH, SLIDE_HEIGHT } from "../../presentation/slide/Slide.tsx";
 import styles from './SlideObject.module.css'
-import { Position } from "../../../store/types/PresentationTypes.ts";
+import { type Position, type Size } from "../../../store/types/PresentationTypes.ts";
+// import { ResizePointMB } from "./resize-points/ResizePointMB.tsx";
+
+
 
 type SlideObjectProps = {
     object: TextObject | ImageObject,
@@ -23,29 +27,25 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
         height: `${object.size.height * scale}px`,
     }
 
-    // let deltaResize: Position = {
-    //     x: 0,
-    //     y: 0,
-    //     angle: 0
-    // }
-
     let finalObjectPos: Position = object.position
+    let deltaResize: Size = {
+        width: 0,
+        height: 0
+    }
+    let finalObjectSize: Size = object.size
 
     const dragElementRef = useRef<HTMLDivElement>(null)
-    const startPointerPos = useRef<{ top: number, left: number }>()
+    const startPointerPosInsideElem = useRef<{ left: number, top: number }>()
     const [dragging, setDragging] = useState(false);
-
     const handleDragStart = useCallback<PointerEventHandler>((event) => {
         if (!isSelected && event.ctrlKey) {
             dispatch(addToElementSelection, object.id)
             return
         }
-        dispatch(clearElementSelection)
         dispatch(selectOneElement, object.id)
-
-        if (!dragElementRef.current) return
+        if (!dragElementRef.current || resizing) return
         const dragElementRect = dragElementRef.current?.getBoundingClientRect();
-        startPointerPos.current = {
+        startPointerPosInsideElem.current = {
             left: dragElementRect.left - event.pageX,
             top: dragElementRect.top - event.pageY
         }
@@ -53,14 +53,11 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
     }, [])
 
     const handleDragMove = useCallback((event: PointerEvent) => {
-        if (!dragElementRef.current || !startPointerPos.current) return
- 
-        finalObjectPos.x = event.pageX + startPointerPos.current.left - slideStart.x
-        finalObjectPos.y = event.pageY + startPointerPos.current.top - slideStart.y
-
+        if (!dragElementRef.current || !startPointerPosInsideElem.current) return
+        finalObjectPos.x = event.pageX + startPointerPosInsideElem.current.left - slideStart.x
+        finalObjectPos.y = event.pageY + startPointerPosInsideElem.current.top - slideStart.y
         dragElementRef.current.style.left = finalObjectPos.x + 'px'
         dragElementRef.current.style.top = finalObjectPos.y + 'px'
-
         if (finalObjectPos.x <= 0) {
             dragElementRef.current.style.left = 0 + 'px'
             finalObjectPos.x = 0
@@ -78,23 +75,64 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
             finalObjectPos.y = SLIDE_HEIGHT - object.size.height - 2
         }
     }, [])
-
     const handleDragEnd = useCallback(() => {
         setDragging(false)
+        setResizing(false)
         dispatch(changeSlideObjectPosition, finalObjectPos)
     }, [])
 
+
+    const refResizeMB = useRef<HTMLDivElement>(null)
+    const startPos = useRef<{ left: number, top: number }>()
+    const startSize = useRef<{ width: number, height: number }>()
+    const [resizing, setResizing] = useState(false);
+    const handleResizeStart = useCallback<PointerEventHandler>((event) => {
+        if (!refResizeMB.current || !dragElementRef.current) return
+        startPos.current = {
+            left: event.pageX,
+            top: event.pageY
+        }
+        const resizeElementRect = dragElementRef.current?.getBoundingClientRect();
+        startSize.current = {
+            width: resizeElementRect?.width,
+            height: resizeElementRect?.height,
+        }
+        setResizing(true)
+    }, [])
+    const handleResizeMove = useCallback((event: PointerEvent) => {
+        if (!dragElementRef.current || !startPos.current || !startSize.current) return
+        deltaResize.height = event.pageY - startPos.current?.top
+        finalObjectSize.height = startSize.current?.height + deltaResize.height
+        if (finalObjectSize.height < 24) {
+            finalObjectSize.height = 24
+        }
+        dragElementRef.current.style.height = finalObjectSize.height + 'px'
+    }, [])
+    const handleResizeEnd = useCallback(() => {
+        setResizing(false)
+        setDragging(false)
+        dispatch(changeSlideObjectSize, finalObjectSize)
+    }, [])
+
+
     useEffect(() => {
+        if (resizing) {
+            window.addEventListener('pointermove', handleResizeMove)
+            window.addEventListener('pointerup', handleResizeEnd)
+            return () => {
+                window.removeEventListener('pointermove', handleResizeMove)
+                window.removeEventListener('pointerup', handleResizeEnd)
+            }
+        }
         if (dragging) {
             window.addEventListener('pointermove', handleDragMove)
             window.addEventListener('pointerup', handleDragEnd)
+            return () => {
+                window.removeEventListener('pointermove', handleDragMove)
+                window.removeEventListener('pointerup', handleDragEnd)
+            }
         }
-        return () => {
-            window.removeEventListener('pointermove', handleDragMove)
-            window.removeEventListener('pointerup', handleDragEnd)
-        }
-    }, [dragging, handleDragMove, handleDragEnd])
-
+    }, [resizing, handleResizeMove, handleResizeEnd, dragging, handleDragMove, handleDragEnd])
 
     if (isSelected) {
         slideObjectStyles.border = "solid 1px #4071db"
@@ -126,7 +164,10 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
                             <div className={styles.resizePointRB}></div>
 
                             <div className={styles.resizePointMT}></div>
-                            <div className={styles.resizePointMB}></div>
+                            <div ref={refResizeMB}
+                                onPointerDown={handleResizeStart}
+                                className={styles.resizePointMB}
+                            />
                         </>
                     }
                 </div>
@@ -151,7 +192,10 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
                             <div className={styles.resizePointRB}></div>
 
                             <div className={styles.resizePointMT}></div>
-                            <div className={styles.resizePointMB}></div>
+                            <div ref={refResizeMB}
+                                onPointerDown={handleResizeStart}
+                                className={styles.resizePointMB}
+                            />
                         </>
                     }
                 </div>
@@ -162,5 +206,5 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
 }
 
 export {
-    SlideObject
+    SlideObject,
 }
