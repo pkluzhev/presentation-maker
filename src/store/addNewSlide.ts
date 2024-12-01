@@ -8,10 +8,8 @@ function addNewSlide(editor: Editor): Editor {
     const newSlide: Slide = {
         id: crypto.randomUUID(),
         background: {
-            type: {
-                type: "solid",
-                color: "#ffffff"
-            }
+            type: "solid",
+            color: "#ffffff"
         },
         objects: []
     }
@@ -21,11 +19,6 @@ function addNewSlide(editor: Editor): Editor {
         presentation: {
             ...editor.presentation,
             slides: newSlides,
-        },
-        slideSelection: [newSlide.id],
-        interfaceState: {
-            ...editor.interfaceState,
-            editBarState: "slide"
         }
     }
 }

@@ -170,8 +170,8 @@ const presentation: Presentation = {
 
 const editor: Editor = {
     presentation: presentation,
-    slideSelection: ["1","2"],
-    elementSelection: ["5"],
+    slideSelection: [],
+    elementSelection: [],
     interfaceState: {
         optionsBarState: "file",
         editBarState: "no-edit",

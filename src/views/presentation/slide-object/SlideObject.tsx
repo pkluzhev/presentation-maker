@@ -23,17 +23,13 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
         height: `${object.size.height * scale}px`,
     }
 
-    // let deltaObjectPos: Position = {
+    // let deltaResize: Position = {
     //     x: 0,
     //     y: 0,
     //     angle: 0
     // }
 
-    let finalObjectPos: Position = {
-        x: 0,
-        y: 0,
-        angle: 0
-    }
+    let finalObjectPos: Position = object.position
 
     const dragElementRef = useRef<HTMLDivElement>(null)
     const startPointerPos = useRef<{ top: number, left: number }>()
@@ -58,7 +54,7 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
 
     const handleDragMove = useCallback((event: PointerEvent) => {
         if (!dragElementRef.current || !startPointerPos.current) return
-
+ 
         finalObjectPos.x = event.pageX + startPointerPos.current.left - slideStart.x
         finalObjectPos.y = event.pageY + startPointerPos.current.top - slideStart.y
 

@@ -7,26 +7,6 @@
   overflow-y: scroll;
 }
 
-.slidePreviewContainer{
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 10px;
-  margin: 15px;
-  cursor: grab;
-}
-
-.slidePreviewContainer:hover{
-  background-color: #e4e4e4;
-}
-
-.slideIndex {
-  margin: 5px 15px 0 0;
-  font: 400 16px/22px Montserrat, sans-serif;
-}
-
 .inputTitleLabel {
   margin: 0 0 5px;
   font: 400 16px/22px Montserrat, sans-serif;
@@ -39,10 +19,4 @@
   font: 400 14px/22px Montserrat, sans-serif;
   padding: 3px;
   margin: 0 0 20px;
-}
-
-.slidePreviewContainerWrapper {
-  position: absolute;
-  width: 100%;
-  height: 100%;
 }

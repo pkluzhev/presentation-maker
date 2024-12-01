@@ -1,8 +1,8 @@
 import { CSSProperties, useEffect, useRef } from "react";
 import { Position, type Slide } from "../../../store/types/PresentationTypes.ts";
 import { SlideObject } from "../slide-object/SlideObject.tsx";
-import { dispatch } from "../../../store/editor.ts";
-import { clearElementSelection } from "../../../store/setSelection.ts";
+// import { dispatch } from "../../../store/editor.ts";
+// import { clearElementSelection } from "../../../store/setSelection.ts";
 import styles from './Slide.module.css'
 
 const SLIDE_WIDTH = 935

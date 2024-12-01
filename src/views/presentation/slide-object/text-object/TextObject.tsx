@@ -2,7 +2,6 @@ import { type TextObject } from "../../../../store/types/PresentationTypes.ts";
 import { dispatch } from "../../../../store/editor.ts";
 import { changeTextValue } from "../../../../store/changeTextValue.ts";
 import styles from './TextObject.module.css'
-
 import { CSSProperties } from "react";
 
 type TextProps = {

@@ -12,7 +12,7 @@ function changePresentationTitle(presentation: Presentation, newTitle: string): 
     }
 }
 
-type Slide = {     
+type Slide = {
     id: string,
     background: SolidBackground | ImageBackground,
     objects: Array<TextObject | ImageObject>
@@ -469,8 +469,27 @@ const defaultImageElement: ImageObject = {
         angle: 0
     },
     size: {
-        width: 0,
-        height: 0
+        width: 200,
+        height: 150
+    }
+}
+
+const defaultTextElement: TextObject = {
+    type: "text",
+    value: "New text",
+    fontFamily: "Montserrat",
+    fontSize: 30,
+    fontWeight: 400,
+    fontColor: "#000000",
+    id: "",
+    position: {
+        x: 0,
+        y: 0,
+        angle: 0
+    },
+    size: {
+        width: 140,
+        height: 50
     }
 }
 
@@ -504,5 +523,6 @@ export {
     // setSlideBackgroundColor,
     // setSlideBackgroundImage,
 
-    defaultImageElement
+    defaultImageElement,
+    defaultTextElement
 }
