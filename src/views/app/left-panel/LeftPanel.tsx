@@ -3,8 +3,8 @@ import { Slide } from "../../presentation/slide/Slide.tsx";
 import styles from './LeftPanel.module.css'
 import { dispatch } from "../../../store/editor.ts";
 import { renamePresentation } from "../../../store/renamePresentation";
-import { addToSlideSelection } from "./../../../store/setSelection.ts";
-import { selectOneSlide } from "./../../../store/setSelection.ts";
+import { addToSlideSelection } from "./../../../store/addToSlideSelection";
+import { selectOneSlide } from "./../../../store/selectOneSlide";
 import { setSlidesOrder } from "../../../store/setSlidesOrder.ts";
 
 type LeftPanelProps = {
