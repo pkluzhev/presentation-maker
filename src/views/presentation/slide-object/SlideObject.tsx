@@ -1,14 +1,17 @@
 import { CSSProperties, PointerEventHandler, useCallback, useEffect, useRef, useState } from "react";
+import { type Position, type Size } from "../../../store/types/PresentationTypes.ts";
 import { TextObject } from "../slide-object/text-object/TextObject.tsx";
 import { ImageObject } from "../slide-object/image-object/ImageObject.tsx";
+import styles from './SlideObject.module.css'
+
 import { dispatch } from "../../../store/editor.ts";
+
+import { slideStart, SLIDE_WIDTH, SLIDE_HEIGHT } from "../../presentation/slide/Slide.tsx";
+
 import { selectOneElement } from "../../../store/setSelection.ts";
 import { changeSlideObjectPosition } from "../../../store/changeSlideObjectPosition.ts";
 import { changeSlideObjectSize } from "../../../store/changeSlideObjectSize.ts";
 import { addToElementSelection } from "../../../store/setSelection.ts";
-import { slideStart, SLIDE_WIDTH, SLIDE_HEIGHT } from "../../presentation/slide/Slide.tsx";
-import styles from './SlideObject.module.css'
-import { type Position, type Size } from "../../../store/types/PresentationTypes.ts";
 
 type SlideObjectProps = {
     object: TextObject | ImageObject,

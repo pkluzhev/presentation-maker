@@ -7,6 +7,7 @@ function setSlidesOrder(editor: Editor, orderData: {dragSlideId: string, dropSli
     const draggableSlide: Slide = structuredClone(editor.presentation.slides[dragSlideIndex])
     const newSlides = structuredClone(editor.presentation.slides)
     newSlides.splice(dragSlideIndex, 1)
+    
     newSlides.splice(dropSlideIndex, 0, draggableSlide)
     return {
         ...editor,

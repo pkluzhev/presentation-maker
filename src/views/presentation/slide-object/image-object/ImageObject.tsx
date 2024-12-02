@@ -1,7 +1,6 @@
+import { CSSProperties } from "react";
 import { type ImageObject } from "../../../../store/types/PresentationTypes.ts";
 import styles from './ImageObject.module.css'
-import { CSSProperties } from "react";
-
 
 type ImageProps = {
     src: string

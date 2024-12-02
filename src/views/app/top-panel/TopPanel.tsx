@@ -1,10 +1,9 @@
-// import * as React from "react";
-import styles from './TopPanel.module.css'
+import { type EditBarState } from './../../../store/types/EditorTypes'
+import { type OptionsBarState } from './../../../store/types/EditorTypes'
 import { MenuBar } from './menu-bar/MenuBar'
 import { OptionsBar } from './options-bar/OptionsBar'
 import { EditBar } from './edit-bar/EditBar'
-import { type EditBarState } from './../../../store/types/EditorTypes'
-import { type OptionsBarState } from './../../../store/types/EditorTypes'
+import styles from './TopPanel.module.css'
 
 type TopPanelProps = {
     optionsBarState: OptionsBarState,

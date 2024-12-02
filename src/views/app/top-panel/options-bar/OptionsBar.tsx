@@ -1,15 +1,15 @@
-// import * as React from "react";
+import { type OptionsBarState } from '../../../../store/types/EditorTypes'
+import { Button } from '../../../../components/Button'
 
 import styles from './OptionsBar.module.css'
-import { Button } from '../../../../components/Button'
+
 import { dispatch } from "../../../../store/editor";
+
 import { addNewSlide } from '../../../../store/addNewSlide'
 import { deleteSlides } from '../../../../store/deleteSlides'
 import { addNewText } from '../../../../store/addNewText'
 import { addNewImage } from '../../../../store/addNewImage'
 import { deleteElements } from '../../../../store/deleteElements'
-import { type OptionsBarState } from '../../../../store/types/EditorTypes'
-
 
 type OptionsBarProps = {
     type: OptionsBarState
@@ -31,7 +31,6 @@ function OptionsBar(props: OptionsBarProps) {
     function onDeleteElements() {
         dispatch(deleteElements)
     }
-
     switch (props.type) {
         case "slide":
             return (

@@ -1,8 +1,6 @@
 import { CSSProperties, useEffect, useRef } from "react";
-import { Position, type Slide } from "../../../store/types/PresentationTypes.ts";
+import { type Slide, type Position } from "../../../store/types/PresentationTypes.ts";
 import { SlideObject } from "../slide-object/SlideObject.tsx";
-// import { dispatch } from "../../../store/editor.ts";
-// import { clearElementSelection } from "../../../store/setSelection.ts";
 import styles from './Slide.module.css'
 
 const SLIDE_WIDTH = 935
@@ -17,11 +15,9 @@ type SlideProps = {
 let slideStart: Position = {
     x: 0,
     y: 0,
-    angle: 0
 }
 
 function Slide({ slide, scale, elementSelection }: SlideProps) {
-
     const isElementSelected = (array: string[] | undefined, objectId: string): boolean | undefined => {
         let selected: boolean = false
         array?.forEach((element) => {
@@ -32,15 +28,13 @@ function Slide({ slide, scale, elementSelection }: SlideProps) {
         return selected
     }
     const slideRef = useRef<HTMLDivElement>(null)
-
     useEffect(() => {
         let rect = slideRef.current?.getBoundingClientRect()
         if (rect) {
             slideStart.x = rect.x
             slideStart.y = rect.y
         }
-    }, []) ///////////////////////////////////////////////////
-
+    }, [])
     let slideStyles: CSSProperties = {}
     switch (slide.background.type) {
         case "solid":
@@ -65,10 +59,7 @@ function Slide({ slide, scale, elementSelection }: SlideProps) {
     }
 
     const onClearElementSelection = (event: React.KeyboardEvent) => {
-        console.log(event)
-        // if (event) {
-            // dispatch(clearElementSelection)
-        // }
+        console.log('Clear element selection')
     }
 
     return (
