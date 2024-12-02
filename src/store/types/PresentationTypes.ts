@@ -52,6 +52,24 @@ function swapSlides(presentation: Presentation, slide1Id: string, slide2Id: stri
     }
 }
 
+
+
+// function setSlidesOrder(presentation: Presentation, orderData: {insertableSlideId: string, droppableSlideId: string}): Presentation {
+//     const insSlideIndex: number = presentation.slides.findIndex((slide) => slide.id === orderData.insertableSlideId)
+//     const dropSlideIndex: number = presentation.slides.findIndex((slide) => slide.id === orderData.droppableSlideId)
+
+//     const insertableSlide: Slide = structuredClone(presentation.slides[insSlideIndex])
+
+//     const newSlideArr = structuredClone(presentation.slides)
+//     newSlideArr.splice(insSlideIndex, 1)
+//     newSlideArr.splice(dropSlideIndex + 1, 0, insertableSlide)
+
+//     return {
+//         ...presentation,
+//         slides: swap(structuredClone(presentation).slides, slide1Index, slide2Index)
+//     }
+// }
+
 // function swapSlides(slides: Slide[], slide1Id: string, slide2Id: string): Slide[] {
 //     const slide1Index: number = slides.findIndex((slide) => slide.id === slide1Id)
 //     const slide2Index: number = slides.findIndex((slide) => slide.id === slide2Id)

@@ -20,3 +20,32 @@
   padding: 3px;
   margin: 0 0 20px;
 }
+
+.slidePreviewContainer{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10px;
+  margin: 15px;
+  cursor: grab;
+  z-index: 20;
+}
+
+.slidePreviewContainer:hover{
+  background-color: #e4e4e4;
+}
+
+.slideIndex {
+  margin: 5px 15px 0 0;
+  font: 400 16px/22px Montserrat, sans-serif;
+}
+
+.slidePreviewContainerGuard {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
