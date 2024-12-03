@@ -8,8 +8,8 @@ enum ActionType {
     ADD_NEW_SLIDE = 'addNewSlide',
     DELETE_SLIDES = 'deleteSlides',
     SET_SLIDES_ORDER = 'setSlidesOrder',
-    SET_SLIDE_BACKGROUND_COLOR = 'setSlideBackGroundColor',
-    SET_SLIDE_BACKGROUND_IMAGE = 'setSlideBackGroundImage',
+    SET_SLIDE_BACKGROUND_COLOR = 'setSlideBackgroundColor',
+    SET_SLIDE_BACKGROUND_IMAGE = 'setSlideBackgroundImage',
 
     DELETE_ELEMENTS = 'deleteElements',
     CHANGE_SLIDE_OBJECT_POSITION = 'changeSlideObjectPosition',
