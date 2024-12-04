@@ -19,6 +19,8 @@ type SlideObjectProps = {
     isSelected?: boolean
 }
 
+type ResizeAttribute = null | 'LT' | 'LM' | 'LB' | 'RT' | 'RM' | 'RB' | 'MB' | 'MT'
+
 function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
     const slideObjectStyles: CSSProperties = {
         left: `${object.position.x * scale}px`,
@@ -29,28 +31,23 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
 
     let finalObjectPos: Position = object.position
     let finalObjectSize: Size = object.size
-    let deltaResize: Size = {
-        width: 0,
-        height: 0
+
+    let delta: Position = {
+        x: 0,
+        y: 0
     }
-
-    // const [resizingType, setResizingType] = useState<null | 'leftTop'>(null);
-    const [resizingLT, setResizingLT] = useState(false);
-    const [resizingLM, setResizingLM] = useState(false);
-    const [resizingLB, setResizingLB] = useState(false);
-    const [resizingRT, setResizingRT] = useState(false);
-    const [resizingRM, setResizingRM] = useState(false);
-    const [resizingRB, setResizingRB] = useState(false);
-    const [resizingMB, setResizingMB] = useState(false);
-    const [resizingMT, setResizingMT] = useState(false);
-
-    const startPos = useRef<Position>()
-    const startSize = useRef<Size>()
-
 
     const dragElementRef = useRef<HTMLDivElement>(null)
     const startPointerPosInsideElem = useRef<Position>()
     const [dragging, setDragging] = useState(false);
+
+    const [resizingType, setResizingType] = useState<ResizeAttribute>(null);
+
+    const startPos = useRef<Position>()
+    const startSize = useRef<Size>()
+    const startPosition = useRef<Position>()
+    const resizeAttribute = useRef<ResizeAttribute>()
+
     const handleDragStart = useCallback<PointerEventHandler>((event) => {
         if (!isSelected && event.ctrlKey) {
             dispatch(addToElementSelection, object.id)
@@ -91,36 +88,30 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
     }, [])
     const handleDragEnd = useCallback(() => {
         setDragging(false)
-        setResizingLT(false)
-        setResizingLM(false)
-        setResizingLB(false)
-        setResizingRT(false)
-        setResizingRM(false)
-        setResizingRB(false)
-        setResizingMB(false)
-        setResizingMT(false)
         dispatch(changeSlideObjectPosition, finalObjectPos)
     }, [])
 
-
-
-    const refResizeLT = useRef<HTMLDivElement>(null)
-    const handleResizeStartLT = useCallback<PointerEventHandler>((event) => {
-        if (!refResizeLT.current || !dragElementRef.current) return
+    const handleResizeStart = useCallback((event: any, type: ResizeAttribute) => {
+        if (!type || !dragElementRef.current) return
         startPos.current = {
             x: event.pageX,
             y: event.pageY
         }
-        const resizeElementRect = dragElementRef.current?.getBoundingClientRect();
+        const resizeElementRect = dragElementRef.current.getBoundingClientRect();
         startSize.current = {
             width: resizeElementRect?.width,
             height: resizeElementRect?.height,
         }
-        setResizingLT(true)
-
+        startPosition.current = {
+            x: resizeElementRect?.x,
+            y: resizeElementRect?.y,
+        }
+        resizeAttribute.current = type
+        setResizingType(type)
     }, [])
-    const handleResizeMoveLT = useCallback((event: PointerEvent) => {
-        if (!dragElementRef.current || !startPos.current || !startSize.current) return
+
+    const handleResizeMove = useCallback((event: PointerEvent) => {
+        if (!dragElementRef.current || !startPos.current || !startSize.current || !startPosition.current) return
         let endPos: Position = {
             x: event.pageX,
             y: event.pageY
@@ -128,472 +119,124 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
         if (endPos.x < slideStart.x) {
             endPos.x = slideStart.x
         }
-        deltaResize.width = endPos.x - startPos.current?.x
-        finalObjectSize.width = startSize.current?.width - deltaResize.width
-        if (finalObjectSize.width < 24) {
-            finalObjectSize.width = 24
-            deltaResize.width = startSize.current?.width - finalObjectSize.width
+        if (endPos.x > slideStart.x + SLIDE_WIDTH) {
+            endPos.x = slideStart.x + SLIDE_WIDTH
         }
         if (endPos.y < slideStart.y) {
             endPos.y = slideStart.y
         }
-        deltaResize.height = endPos.y - startPos.current?.y
-        finalObjectSize.height = startSize.current?.height - deltaResize.height
-        if (finalObjectSize.height < 24) {
-            finalObjectSize.height = 24
-            deltaResize.height = startSize.current?.height - finalObjectSize.height
+        if (endPos.y > slideStart.y + SLIDE_HEIGHT) {
+            endPos.y = slideStart.y + SLIDE_HEIGHT
         }
-        finalObjectPos.x = startPos.current?.x - slideStart.x + deltaResize.width
-        finalObjectPos.y = startPos.current?.y - slideStart.y + deltaResize.height
+        delta.x = endPos.x - startPos.current.x
+        delta.y = endPos.y - startPos.current.y
+        switch (resizeAttribute.current) {
+            case 'RB':
+                finalObjectSize.width = startSize.current.width + delta.x
+                finalObjectSize.height = startSize.current.height + delta.y
+                if (finalObjectSize.width < 24) {
+                    finalObjectSize.width = 24
+                }
+                if (finalObjectSize.height < 24) {
+                    finalObjectSize.height = 24
+                }
+                break
+            case 'RM':
+                finalObjectSize.width = startSize.current.width + delta.x
+                if (finalObjectSize.width < 24) {
+                    finalObjectSize.width = 24
+                }
+                break
+            case 'RT':
+                finalObjectSize.width = startSize.current.width + delta.x
+                finalObjectSize.height = startSize.current.height - delta.y
+                if (finalObjectSize.width < 24) {
+                    finalObjectSize.width = 24
+                    delta.x = startPos.current.x - finalObjectSize.width
+                }
+                if (finalObjectSize.height < 24) {
+                    finalObjectSize.height = 24
+                    finalObjectPos.y = startPosition.current?.y - slideStart.y + startSize.current.height - finalObjectSize.height
+                } else {
+                    finalObjectPos.y = startPosition.current?.y - slideStart.y + delta.y
+                }
+                break
+            case 'MT':
+                finalObjectSize.height = startSize.current.height - delta.y
+                if (finalObjectSize.height < 24) {
+                    finalObjectSize.height = 24
+                    finalObjectPos.y = startPosition.current?.y - slideStart.y + startSize.current.height - finalObjectSize.height
+                } else {
+                    finalObjectPos.y = startPosition.current?.y - slideStart.y + delta.y
+                }
+                break
+            case 'LT':
+                finalObjectSize.width = startSize.current.width - delta.x
+                finalObjectSize.height = startSize.current.height - delta.y
+                if (finalObjectSize.width < 24) {
+                    finalObjectSize.width = 24
+                    finalObjectPos.x = startPosition.current?.x - slideStart.x + startSize.current.width - finalObjectSize.width
+                } else {
+                    finalObjectPos.x = startPosition.current?.x - slideStart.x + delta.x
+                }
+                if (finalObjectSize.height < 24) {
+                    finalObjectSize.height = 24
+                    finalObjectPos.y = startPosition.current?.y - slideStart.y + startSize.current.height - finalObjectSize.height
+                } else {
+                    finalObjectPos.y = startPosition.current?.y - slideStart.y + delta.y
+                }
+                break
+            case 'LM':
+                finalObjectSize.width = startSize.current.width - delta.x
+                if (finalObjectSize.width < 24) {
+                    finalObjectSize.width = 24
+                    finalObjectPos.x = startPosition.current?.x - slideStart.x + startSize.current.width - finalObjectSize.width
+                } else {
+                    finalObjectPos.x = startPosition.current?.x - slideStart.x + delta.x
+                }
+                break
+            case 'LB':
+                finalObjectSize.width = startSize.current.width - delta.x
+                finalObjectSize.height = startSize.current.height + delta.y
+                if (finalObjectSize.width < 24) {
+                    finalObjectSize.width = 24
+                    finalObjectPos.x = startPosition.current?.x - slideStart.x + startSize.current.width - finalObjectSize.width
+                } else {
+                    finalObjectPos.x = startPosition.current?.x - slideStart.x + delta.x
+                }
+                if (finalObjectSize.height < 24) {
+                    finalObjectSize.height = 24
+                }
+                break
+            case 'MB':
+                finalObjectSize.height = startSize.current.height + delta.y
+                if (finalObjectSize.height < 24) {
+                    finalObjectSize.height = 24
+                }
+                break
+            default:
+                break
+        }
         dragElementRef.current.style.top = finalObjectPos.y + 'px'
         dragElementRef.current.style.left = finalObjectPos.x + 'px'
         dragElementRef.current.style.width = finalObjectSize.width + 'px'
         dragElementRef.current.style.height = finalObjectSize.height + 'px'
     }, [])
-    const handleResizeEndLT = useCallback(() => {
-        setResizingLT(false)
+    const handleResizeEnd = useCallback(() => {
+        resizeAttribute.current = null
+        setResizingType(null)
         setDragging(false)
         dispatch(changeSlideObjectSize, finalObjectSize)
         dispatch(changeSlideObjectPosition, finalObjectPos)
     }, [])
-
-
-    // const handleResizeStart = useCallback<PointerEventHandler>((event: PointerEvent, type: any) => { //~!!!!!!!!!!!!!!!!!!!!!!!!
-    //     if (!refResizeLM.current || !dragElementRef.current) return
-
-    //     setResizingType(type)
-    //     startPos.current = {
-    //         x: event.pageX,
-    //         y: event.pageY
-    //     }
-    //     const resizeElementRect = dragElementRef.current?.getBoundingClientRect();
-    //     startSize.current = {
-    //         width: resizeElementRect?.width,
-    //         height: resizeElementRect?.height,
-    //     }
-    //     setResizingLM(true)
-    // }, [])
-
-    // const handleResizeMove = useCallback((event: PointerEvent) => {
-    //     if (!resizingType) return      !!!!!!!!!!!!!!!!
-    //     if (!dragElementRef.current || !startPos.current || !startSize.current) return
-    //     let endPos: Position = {
-    //         x: event.pageX,
-    //         y: event.pageY
-    //     }
-    //     if (endPos.x < slideStart.x) {
-    //         endPos.x = slideStart.x
-    //     }
-    //     deltaResize.width = endPos.x - startPos.current?.x
-    //     finalObjectSize.width = startSize.current?.width - deltaResize.width
-    //     if (finalObjectSize.width < 24) {
-    //         finalObjectSize.width = 24
-    //         deltaResize.width = startSize.current?.width - finalObjectSize.width
-    //     }
-    //     if (endPos.y < slideStart.y) {
-    //         endPos.y = slideStart.y
-    //     }
-    //     deltaResize.height = endPos.y - startPos.current?.y
-    //     finalObjectSize.height = startSize.current?.height - deltaResize.height
-    //     if (finalObjectSize.height < 24) {
-    //         finalObjectSize.height = 24
-    //         deltaResize.height = startSize.current?.height - finalObjectSize.height
-    //     }
-    //     finalObjectPos.x = startPos.current?.x - slideStart.x + deltaResize.width
-    //     finalObjectPos.y = startPos.current?.y - slideStart.y + deltaResize.height
-    //     dragElementRef.current.style.top = finalObjectPos.y + 'px'
-    //     dragElementRef.current.style.left = finalObjectPos.x + 'px'
-    //     dragElementRef.current.style.width = finalObjectSize.width + 'px'
-    //     dragElementRef.current.style.height = finalObjectSize.height + 'px'
-    // }, [])
-    // const handleResizeEndLT = useCallback(() => {
-    //     setResizingLT(false)
-    //     setDragging(false)
-    //     dispatch(changeSlideObjectSize, finalObjectSize)
-    //     dispatch(changeSlideObjectPosition, finalObjectPos)
-    // }, [])
-
-
-    const refResizeLM = useRef<HTMLDivElement>(null)
-    const handleResizeStartLM = useCallback<PointerEventHandler>((event) => {
-        if (!refResizeLM.current || !dragElementRef.current) return
-        startPos.current = {
-            x: event.pageX,
-            y: event.pageY
-        }
-        const resizeElementRect = dragElementRef.current?.getBoundingClientRect();
-        startSize.current = {
-            width: resizeElementRect?.width,
-            height: resizeElementRect?.height,
-        }
-        setResizingLM(true)
-    }, [])
-    const handleResizeMoveLM = useCallback((event: PointerEvent) => {
-        if (!dragElementRef.current || !startPos.current || !startSize.current) return
-
-        let endPos: Position = {
-            x: event.pageX,
-            y: event.pageY
-        }
-        if (endPos.x < slideStart.x) {
-            endPos.x = slideStart.x
-        }
-        deltaResize.width = endPos.x - startPos.current?.x
-        finalObjectSize.width = startSize.current?.width - deltaResize.width
-        if (finalObjectSize.width < 24) {
-            finalObjectSize.width = 24
-            deltaResize.width = startSize.current?.width - finalObjectSize.width
-        }
-        finalObjectPos.x = startPos.current?.x - slideStart.x + deltaResize.width
-        dragElementRef.current.style.left = finalObjectPos.x + 'px'
-        dragElementRef.current.style.width = finalObjectSize.width + 'px'
-    }, [])
-    const handleResizeEndLM = useCallback(() => {
-        setResizingLM(false)
-        setDragging(false)
-        dispatch(changeSlideObjectSize, finalObjectSize)
-        dispatch(changeSlideObjectPosition, finalObjectPos)
-    }, [])
-
-
-
-    const refResizeLB = useRef<HTMLDivElement>(null)
-    const handleResizeStartLB = useCallback<PointerEventHandler>((event) => {
-        if (!refResizeLB.current || !dragElementRef.current) return
-        startPos.current = {
-            x: event.pageX,
-            y: event.pageY
-        }
-        const resizeElementRect = dragElementRef.current?.getBoundingClientRect();
-        startSize.current = {
-            width: resizeElementRect?.width,
-            height: resizeElementRect?.height,
-        }
-        setResizingLB(true)
-    }, [])
-    const handleResizeMoveLB = useCallback((event: PointerEvent) => {
-        if (!dragElementRef.current || !startPos.current || !startSize.current) return
-
-        let endPos: Position = {
-            x: event.pageX,
-            y: event.pageY
-        }
-        if (endPos.x < slideStart.x) {
-            endPos.x = slideStart.x
-        }
-        deltaResize.width = endPos.x - startPos.current?.x
-        finalObjectSize.width = startSize.current?.width - deltaResize.width
-        if (finalObjectSize.width < 24) {
-            finalObjectSize.width = 24
-            deltaResize.width = startSize.current?.width - finalObjectSize.width
-        }
-        if (endPos.y > slideStart.y + SLIDE_HEIGHT - 4) {
-            endPos.y = slideStart.y + SLIDE_HEIGHT - 4
-        }
-        deltaResize.height = endPos.y - startPos.current?.y
-        finalObjectSize.height = startSize.current?.height + deltaResize.height
-        if (finalObjectSize.height < 24) {
-            finalObjectSize.height = 24
-        }
-        finalObjectPos.x = startPos.current?.x - slideStart.x + deltaResize.width
-        dragElementRef.current.style.left = finalObjectPos.x + 'px'
-        dragElementRef.current.style.width = finalObjectSize.width + 'px'
-        dragElementRef.current.style.height = finalObjectSize.height + 'px'
-    }, [])
-    const handleResizeEndLB = useCallback(() => {
-        setResizingLB(false)
-        setDragging(false)
-        dispatch(changeSlideObjectSize, finalObjectSize)
-        dispatch(changeSlideObjectPosition, finalObjectPos)
-    }, [])
-
-
-
-    const refResizeRT = useRef<HTMLDivElement>(null)
-    const handleResizeStartRT = useCallback<PointerEventHandler>((event) => {
-        if (!refResizeRT.current || !dragElementRef.current) return
-        startPos.current = {
-            x: event.pageX,
-            y: event.pageY
-        }
-        const resizeElementRect = dragElementRef.current?.getBoundingClientRect();
-        startSize.current = {
-            width: resizeElementRect?.width,
-            height: resizeElementRect?.height,
-        }
-        setResizingRT(true)
-    }, [])
-    const handleResizeMoveRT = useCallback((event: PointerEvent) => {
-        if (!dragElementRef.current || !startPos.current || !startSize.current) return
-
-        let endPos: Position = {
-            x: event.pageX,
-            y: event.pageY
-        }
-        if (endPos.x > slideStart.x + SLIDE_WIDTH - 2) {
-            endPos.x = slideStart.x + SLIDE_WIDTH - 2
-        }
-        deltaResize.width = endPos.x - startPos.current?.x
-        if (endPos.y < slideStart.y) {
-            endPos.y = slideStart.y
-        }
-        deltaResize.height = endPos.y - startPos.current?.y
-        finalObjectSize.width = startSize.current?.width + deltaResize.width
-        if (finalObjectSize.width < 24) {
-            finalObjectSize.width = 24
-        }
-        finalObjectSize.height = startSize.current?.height - deltaResize.height
-        if (finalObjectSize.height < 24) {
-            finalObjectSize.height = 24
-            deltaResize.height = startSize.current?.height - finalObjectSize.height
-        }
-        finalObjectPos.y = startPos.current?.y - slideStart.y + deltaResize.height
-        dragElementRef.current.style.width = finalObjectSize.width + 'px'
-        dragElementRef.current.style.top = finalObjectPos.y + 'px'
-        dragElementRef.current.style.height = finalObjectSize.height + 'px'
-    }, [])
-    const handleResizeEndRT = useCallback(() => {
-        setResizingRT(false)
-        setDragging(false)
-        dispatch(changeSlideObjectSize, finalObjectSize)
-        dispatch(changeSlideObjectPosition, finalObjectPos)
-    }, [])
-
-
-
-    const refResizeRM = useRef<HTMLDivElement>(null)
-    const handleResizeStartRM = useCallback<PointerEventHandler>((event) => {
-        if (!refResizeRM.current || !dragElementRef.current) return
-        startPos.current = {
-            x: event.pageX,
-            y: event.pageY
-        }
-        const resizeElementRect = dragElementRef.current?.getBoundingClientRect();
-        startSize.current = {
-            width: resizeElementRect?.width,
-            height: resizeElementRect?.height,
-        }
-        setResizingRM(true)
-    }, [])
-    const handleResizeMoveRM = useCallback((event: PointerEvent) => {
-        if (!dragElementRef.current || !startPos.current || !startSize.current) return
-
-        let endPos: Position = {
-            x: event.pageX,
-            y: event.pageY
-        }
-        if (endPos.x > slideStart.x + SLIDE_WIDTH - 2) {
-            endPos.x = slideStart.x + SLIDE_WIDTH - 2
-        }
-        deltaResize.width = endPos.x - startPos.current?.x
-
-        finalObjectSize.width = startSize.current?.width + deltaResize.width
-        if (finalObjectSize.width < 24) {
-            finalObjectSize.width = 24
-        }
-        dragElementRef.current.style.width = finalObjectSize.width + 'px'
-    }, [])
-    const handleResizeEndRM = useCallback(() => {
-        setResizingRM(false)
-        setDragging(false)
-        dispatch(changeSlideObjectSize, finalObjectSize)
-    }, [])
-
-
-
-    const refResizeRB = useRef<HTMLDivElement>(null)
-    const handleResizeStartRB = useCallback<PointerEventHandler>((event) => {
-        if (!refResizeRB.current || !dragElementRef.current) return
-        startPos.current = {
-            x: event.pageX,
-            y: event.pageY
-        }
-        const resizeElementRect = dragElementRef.current?.getBoundingClientRect();
-        startSize.current = {
-            width: resizeElementRect?.width,
-            height: resizeElementRect?.height,
-        }
-        setResizingRB(true)
-    }, [])
-    const handleResizeMoveRB = useCallback((event: PointerEvent) => {
-        if (!dragElementRef.current || !startPos.current || !startSize.current) return
-
-        let endPos: Position = {
-            x: event.pageX,
-            y: event.pageY
-        }
-        if (endPos.x > slideStart.x + SLIDE_WIDTH - 2) {
-            endPos.x = slideStart.x + SLIDE_WIDTH - 2
-        }
-        deltaResize.width = endPos.x - startPos.current?.x
-        if (endPos.y > slideStart.y + SLIDE_HEIGHT - 4) {
-            endPos.y = slideStart.y + SLIDE_HEIGHT - 4
-        }
-        deltaResize.height = endPos.y - startPos.current?.y
-        finalObjectSize.width = startSize.current?.width + deltaResize.width
-        if (finalObjectSize.width < 24) {
-            finalObjectSize.width = 24
-        }
-        finalObjectSize.height = startSize.current?.height + deltaResize.height
-        if (finalObjectSize.height < 24) {
-            finalObjectSize.height = 24
-        }
-        dragElementRef.current.style.width = finalObjectSize.width + 'px'
-        dragElementRef.current.style.height = finalObjectSize.height + 'px'
-    }, [])
-    const handleResizeEndRB = useCallback(() => {
-        setResizingRB(false)
-        setDragging(false)
-        dispatch(changeSlideObjectSize, finalObjectSize)
-    }, [])
-
-
-
-    const refResizeMT = useRef<HTMLDivElement>(null)
-    const handleResizeStartMT = useCallback<PointerEventHandler>((event) => {
-        if (!refResizeMT.current || !dragElementRef.current) return
-        startPos.current = {
-            x: event.pageX,
-            y: event.pageY
-        }
-        const resizeElementRect = dragElementRef.current?.getBoundingClientRect();
-        startSize.current = {
-            width: resizeElementRect?.width,
-            height: resizeElementRect?.height,
-        }
-        setResizingMT(true)
-    }, [])
-    const handleResizeMoveMT = useCallback((event: PointerEvent) => {
-        if (!dragElementRef.current || !startPos.current || !startSize.current) return
-
-        let endPos: Position = {
-            x: event.pageX,
-            y: event.pageY
-        }
-        if (endPos.y < slideStart.y) {
-            endPos.y = slideStart.y
-        }
-        deltaResize.height = endPos.y - startPos.current?.y
-        finalObjectSize.height = startSize.current?.height - deltaResize.height
-        if (finalObjectSize.height < 24) {
-            finalObjectSize.height = 24
-            deltaResize.height = startSize.current?.height - finalObjectSize.height
-        }
-        finalObjectPos.y = startPos.current?.y - slideStart.y + deltaResize.height
-        dragElementRef.current.style.top = finalObjectPos.y + 'px'
-        dragElementRef.current.style.height = finalObjectSize.height + 'px'
-    }, [])
-    const handleResizeEndMT = useCallback(() => {
-        setResizingMT(false)
-        setDragging(false)
-        dispatch(changeSlideObjectSize, finalObjectSize)
-        dispatch(changeSlideObjectPosition, finalObjectPos)
-    }, [])
-
-
-
-    const refResizeMB = useRef<HTMLDivElement>(null)
-    const handleResizeStartMB = useCallback<PointerEventHandler>((event) => {
-        if (!refResizeMB.current || !dragElementRef.current) return
-        startPos.current = {
-            x: event.pageX,
-            y: event.pageY
-        }
-        const resizeElementRect = dragElementRef.current?.getBoundingClientRect();
-        startSize.current = {
-            width: resizeElementRect?.width,
-            height: resizeElementRect?.height,
-        }
-        setResizingMB(true)
-    }, [])
-    const handleResizeMoveMB = useCallback((event: PointerEvent) => {
-        if (!dragElementRef.current || !startPos.current || !startSize.current) return
-
-        let endPos: Position = {
-            x: event.pageX,
-            y: event.pageY
-        }
-        if (endPos.y > slideStart.y + SLIDE_HEIGHT - 4) {
-            endPos.y = slideStart.y + SLIDE_HEIGHT - 4
-        }
-        deltaResize.height = endPos.y - startPos.current?.y
-
-        finalObjectSize.height = startSize.current?.height + deltaResize.height
-        if (finalObjectSize.height < 24) {
-            finalObjectSize.height = 24
-        }
-        dragElementRef.current.style.height = finalObjectSize.height + 'px'
-    }, [])
-    const handleResizeEndMB = useCallback(() => {
-        setResizingMB(false)
-        setDragging(false)
-        dispatch(changeSlideObjectSize, finalObjectSize)
-    }, [])
-
 
     useEffect(() => {
-        if (resizingLT) {
-            window.addEventListener('pointermove', handleResizeMoveLT)
-            window.addEventListener('pointerup', handleResizeEndLT)
+        if (resizingType !== null) {
+            window.addEventListener('pointermove', handleResizeMove)
+            window.addEventListener('pointerup', handleResizeEnd)
             return () => {
-                window.removeEventListener('pointermove', handleResizeMoveLT)
-                window.removeEventListener('pointerup', handleResizeEndLT)
-            }
-        }
-        if (resizingLM) {
-            window.addEventListener('pointermove', handleResizeMoveLM)
-            window.addEventListener('pointerup', handleResizeEndLM)
-            return () => {
-                window.removeEventListener('pointermove', handleResizeMoveLM)
-                window.removeEventListener('pointerup', handleResizeEndLM)
-            }
-        }
-        if (resizingLB) {
-            window.addEventListener('pointermove', handleResizeMoveLB)
-            window.addEventListener('pointerup', handleResizeEndLB)
-            return () => {
-                window.removeEventListener('pointermove', handleResizeMoveLB)
-                window.removeEventListener('pointerup', handleResizeEndLB)
-            }
-        }
-        if (resizingRT) {
-            window.addEventListener('pointermove', handleResizeMoveRT)
-            window.addEventListener('pointerup', handleResizeEndRT)
-            return () => {
-                window.removeEventListener('pointermove', handleResizeMoveRT)
-                window.removeEventListener('pointerup', handleResizeEndRT)
-            }
-        }
-        if (resizingRM) {
-            window.addEventListener('pointermove', handleResizeMoveRM)
-            window.addEventListener('pointerup', handleResizeEndRM)
-            return () => {
-                window.removeEventListener('pointermove', handleResizeMoveRM)
-                window.removeEventListener('pointerup', handleResizeEndRM)
-            }
-        }
-        if (resizingRB) {
-            window.addEventListener('pointermove', handleResizeMoveRB)
-            window.addEventListener('pointerup', handleResizeEndRB)
-            return () => {
-                window.removeEventListener('pointermove', handleResizeMoveRB)
-                window.removeEventListener('pointerup', handleResizeEndRB)
-            }
-        }
-        if (resizingMT) {
-            window.addEventListener('pointermove', handleResizeMoveMT)
-            window.addEventListener('pointerup', handleResizeEndMT)
-            return () => {
-                window.removeEventListener('pointermove', handleResizeMoveMT)
-                window.removeEventListener('pointerup', handleResizeEndMT)
-            }
-        }
-        if (resizingMB) {
-            window.addEventListener('pointermove', handleResizeMoveMB)
-            window.addEventListener('pointerup', handleResizeEndMB)
-            return () => {
-                window.removeEventListener('pointermove', handleResizeMoveMB)
-                window.removeEventListener('pointerup', handleResizeEndMB)
+                window.removeEventListener('pointermove', handleResizeMove)
+                window.removeEventListener('pointerup', handleResizeEnd)
             }
         }
         if (dragging) {
@@ -604,24 +247,8 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
                 window.removeEventListener('pointerup', handleDragEnd)
             }
         }
-    }, [resizingLT, resizingLM, resizingLB, resizingRT, resizingRM, resizingRB, resizingMB, resizingMT,
-        handleResizeMoveLT, handleResizeEndLT,
-        handleResizeMoveLM, handleResizeEndLM,
-        handleResizeMoveLB, handleResizeEndLB,
-        handleResizeMoveRT, handleResizeEndRT,
-        handleResizeMoveRM, handleResizeEndRM,
-        handleResizeMoveRB, handleResizeEndRB,
-        handleResizeMoveMB, handleResizeEndMB,
-        handleResizeMoveMT, handleResizeEndMT,
-        dragging, handleDragMove, handleDragEnd])
+    }, [dragging, handleDragMove, handleDragEnd, handleResizeMove, handleResizeEnd,])
 
-    // window.addEventListener('pointermove', handleDragMove)
-    // window.addEventListener('pointerup', handleDragEnd)
-    // return () => {
-    //     window.removeEventListener('pointermove', handleDragMove)
-    // window.removeEventListener('pointerup', handleDragEnd)
-
-    // resizingType,handleResizeMoveLT, handleResizeEndLT,
     if (isSelected) {
         slideObjectStyles.border = "solid 1px #4071db"
     }
@@ -652,37 +279,36 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
             {slideElement}
             {isSelected &&
                 <>
-                    <div ref={refResizeLT}  //рефы можно будет убрать
-                        // onPointerDown={(e) => handleResizeStart(e, 'leftTop')}
-                        onPointerDown={handleResizeStartLT}
+                    <div
+                        onPointerDown={(e) => handleResizeStart(e, 'LT')}
                         className={styles.resizePointLT}
                     />
-                    <div ref={refResizeLM}
-                        onPointerDown={handleResizeStartLM}
+                    <div
+                        onPointerDown={(e) => handleResizeStart(e, 'LM')}
                         className={styles.resizePointLM}
                     />
-                    <div ref={refResizeLB}
-                        onPointerDown={handleResizeStartLB}
+                    <div
+                        onPointerDown={(e) => handleResizeStart(e, 'LB')}
                         className={styles.resizePointLB}
                     />
-                    <div ref={refResizeRT}
-                        onPointerDown={handleResizeStartRT}
+                    <div
+                        onPointerDown={(e) => handleResizeStart(e, 'RT')}
                         className={styles.resizePointRT}
                     />
-                    <div ref={refResizeRM}
-                        onPointerDown={handleResizeStartRM}
+                    <div
+                        onPointerDown={(e) => handleResizeStart(e, 'RM')}
                         className={styles.resizePointRM}
                     />
-                    <div ref={refResizeRB}
-                        onPointerDown={handleResizeStartRB}
+                    <div
+                        onPointerDown={(e) => handleResizeStart(e, 'RB')}
                         className={styles.resizePointRB}
                     />
-                    <div ref={refResizeMT}
-                        onPointerDown={handleResizeStartMT}
+                    <div
+                        onPointerDown={(e) => handleResizeStart(e, 'MT')}
                         className={styles.resizePointMT}
                     />
-                    <div ref={refResizeMB}
-                        onPointerDown={handleResizeStartMB}
+                    <div
+                        onPointerDown={(e) => handleResizeStart(e, 'MB')}
                         className={styles.resizePointMB}
                     />
                 </>
