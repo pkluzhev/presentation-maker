@@ -34,6 +34,7 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
         height: 0
     }
 
+    // const [resizingType, setResizingType] = useState<null | 'leftTop'>(null);
     const [resizingLT, setResizingLT] = useState(false);
     const [resizingLM, setResizingLM] = useState(false);
     const [resizingLB, setResizingLB] = useState(false);
@@ -116,6 +117,7 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
             height: resizeElementRect?.height,
         }
         setResizingLT(true)
+
     }, [])
     const handleResizeMoveLT = useCallback((event: PointerEvent) => {
         if (!dragElementRef.current || !startPos.current || !startSize.current) return
@@ -155,6 +157,61 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
         dispatch(changeSlideObjectPosition, finalObjectPos)
     }, [])
 
+
+    // const handleResizeStart = useCallback<PointerEventHandler>((event: PointerEvent, type: any) => { //~!!!!!!!!!!!!!!!!!!!!!!!!
+    //     if (!refResizeLM.current || !dragElementRef.current) return
+
+    //     setResizingType(type)
+    //     startPos.current = {
+    //         x: event.pageX,
+    //         y: event.pageY
+    //     }
+    //     const resizeElementRect = dragElementRef.current?.getBoundingClientRect();
+    //     startSize.current = {
+    //         width: resizeElementRect?.width,
+    //         height: resizeElementRect?.height,
+    //     }
+    //     setResizingLM(true)
+    // }, [])
+
+    // const handleResizeMove = useCallback((event: PointerEvent) => {
+    //     if (!resizingType) return      !!!!!!!!!!!!!!!!
+    //     if (!dragElementRef.current || !startPos.current || !startSize.current) return
+    //     let endPos: Position = {
+    //         x: event.pageX,
+    //         y: event.pageY
+    //     }
+    //     if (endPos.x < slideStart.x) {
+    //         endPos.x = slideStart.x
+    //     }
+    //     deltaResize.width = endPos.x - startPos.current?.x
+    //     finalObjectSize.width = startSize.current?.width - deltaResize.width
+    //     if (finalObjectSize.width < 24) {
+    //         finalObjectSize.width = 24
+    //         deltaResize.width = startSize.current?.width - finalObjectSize.width
+    //     }
+    //     if (endPos.y < slideStart.y) {
+    //         endPos.y = slideStart.y
+    //     }
+    //     deltaResize.height = endPos.y - startPos.current?.y
+    //     finalObjectSize.height = startSize.current?.height - deltaResize.height
+    //     if (finalObjectSize.height < 24) {
+    //         finalObjectSize.height = 24
+    //         deltaResize.height = startSize.current?.height - finalObjectSize.height
+    //     }
+    //     finalObjectPos.x = startPos.current?.x - slideStart.x + deltaResize.width
+    //     finalObjectPos.y = startPos.current?.y - slideStart.y + deltaResize.height
+    //     dragElementRef.current.style.top = finalObjectPos.y + 'px'
+    //     dragElementRef.current.style.left = finalObjectPos.x + 'px'
+    //     dragElementRef.current.style.width = finalObjectSize.width + 'px'
+    //     dragElementRef.current.style.height = finalObjectSize.height + 'px'
+    // }, [])
+    // const handleResizeEndLT = useCallback(() => {
+    //     setResizingLT(false)
+    //     setDragging(false)
+    //     dispatch(changeSlideObjectSize, finalObjectSize)
+    //     dispatch(changeSlideObjectPosition, finalObjectPos)
+    // }, [])
 
 
     const refResizeLM = useRef<HTMLDivElement>(null)
@@ -558,113 +615,80 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
         handleResizeMoveMT, handleResizeEndMT,
         dragging, handleDragMove, handleDragEnd])
 
+    // window.addEventListener('pointermove', handleDragMove)
+    // window.addEventListener('pointerup', handleDragEnd)
+    // return () => {
+    //     window.removeEventListener('pointermove', handleDragMove)
+    // window.removeEventListener('pointerup', handleDragEnd)
+
+    // resizingType,handleResizeMoveLT, handleResizeEndLT,
     if (isSelected) {
         slideObjectStyles.border = "solid 1px #4071db"
     }
+    let slideElement
     switch (object.type) {
         case "text":
-            return (
-                <div
-                    ref={dragElementRef}
-                    onPointerDown={handleDragStart}
-                    style={slideObjectStyles}
-                    className={styles.slideObject}
-                >
-                    <TextObject
-                        value={object.value}
-                        fontFamily={object.fontFamily}
-                        fontSize={object.fontSize * scale}
-                        fontWeight={object.fontWeight}
-                        fontColor={object.fontColor}
-                    />
-                    {isSelected &&
-                        <>
-                            <div ref={refResizeLT}
-                                onPointerDown={handleResizeStartLT}
-                                className={styles.resizePointLT}
-                            />
-                            <div ref={refResizeLM}
-                                onPointerDown={handleResizeStartLM}
-                                className={styles.resizePointLM}
-                            />
-                            <div ref={refResizeLB}
-                                onPointerDown={handleResizeStartLB}
-                                className={styles.resizePointLB}
-                            />
-                            <div ref={refResizeRT}
-                                onPointerDown={handleResizeStartRT}
-                                className={styles.resizePointRT}
-                            />
-                            <div ref={refResizeRM}
-                                onPointerDown={handleResizeStartRM}
-                                className={styles.resizePointRM}
-                            />
-                            <div ref={refResizeRB}
-                                onPointerDown={handleResizeStartRB}
-                                className={styles.resizePointRB}
-                            />
-                            <div ref={refResizeMT}
-                                onPointerDown={handleResizeStartMT}
-                                className={styles.resizePointMT}
-                            />
-                            <div ref={refResizeMB}
-                                onPointerDown={handleResizeStartMB}
-                                className={styles.resizePointMB}
-                            />
-                        </>
-                    }
-                </div>
-            )
+            slideElement = <TextObject
+                value={object.value}
+                fontFamily={object.fontFamily}
+                fontSize={object.fontSize * scale}
+                fontWeight={object.fontWeight}
+                fontColor={object.fontColor}
+            />
+            break
         case "image":
-            return (
-                <div
-                    ref={dragElementRef}
-                    onPointerDown={handleDragStart}
-                    style={slideObjectStyles}
-                    className={styles.slideObject}
-                >
-                    <ImageObject src={object.src} />
-                    {isSelected &&
-                        <>
-                            <div ref={refResizeLT}
-                                onPointerDown={handleResizeStartLT}
-                                className={styles.resizePointLT}
-                            />
-                            <div ref={refResizeLM}
-                                onPointerDown={handleResizeStartLM}
-                                className={styles.resizePointLM}
-                            />
-                            <div ref={refResizeLB}
-                                onPointerDown={handleResizeStartLB}
-                                className={styles.resizePointLB}
-                            />
-                            <div ref={refResizeRT}
-                                onPointerDown={handleResizeStartRT}
-                                className={styles.resizePointRT}
-                            />
-                            <div ref={refResizeRM}
-                                onPointerDown={handleResizeStartRM}
-                                className={styles.resizePointRM}
-                            />
-                            <div ref={refResizeRB}
-                                onPointerDown={handleResizeStartRB}
-                                className={styles.resizePointRB}
-                            />
-                            <div ref={refResizeMT}
-                                onPointerDown={handleResizeStartMT}
-                                className={styles.resizePointMT}
-                            />
-                            <div ref={refResizeMB}
-                                onPointerDown={handleResizeStartMB}
-                                className={styles.resizePointMB}
-                            />
-                        </>
-                    }
-                </div>
-            )
+            slideElement = <ImageObject src={object.src} />
+            break
         default:
             throw new Error(`Unknown slide-object type: ${object}`)
     }
+    return (
+        <div
+            ref={dragElementRef}
+            onPointerDown={handleDragStart}
+            style={slideObjectStyles}
+            className={styles.slideObject}
+        >
+            {slideElement}
+            {isSelected &&
+                <>
+                    <div ref={refResizeLT}  //рефы можно будет убрать
+                        // onPointerDown={(e) => handleResizeStart(e, 'leftTop')}
+                        onPointerDown={handleResizeStartLT}
+                        className={styles.resizePointLT}
+                    />
+                    <div ref={refResizeLM}
+                        onPointerDown={handleResizeStartLM}
+                        className={styles.resizePointLM}
+                    />
+                    <div ref={refResizeLB}
+                        onPointerDown={handleResizeStartLB}
+                        className={styles.resizePointLB}
+                    />
+                    <div ref={refResizeRT}
+                        onPointerDown={handleResizeStartRT}
+                        className={styles.resizePointRT}
+                    />
+                    <div ref={refResizeRM}
+                        onPointerDown={handleResizeStartRM}
+                        className={styles.resizePointRM}
+                    />
+                    <div ref={refResizeRB}
+                        onPointerDown={handleResizeStartRB}
+                        className={styles.resizePointRB}
+                    />
+                    <div ref={refResizeMT}
+                        onPointerDown={handleResizeStartMT}
+                        className={styles.resizePointMT}
+                    />
+                    <div ref={refResizeMB}
+                        onPointerDown={handleResizeStartMB}
+                        className={styles.resizePointMB}
+                    />
+                </>
+            }
+        </div>
+    )
 }
 
 export {

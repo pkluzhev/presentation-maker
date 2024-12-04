@@ -10,6 +10,8 @@ import { deleteSlides } from '../../../../store/deleteSlides'
 import { addNewText } from '../../../../store/addNewText'
 import { addNewImage } from '../../../../store/addNewImage'
 import { deleteElements } from '../../../../store/deleteElements'
+import { saveJSON } from '../../../../store/saveJSON'
+import { openJSON } from '../../../../store/openJSON'
 
 type OptionsBarProps = {
     type: OptionsBarState
@@ -30,6 +32,29 @@ function OptionsBar(props: OptionsBarProps) {
     }
     function onDeleteElements() {
         dispatch(deleteElements)
+    }
+    function onSavePresentation() {
+        dispatch(saveJSON)
+    }
+    function onOpenPresentation(event: React.ChangeEvent<HTMLInputElement>) {
+        const file = event.target.files?.[0]
+        if (!file) {
+            return
+        }
+        const reader = new FileReader();
+        reader.onload = e => {
+            if (typeof e.target?.result === "string") {
+                const data = JSON.parse(e.target.result)
+                if (!data) {
+                    return
+                }
+                dispatch(openJSON, data)
+            }
+        }
+        reader.onerror = (e) => {
+            console.error('Ошибка FileReader:', e);    // Обработка ошибки
+        }
+        reader.readAsText(file)
     }
     switch (props.type) {
         case "slide":
@@ -59,9 +84,16 @@ function OptionsBar(props: OptionsBarProps) {
             return (
                 <div className={styles.optionsBar}>
                     <Button className={styles.button} text={'Create new'} onClick={() => { }}></Button>
-                    <Button className={styles.button} text={'Open'} onClick={() => { alert("Hello") }}></Button>
+                    <div className={styles.inputFile}>
+                        <input
+                            className={styles.hiddenInput}
+                            type={"file"}
+                            onChange={ onOpenPresentation }
+                        />
+                        Open
+                    </div>
                     <Button className={styles.button} text={'Export as PDF'} onClick={() => { }}></Button>
-                    <Button className={styles.button} text={'Save'} onClick={() => { }}></Button>
+                    <Button className={styles.button} text={'Save'} onClick={onSavePresentation}></Button>
                     <Button className={styles.button} text={'Close'} onClick={() => { }}></Button>
                 </div>
             )

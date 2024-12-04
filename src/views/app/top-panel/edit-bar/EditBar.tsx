@@ -13,7 +13,7 @@ type EditBarProps = {
     type: EditBarState
 }
 
-function onChangeImage(event: React.FormEvent<HTMLInputElement>, func: Function) {
+function onChangeImage(event: React.ChangeEvent<HTMLInputElement>, func: Function) {
     const target = event.target as HTMLInputElement & {
         files: FileList
     }
