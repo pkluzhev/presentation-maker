@@ -9,9 +9,13 @@ import { setSlideBackgroundImage } from '../../../../store/setSlideBackgroundIma
 import { changeImage } from '../../../../store/changeImage'
 import { incSlideObjectLayer } from '../../../../store/incSlideObjectLayer'
 
-type EditBarProps = {
-    type: EditBarState
-}
+import { useAppSelector } from "../../../hooks/useAppSelector";
+
+
+
+// type EditBarProps = {
+//     type: EditBarState
+// }
 
 function onChangeImage(event: React.ChangeEvent<HTMLInputElement>, func: Function) {
     const target = event.target as HTMLInputElement & {
@@ -26,9 +30,14 @@ function onChangeImage(event: React.ChangeEvent<HTMLInputElement>, func: Functio
     reader.readAsDataURL(target.files[0])
 }
 
-function EditBar(props: EditBarProps) {
+function EditBar() { //(props: EditBarProps) {
+    const editor = useAppSelector((editor => editor))
+    const editBarState = editor.interfaceState.editBarState
+
+
+
     let selectedBackgroundColor: string = ""
-    switch (props.type) {
+    switch (editBarState) {
         case "text":
             return (
                 <div className={styles.editBar}>

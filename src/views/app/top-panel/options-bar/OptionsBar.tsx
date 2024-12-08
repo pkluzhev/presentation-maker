@@ -13,11 +13,22 @@ import { deleteElements } from '../../../../store/deleteElements'
 import { saveJSON } from '../../../../store/saveJSON'
 import { openJSON } from '../../../../store/openJSON'
 
-type OptionsBarProps = {
-    type: OptionsBarState
-}
+import { useAppSelector } from "../../../hooks/useAppSelector";
 
-function OptionsBar(props: OptionsBarProps) {
+
+// type OptionsBarProps = {
+//     type: OptionsBarState
+// }
+
+
+  const editor = useAppSelector((editor => editor))
+  const optionsBarState = editor.interfaceState.optionsBarState
+
+
+
+
+
+function OptionsBar() { //(props: OptionsBarProps) {
     function onAddNewSlide() {
         dispatch(addNewSlide)
     }
@@ -56,7 +67,7 @@ function OptionsBar(props: OptionsBarProps) {
         }
         reader.readAsText(file)
     }
-    switch (props.type) {
+    switch (optionsBarState) {
         case "slide":
             return (
                 <div className={styles.optionsBar}>

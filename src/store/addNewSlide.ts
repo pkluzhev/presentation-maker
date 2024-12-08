@@ -1,9 +1,7 @@
 import { type Editor } from "./types/EditorTypes";
 import { type Slide } from "./types/PresentationTypes";
 
-
 function addNewSlide(editor: Editor): Editor {
-    console.log('editor', editor)
     const newSlides = [...editor.presentation.slides]
     const newSlide: Slide = {
         id: crypto.randomUUID(),

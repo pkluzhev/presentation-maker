@@ -30,7 +30,7 @@ import { clearElementSelection } from "../clearElementSelection";
 function editorReducer(editor: Editor = defaultEditor, action: EditorAction): Editor {
     switch (action.type) {
         case ActionType.RENAME_PRESENTATION: 
-            return renamePresentation(editor)
+            return renamePresentation(editor, action)
         case ActionType.REMOVE_SLIDE:
             return removeSlide(editor)
         case ActionType.SET_SELECTION: 

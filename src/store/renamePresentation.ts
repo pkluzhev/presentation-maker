@@ -1,13 +1,12 @@
 import { type Editor } from "./types/EditorTypes";
-// import { type Presentation } from "./types/PresentationTypes";
+import { type RenamePresentationAction } from "./redux/actions.ts";
 
-function renamePresentation(editor: Editor, newTitle: string): Editor {
-    console.log('editor', editor)
+function renamePresentation(editor: Editor, action: RenamePresentationAction): Editor {
     return {
         ...editor,
         presentation: {
             ...editor.presentation,
-            title: newTitle,
+            title: action.payload,
         }
     }
 }

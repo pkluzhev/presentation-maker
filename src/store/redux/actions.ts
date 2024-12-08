@@ -1,4 +1,5 @@
 import { type Editor } from "../types/EditorTypes"
+import { Position, Size } from "../types/PresentationTypes"
 
 enum ActionType {
     SET_EDITOR = 'setEditor',
@@ -36,6 +37,7 @@ type SetEditorAction = {
 
 type RenamePresentationAction = {
     type: ActionType.RENAME_PRESENTATION,
+    payload: string
 }
 
 type AddNewSlideAction = {
@@ -48,14 +50,17 @@ type DeleteSlidesAction = {
 
 type SetSlidesOrderAction = {
     type: ActionType.SET_SLIDES_ORDER,
+    payload: { dragSlideId: string, dropSlideId: string }
 }
 
 type SetSlideBackgroundColorAction = {
     type: ActionType.SET_SLIDE_BACKGROUND_COLOR,
+    payload: string
 }
 
 type SetSlideBackgroundImageAction = {
     type: ActionType.SET_SLIDE_BACKGROUND_IMAGE,
+    payload: string
 }
 
 type DeleteElementsAction = {
@@ -64,10 +69,12 @@ type DeleteElementsAction = {
 
 type ChangeSlideObjectPositionAction = {
     type: ActionType.CHANGE_SLIDE_OBJECT_POSITION,
+    payload: Position
 }
 
 type ChangeSlideObjectSizeAction = {
     type: ActionType.CHANGE_SLIDE_OBJECT_SIZE,
+    payload: Size
 }
 
 type IncSlideObjectLayerAction = {
@@ -80,6 +87,7 @@ type AddNewImageAction = {
 
 type ChangeImageAction = {
     type: ActionType.CHANGE_IMAGE,
+    payload: string
 }
 
 type AddNewTextAction = {
@@ -88,36 +96,43 @@ type AddNewTextAction = {
 
 type ChangeTextValueAction = {
     type: ActionType.CHANGE_TEXT_VALUE,
+    payload: string
 }
 
 type AddToSlideSelectionAction = {
     type: ActionType.ADD_TO_SLIDE_SELECTION,
+    payload: string
 }
 
 type SelectOneSlideAction = {
     type: ActionType.SELECT_ONE_SLIDE,
+    payload: string
 }
 
 type AddToElementSelectionAction = {
     type: ActionType.ADD_TO_ELEMENT_SELECTION,
+    payload: string
 }
 
 type SelectOneElementAction = {
     type: ActionType.SELECT_ONE_ELEMENT,
+    payload: string
 }
 
 type ClearElementSelectionAction = {
     type: ActionType.CLEAR_ELEMENT_SELECTION,
 }
 
-type EditorAction = SetEditorAction | RenamePresentationAction 
-| AddNewSlideAction | DeleteSlidesAction | SetSlidesOrderAction | SetSlideBackgroundColorAction 
-| SetSlideBackgroundImageAction | DeleteElementsAction | ChangeSlideObjectPositionAction | ChangeSlideObjectSizeAction
-| IncSlideObjectLayerAction | AddNewImageAction | ChangeImageAction | AddNewTextAction | ChangeTextValueAction 
-| AddToSlideSelectionAction | SelectOneSlideAction | AddToElementSelectionAction | SelectOneElementAction 
-| ClearElementSelectionAction
+type EditorAction = SetEditorAction | RenamePresentationAction
+    | AddNewSlideAction | DeleteSlidesAction | SetSlidesOrderAction | SetSlideBackgroundColorAction
+    | SetSlideBackgroundImageAction | DeleteElementsAction | ChangeSlideObjectPositionAction | ChangeSlideObjectSizeAction
+    | IncSlideObjectLayerAction | AddNewImageAction | ChangeImageAction | AddNewTextAction | ChangeTextValueAction
+    | AddToSlideSelectionAction | SelectOneSlideAction | AddToElementSelectionAction | SelectOneElementAction
+    | ClearElementSelectionAction
 
 export {
     ActionType,
     type EditorAction,
+    type RenamePresentationAction,
+    type AddToSlideSelectionAction
 }

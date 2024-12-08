@@ -8,10 +8,10 @@ import { dispatch } from "../../../store/editor.ts";
 
 import { slideStart, SLIDE_WIDTH, SLIDE_HEIGHT } from "../../presentation/slide/Slide.tsx";
 
-import { selectOneElement } from "../../../store/selectOneElement";
+import { selectOneElement } from "../../../store/selectOneElement.ts";
 import { changeSlideObjectPosition } from "../../../store/changeSlideObjectPosition.ts";
 import { changeSlideObjectSize } from "../../../store/changeSlideObjectSize.ts";
-import { addToElementSelection } from "../../../store/addToElementSelection";
+import { addToElementSelection } from "../../../store/addToElementSelection.ts";
 
 type SlideObjectProps = {
     object: TextObject | ImageObject,

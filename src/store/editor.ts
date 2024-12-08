@@ -1,7 +1,7 @@
 import { Editor } from './types/EditorTypes.ts'
-import { editor } from './test-data.ts'
+import { defaultEditor } from './test-data.ts'
 
-let _editor: Editor = editor
+let _editor: Editor = defaultEditor
 let _handler: Function
 
 function getEditor() {

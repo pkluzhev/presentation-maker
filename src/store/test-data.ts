@@ -157,12 +157,8 @@ const presentation: Presentation = {
     title: "project1",
     slides: [slide1, slide2, slide3, slide4, slide5]
 }
-// const slideSelection: SlideSelection = ["1","2"]
 
-// const elementSelection: ElementSelection = ["4","5"]
-
-const editor: Editor = {
-// const defaultEditor: Editor = {
+const defaultEditor: Editor = {
     presentation: presentation,
     slideSelection: [],
     elementSelection: [],
@@ -174,6 +170,5 @@ const editor: Editor = {
 }
 
 export {
-    editor,
-    // defaultEditor
+    defaultEditor
 }
