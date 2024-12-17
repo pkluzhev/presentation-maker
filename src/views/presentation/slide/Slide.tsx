@@ -59,12 +59,8 @@ function Slide({ slide, scale}: SlideProps) {
             throw new Error(`Unknown background type on slide: ${slide.id}`)
     }
 
-    const onClearElementSelection = (event: React.KeyboardEvent) => {
-        console.log('Clear element selection')
-    }
-
     return (
-        <div ref={slideRef} style={slideStyles} className={styles.slide} onKeyDown={onClearElementSelection}>
+        <div ref={slideRef} style={slideStyles} className={styles.slide}>
             {slide.objects.map(object => {
                 return (
                     <SlideObject

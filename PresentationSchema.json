@@ -1,0 +1,223 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "ImageObject": {
+            "allOf": [
+                {
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "position": {
+                            "properties": {
+                                "x": {
+                                    "type": "number"
+                                },
+                                "y": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "x",
+                                "y"
+                            ],
+                            "type": "object"
+                        },
+                        "size": {
+                            "properties": {
+                                "height": {
+                                    "type": "number"
+                                },
+                                "width": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "height",
+                                "width"
+                            ],
+                            "type": "object"
+                        }
+                    },
+                    "required": [
+                        "id",
+                        "position",
+                        "size"
+                    ],
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "src": {
+                            "type": "string"
+                        },
+                        "type": {
+                            "const": "image",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "src",
+                        "type"
+                    ],
+                    "type": "object"
+                }
+            ]
+        },
+        "TextObject": {
+            "allOf": [
+                {
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "position": {
+                            "properties": {
+                                "x": {
+                                    "type": "number"
+                                },
+                                "y": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "x",
+                                "y"
+                            ],
+                            "type": "object"
+                        },
+                        "size": {
+                            "properties": {
+                                "height": {
+                                    "type": "number"
+                                },
+                                "width": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "height",
+                                "width"
+                            ],
+                            "type": "object"
+                        }
+                    },
+                    "required": [
+                        "id",
+                        "position",
+                        "size"
+                    ],
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "fontColor": {
+                            "type": "string"
+                        },
+                        "fontFamily": {
+                            "type": "string"
+                        },
+                        "fontSize": {
+                            "type": "number"
+                        },
+                        "fontWeight": {
+                            "type": "number"
+                        },
+                        "type": {
+                            "const": "text",
+                            "type": "string"
+                        },
+                        "value": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "fontColor",
+                        "fontFamily",
+                        "fontSize",
+                        "fontWeight",
+                        "type",
+                        "value"
+                    ],
+                    "type": "object"
+                }
+            ]
+        }
+    },
+    "properties": {
+        "slides": {
+            "items": {
+                "properties": {
+                    "background": {
+                        "anyOf": [
+                            {
+                                "properties": {
+                                    "color": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "const": "solid",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "color",
+                                    "type"
+                                ],
+                                "type": "object"
+                            },
+                            {
+                                "properties": {
+                                    "src": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "const": "image",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "src",
+                                    "type"
+                                ],
+                                "type": "object"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "objects": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/definitions/TextObject"
+                                },
+                                {
+                                    "$ref": "#/definitions/ImageObject"
+                                }
+                            ]
+                        },
+                        "type": "array"
+                    }
+                },
+                "required": [
+                    "background",
+                    "id",
+                    "objects"
+                ],
+                "type": "object"
+            },
+            "type": "array"
+        },
+        "title": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "slides",
+        "title"
+    ],
+    "type": "object"
+}
+
