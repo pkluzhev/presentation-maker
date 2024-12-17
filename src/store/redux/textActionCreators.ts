@@ -6,9 +6,10 @@ function addNewText() {
     }
 }
 
-function changeTextValue() {
+function changeTextValue(newValue: string) {
     return {
         type: ActionType.CHANGE_TEXT_VALUE,
+        payload: newValue
     }
 }
 

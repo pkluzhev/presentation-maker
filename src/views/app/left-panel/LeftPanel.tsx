@@ -1,48 +1,31 @@
 import { CSSProperties, useState } from "react";
 import { Slide } from "../../presentation/slide/Slide.tsx";
 import styles from './LeftPanel.module.css'
-import { dispatch } from "../../../store/editor.ts";
-import { renamePresentation } from "../../../store/renamePresentation.ts";
-import { addToSlideSelection } from "../../../store/addToSlideSelection.ts";
-import { selectOneSlide } from "../../../store/selectOneSlide.ts";
-import { setSlidesOrder } from "../../../store/setSlidesOrder.ts";
 import { useAppSelector } from "../../hooks/useAppSelector.ts";
-
-
-// type LeftPanelProps = {
-//     title: string,
-//     slides: Slide[],
-//     slideSelection: string[]
-// }
+import { useAppActions } from "../../hooks/useAppActions.ts";
 
 const SLIDE_PREVIEW_SCALE = 0.2
 
-function LeftPanel() { //(props: LeftPanelProps) {
-
-    const editor = useAppSelector(editor => editor)
-    const title = editor.presentation.title
-    const slideSelection = editor.slideSelection
-
-
-    const slides = editor.presentation.slides
-    // const selection = editor.selection
-    // const selectedSlide: SlideType = slides.find(slide => slide.id === selection?.selectedSlideId) || slides[0]
-
-
-
-
+function LeftPanel() {
+    const title = useAppSelector(editor => editor.presentation.title)
+    const slideSelection = useAppSelector(editor => editor.slideSelection)
+    const slides = useAppSelector(editor => editor.presentation.slides)
+    const { addToSlideSelection } = useAppActions()
+    const { selectOneSlide } = useAppActions()
+    const { renamePresentation } = useAppActions()
+    const { setSlidesOrder } = useAppActions()
     const onRenamePresentation: React.ChangeEventHandler = (event) => {
-        dispatch(renamePresentation, (event.target as HTMLInputElement).value)
+        renamePresentation((event.target as HTMLInputElement).value)
     }
     const onSlideClick = (slideId: string, event: React.MouseEvent) => {
         if (event.ctrlKey) {
-            dispatch(addToSlideSelection, slideId)
+            addToSlideSelection(slideId)
         } else {
-            dispatch(selectOneSlide, slideId)
+            selectOneSlide(slideId)
         }
     }
     const [currentSlide, setCurrentSlide] = useState<Slide | null>(null)
-    const dragStartHandler = (event: any, slide: Slide) => {
+    const dragStartHandler = (slide: Slide) => {
         setCurrentSlide(slide)
     }
     const dragOverHandler = (event: any) => {
@@ -51,11 +34,11 @@ function LeftPanel() { //(props: LeftPanelProps) {
     const dropHandler = (event: any, slide: Slide) => {
         event.preventDefault()
         if (currentSlide == null) return
-        const payload: { dragSlideId: string, dropSlideId: string } = {
+        const draggableSlides: { dragSlideId: string, dropSlideId: string } = {
             dragSlideId: currentSlide?.id,
             dropSlideId: slide.id
         }
-        dispatch(setSlidesOrder, payload)
+        setSlidesOrder(draggableSlides)
     }
     return (
         <div>
@@ -75,10 +58,10 @@ function LeftPanel() { //(props: LeftPanelProps) {
                     }
                     return <div
                         key={slide.id}
-                        onDragStart={(event) => dragStartHandler(event, slide)}
+                        onDragStart={() => dragStartHandler(slide)}
                         onDragOver={(event) => dragOverHandler(event)}
                         onDrop={(event) => dropHandler(event, slide)}
-                        onClick={(event) => {onSlideClick(slide.id, event)}}
+                        onClick={(event) => { onSlideClick(slide.id, event) }}
                         draggable={true}
                         style={inlineStyles}
                         className={styles.slidePreviewContainer}

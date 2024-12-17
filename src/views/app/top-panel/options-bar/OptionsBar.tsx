@@ -1,51 +1,40 @@
-import { type OptionsBarState } from '../../../../store/types/EditorTypes'
 import { Button } from '../../../../components/Button'
 
 import styles from './OptionsBar.module.css'
 
-import { dispatch } from "../../../../store/editor";
-
-import { addNewSlide } from '../../../../store/addNewSlide'
-import { deleteSlides } from '../../../../store/deleteSlides'
-import { addNewText } from '../../../../store/addNewText'
-import { addNewImage } from '../../../../store/addNewImage'
-import { deleteElements } from '../../../../store/deleteElements'
-import { saveJSON } from '../../../../store/saveJSON'
-import { openJSON } from '../../../../store/openJSON'
-
 import { useAppSelector } from "../../../hooks/useAppSelector";
+import { useAppActions } from "../../../hooks/useAppActions.ts";
 
+function OptionsBar() {
 
-// type OptionsBarProps = {
-//     type: OptionsBarState
-// }
+    const optionsBarState = useAppSelector((editor => editor.interfaceState.optionsBarState))
 
+    const {addNewSlide} = useAppActions()
+    const {deleteSlides} = useAppActions()
+    const {addNewText} = useAppActions()
+    const {addNewImage} = useAppActions()
+    const {deleteElements} = useAppActions()
+    const {saveJSON} = useAppActions()
+    const {openJSON} = useAppActions()
 
-  const editor = useAppSelector((editor => editor))
-  const optionsBarState = editor.interfaceState.optionsBarState
-
-
-
-
-
-function OptionsBar() { //(props: OptionsBarProps) {
+    
     function onAddNewSlide() {
-        dispatch(addNewSlide)
+        addNewSlide()
     }
     function onDeleteSlides() {
-        dispatch(deleteSlides)
+        deleteSlides()
     }
     function onAddNewText() {
-        dispatch(addNewText)
+        addNewText()
     }
     function onAddNewImage() {
-        dispatch(addNewImage)
+        addNewImage()
     }
     function onDeleteElements() {
-        dispatch(deleteElements)
+        deleteElements()
     }
     function onSavePresentation() {
-        dispatch(saveJSON)
+        saveJSON()
     }
     function onOpenPresentation(event: React.ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0]
@@ -59,11 +48,11 @@ function OptionsBar() { //(props: OptionsBarProps) {
                 if (!data) {
                     return
                 }
-                dispatch(openJSON, data)
+                openJSON(data)
             }
         }
         reader.onerror = (e) => {
-            console.error('Ошибка FileReader:', e);    // Обработка ошибки
+            console.error('Ошибка FileReader:', e); 
         }
         reader.readAsText(file)
     }

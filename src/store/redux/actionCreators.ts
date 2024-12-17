@@ -5,6 +5,7 @@ import * as SlideActionCreators from './slideActionCreators'
 import * as ElementActionCreators from './elementActionCreators'
 import * as ImageActionCreators from './imageActionCreators'
 import * as TextActionCreators from './textActionCreators'
+import * as OptionsBarActionCreators from './optionsBarActionCreators'
 
 export default {
     ...EditorActionCreators,
@@ -14,4 +15,5 @@ export default {
     ...ElementActionCreators,
     ...ImageActionCreators,
     ...TextActionCreators,
+    ...OptionsBarActionCreators,
 }

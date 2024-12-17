@@ -14,6 +14,7 @@ function addNewSlide(editor: Editor): Editor {
     newSlides.push(newSlide)
     return {
         ...editor,
+        slideSelection: [newSlide.id],
         presentation: {
             ...editor.presentation,
             slides: newSlides,

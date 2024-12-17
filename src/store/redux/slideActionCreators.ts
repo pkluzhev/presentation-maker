@@ -12,21 +12,24 @@ function deleteSlides() {
     }
 }
 
-function setSlidesOrder() {
+function setSlidesOrder(draggableSlides: { dragSlideId: string, dropSlideId: string }) {
     return {
         type: ActionType.SET_SLIDES_ORDER,
+        payload: draggableSlides
     }
 }
 
-function setSlideBackgroundColor() {
+function setSlideBackgroundColor(backgroundColor: string) {
     return {
         type: ActionType.SET_SLIDE_BACKGROUND_COLOR,
+        payload: backgroundColor
     }
 }
 
-function setSlideBackgroundImage() {
+function setSlideBackgroundImage(backgroundImage: string) {
     return {
         type: ActionType.SET_SLIDE_BACKGROUND_IMAGE,
+        payload: backgroundImage
     }
 }
 

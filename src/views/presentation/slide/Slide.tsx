@@ -4,19 +4,13 @@ import { SlideObject } from "../slide-object/SlideObject.tsx";
 import styles from './Slide.module.css'
 import { useAppSelector } from "../../hooks/useAppSelector.ts";
 
-
 const SLIDE_WIDTH = 935
 const SLIDE_HEIGHT = 525
 
 type SlideProps = {
     slide: Slide,
     scale: number,
-    // elementSelection?: string[]
 }
-
-const editor = useAppSelector((editor => editor))
-const elementSelection = editor.elementSelection
-
 
 let slideStart: Position = {
     x: 0,
@@ -24,6 +18,7 @@ let slideStart: Position = {
 }
 
 function Slide({ slide, scale}: SlideProps) {
+    const elementSelection = useAppSelector(editor => editor.elementSelection)
     const isElementSelected = (array: string[] | undefined, objectId: string): boolean | undefined => {
         let selected: boolean = false
         array?.forEach((element) => {

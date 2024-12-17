@@ -1,7 +1,7 @@
 import { type Editor } from "./types/EditorTypes";
+import { ChangeImageAction } from "./redux/actions.ts";
 
-function changeImage(editor: Editor, newSrc: string): Editor {
-    
+function changeImage(editor: Editor, action: ChangeImageAction): Editor {
     return {
         ...editor,
         presentation: {
@@ -18,7 +18,7 @@ function changeImage(editor: Editor, newSrc: string): Editor {
                         }
                         return {
                             ...object,
-                            src: newSrc
+                            src: action.payload
                         }
                     })
                 }

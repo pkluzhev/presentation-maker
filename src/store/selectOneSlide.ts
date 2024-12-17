@@ -1,7 +1,7 @@
 import { type Editor } from "./types/EditorTypes.ts"
-import { type AddToSlideSelectionAction } from "./redux/actions.ts"
+import { type SelectOneSlideAction } from "./redux/actions.ts"
 
-function selectOneSlide(editor: Editor, action: AddToSlideSelectionAction): Editor {
+function selectOneSlide(editor: Editor, action: SelectOneSlideAction): Editor {
     return {
         ...editor,
         slideSelection: [action.payload],

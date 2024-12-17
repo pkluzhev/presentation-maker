@@ -6,9 +6,10 @@ function addNewImage() {
     }
 }
 
-function changeImage() {
+function changeImage(newImage: string) {
     return {
         type: ActionType.CHANGE_IMAGE,
+        payload: newImage
     }
 }
 

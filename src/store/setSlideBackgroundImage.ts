@@ -1,8 +1,8 @@
 import { type Editor } from "./types/EditorTypes";
 import { type ImageBackground } from "./types/PresentationTypes";
+import { SetSlideBackgroundImageAction } from "./redux/actions.ts";
 
-
-function setSlideBackgroundImage(editor: Editor, backgroundImage: string): Editor {
+function setSlideBackgroundImage(editor: Editor, action: SetSlideBackgroundImageAction): Editor {
     function setBackground(srcStr: string): ImageBackground {
         return {
             type: "image",
@@ -13,11 +13,10 @@ function setSlideBackgroundImage(editor: Editor, backgroundImage: string): Edito
     newSlides.forEach((slide) => {
         editor.slideSelection.forEach((idStr) => {
             if (slide.id === idStr) {
-                slide.background = setBackground(backgroundImage)
+                slide.background = setBackground(action.payload)
             }
         })
     })
-
     return {
         ...editor,
         presentation: {

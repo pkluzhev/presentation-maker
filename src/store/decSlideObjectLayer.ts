@@ -1,17 +1,16 @@
 import { type Editor } from "./types/EditorTypes";
-import { type TextObject } from "./types/PresentationTypes";
-import { type ImageObject } from "./types/PresentationTypes";
+import { type TextObject, type ImageObject } from "./types/PresentationTypes";
 
-function incSlideObjectLayer(editor: Editor): Editor {
+function decSlideObjectLayer(editor: Editor): Editor {
     const currentSlideId = editor.slideSelection[editor.slideSelection.length - 1]
     let newSlides = [...editor.presentation.slides]
     function incElem(array: Array<TextObject | ImageObject>, currIndex: number): Array<TextObject | ImageObject> {
         const newArray = [...array]
-        const swapElem1 = newArray[currIndex]
-        const swapElem2 = newArray[currIndex + 1]
+        const swapElem1 = newArray[currIndex - 1]
+        const swapElem2 = newArray[currIndex]
         const temp = swapElem1
-        newArray[currIndex] = swapElem2
-        newArray[currIndex + 1] = temp
+        newArray[currIndex - 1] = swapElem2
+        newArray[currIndex] = temp
         return newArray
     };
     editor.elementSelection.forEach((elem) => {
@@ -19,13 +18,13 @@ function incSlideObjectLayer(editor: Editor): Editor {
             if (slide.id !== currentSlideId) {
                 return slide;
             }
-            const incSlideObjectIndex = slide.objects.findIndex((obj) => obj.id === elem)
-            if ((incSlideObjectIndex < 0) || (incSlideObjectIndex >= (slide.objects.length - 1))) {
+            const decSlideObjectIndex = slide.objects.findIndex((obj) => obj.id === elem)
+            if ((decSlideObjectIndex < 1) || (decSlideObjectIndex >= (slide.objects.length))) {
                 return slide;
             }
             return {
                 ...slide,
-                objects: incElem(slide.objects, incSlideObjectIndex),
+                objects: incElem(slide.objects, decSlideObjectIndex),
             }
         })
     })
@@ -39,5 +38,5 @@ function incSlideObjectLayer(editor: Editor): Editor {
 }
 
 export {
-    incSlideObjectLayer,
+    decSlideObjectLayer,
 }

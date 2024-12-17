@@ -1,9 +1,10 @@
+import { AddToSlideSelectionAction } from "./redux/actions.ts";
 import { type Editor } from "./types/EditorTypes.ts";
 
-function addToSlideSelection(editor: Editor, selectedSlide: string): Editor {
+function addToSlideSelection(editor: Editor, action: AddToSlideSelectionAction): Editor {
     return {
         ...editor,
-        slideSelection: [...editor.slideSelection, selectedSlide],
+        slideSelection: [...editor.slideSelection, action.payload],
         elementSelection: [],
         interfaceState: {
             ...editor.interfaceState,

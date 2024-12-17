@@ -1,7 +1,8 @@
 import { type Editor } from "./types/EditorTypes";
 import { Size } from "./types/PresentationTypes";
+import { ChangeSlideObjectSizeAction } from "./redux/actions.ts";
 
-function changeSlideObjectSize(editor: Editor, newSize: Size): Editor {
+function changeSlideObjectSize(editor: Editor, action: ChangeSlideObjectSizeAction): Editor {
     function modifySize(size: Size, newSize: Size): Size {
         size.width = newSize.width
         size.height = newSize.height
@@ -23,7 +24,7 @@ function changeSlideObjectSize(editor: Editor, newSize: Size): Editor {
                         }
                         return {
                             ...object,
-                            size: modifySize(structuredClone(object.size), newSize)
+                            size: modifySize(structuredClone(object.size), action.payload)
                         }
                     })
                 }

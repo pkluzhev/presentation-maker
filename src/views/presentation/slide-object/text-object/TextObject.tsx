@@ -1,10 +1,8 @@
 import { CSSProperties } from "react";
 import { type TextObject } from "../../../../store/types/PresentationTypes.ts";
 import styles from './TextObject.module.css'
+import { useAppActions } from "../../../hooks/useAppActions.ts";
 
-import { dispatch } from "../../../../store/editor.ts";
-
-import { changeTextValue } from "../../../../store/changeTextValue.ts";
 
 type TextProps = {
     value: string,
@@ -15,6 +13,8 @@ type TextProps = {
 }
 
 function TextObject({ value, fontFamily, fontSize, fontWeight, fontColor }: TextProps) {
+    const { changeTextValue } = useAppActions()
+
     const textStyles: CSSProperties = {
         fontFamily: `${fontFamily}`,
         fontSize: `${fontSize}px`,
@@ -26,7 +26,7 @@ function TextObject({ value, fontFamily, fontSize, fontWeight, fontColor }: Text
             style={textStyles}
             className={styles.textObjectInput}
             onChange={(event) => {
-                dispatch(changeTextValue, (event.target as HTMLTextAreaElement).value)
+                changeTextValue((event.target as HTMLTextAreaElement).value)
             }}
             value={value}
         />

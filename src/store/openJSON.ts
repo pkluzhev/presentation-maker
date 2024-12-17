@@ -1,10 +1,10 @@
 import { type Editor } from "./types/EditorTypes.ts";
-import { Presentation } from "./types/PresentationTypes.ts";
+import { openJSONAction } from "./redux/actions.ts";
 
-function openJSON(editor: Editor, newPresentation: Presentation): Editor {
+function openJSON(editor: Editor, action: openJSONAction): Editor {
     return {
         ...editor,
-        presentation: newPresentation,
+        presentation: action.payload,
         slideSelection: []
     }
 }

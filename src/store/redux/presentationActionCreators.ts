@@ -1,8 +1,9 @@
 import { ActionType } from "./actions"
 
-function renamePresentation() {
+function renamePresentation(newName: string) {
     return {
         type: ActionType.RENAME_PRESENTATION,
+        payload: newName
     }
 }
 

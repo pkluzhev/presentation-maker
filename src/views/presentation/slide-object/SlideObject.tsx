@@ -3,15 +3,8 @@ import { type Position, type Size } from "../../../store/types/PresentationTypes
 import { TextObject } from "../slide-object/text-object/TextObject.tsx";
 import { ImageObject } from "../slide-object/image-object/ImageObject.tsx";
 import styles from './SlideObject.module.css'
-
-import { dispatch } from "../../../store/editor.ts";
-
 import { slideStart, SLIDE_WIDTH, SLIDE_HEIGHT } from "../../presentation/slide/Slide.tsx";
-
-import { selectOneElement } from "../../../store/selectOneElement.ts";
-import { changeSlideObjectPosition } from "../../../store/changeSlideObjectPosition.ts";
-import { changeSlideObjectSize } from "../../../store/changeSlideObjectSize.ts";
-import { addToElementSelection } from "../../../store/addToElementSelection.ts";
+import { useAppActions } from "../../hooks/useAppActions.ts";
 
 type SlideObjectProps = {
     object: TextObject | ImageObject,
@@ -22,6 +15,11 @@ type SlideObjectProps = {
 type ResizeAttribute = null | 'LT' | 'LM' | 'LB' | 'RT' | 'RM' | 'RB' | 'MB' | 'MT'
 
 function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
+    const { selectOneElement } = useAppActions()
+    const { addToElementSelection } = useAppActions()
+    const { changeSlideObjectPosition } = useAppActions()
+    const { changeSlideObjectSize } = useAppActions()
+
     const slideObjectStyles: CSSProperties = {
         left: `${object.position.x * scale}px`,
         top: `${object.position.y * scale}px`,
@@ -50,10 +48,10 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
 
     const handleDragStart = useCallback<PointerEventHandler>((event) => {
         if (!isSelected && event.ctrlKey) {
-            dispatch(addToElementSelection, object.id)
+            addToElementSelection(object.id)
             return
         }
-        dispatch(selectOneElement, object.id)
+        selectOneElement(object.id)
         if (!dragElementRef.current) return
         const dragElementRect = dragElementRef.current?.getBoundingClientRect();
         startPointerPosInsideElem.current = {
@@ -88,7 +86,7 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
     }, [])
     const handleDragEnd = useCallback(() => {
         setDragging(false)
-        dispatch(changeSlideObjectPosition, finalObjectPos)
+        changeSlideObjectPosition(finalObjectPos)
     }, [])
 
     const handleResizeStart = useCallback((event: any, type: ResizeAttribute) => {
@@ -226,8 +224,8 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
         resizeAttribute.current = null
         setResizingType(null)
         setDragging(false)
-        dispatch(changeSlideObjectSize, finalObjectSize)
-        dispatch(changeSlideObjectPosition, finalObjectPos)
+        changeSlideObjectSize(finalObjectSize)
+        changeSlideObjectPosition(finalObjectPos)
     }, [])
 
     useEffect(() => {
@@ -249,7 +247,7 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
         }
     }, [dragging, handleDragMove, handleDragEnd, handleResizeMove, handleResizeEnd,])
 
-    if (isSelected) {
+    if (isSelected && scale === 1) {
         slideObjectStyles.border = "solid 1px #4071db"
     }
     let slideElement
@@ -277,7 +275,7 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
             className={styles.slideObject}
         >
             {slideElement}
-            {isSelected &&
+            {(isSelected && scale === 1) &&
                 <>
                     <div
                         onPointerDown={(e) => handleResizeStart(e, 'LT')}
