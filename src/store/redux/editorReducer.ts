@@ -83,8 +83,8 @@ function editorReducer(editor: Editor = defaultEditor, action: EditorAction): Ed
             return saveJSON(editor)
         case ActionType.OPEN_JSON:
             return openJSON(editor, action)
-        // case ActionType.SET_EDITOR:
-        //     return action.payload
+        case ActionType.SET_EDITOR:
+            return action.payload
         default:
             return editor
     }

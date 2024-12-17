@@ -176,5 +176,6 @@ export {
     type RenderOptionsBarAction,
     type saveJSONAction,
     type openJSONAction,
-    type ClearElementSelectionAction
+    type ClearElementSelectionAction,
+    type SetEditorAction
 }

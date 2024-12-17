@@ -1,12 +1,12 @@
 import { Slide } from "../../presentation/slide/Slide.tsx";
 import styles from './WorkSpace.module.css'
-import { useAppSelector } from "../../hooks/useAppSelector.ts";
+import { useSlidesSelector, useSlideSelectionSelector } from "../../hooks/useAppSelector.ts";
 
 const SLIDE_WORKSPACE_SCALE = 1
 
 function WorkSpace() {
-    const slides = useAppSelector((editor => editor.presentation.slides))
-    const slideSelection = useAppSelector((editor => editor.slideSelection))
+    const slides = useSlidesSelector()
+    const slideSelection = useSlideSelectionSelector()
 
     if (slides.length <= 0) {
         return <></>

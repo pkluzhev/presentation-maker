@@ -1,14 +1,10 @@
 import { Button } from '../../../../components/Button'
-
 import styles from './OptionsBar.module.css'
-
-import { useAppSelector } from "../../../hooks/useAppSelector";
+import { useOptionsBarStateSelector } from "../../../hooks/useAppSelector";
 import { useAppActions } from "../../../hooks/useAppActions.ts";
 
 function OptionsBar() {
-
-    const optionsBarState = useAppSelector((editor => editor.interfaceState.optionsBarState))
-
+    const optionsBarState = useOptionsBarStateSelector()
     const {addNewSlide} = useAppActions()
     const {deleteSlides} = useAppActions()
     const {addNewText} = useAppActions()
@@ -16,7 +12,6 @@ function OptionsBar() {
     const {deleteElements} = useAppActions()
     const {saveJSON} = useAppActions()
     const {openJSON} = useAppActions()
-
     
     function onAddNewSlide() {
         addNewSlide()

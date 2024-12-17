@@ -1,6 +1,6 @@
 import { Button } from '../../../../components/Button'
 import styles from './EditBar.module.css'
-import { useAppSelector } from "../../../hooks/useAppSelector";
+import { useEditBarStateSelector } from "../../../hooks/useAppSelector";
 import { useAppActions } from "../../../hooks/useAppActions.ts";
 
 function onChangeImage(event: React.ChangeEvent<HTMLInputElement>, callbackFunction: Function) {
@@ -17,7 +17,7 @@ function onChangeImage(event: React.ChangeEvent<HTMLInputElement>, callbackFunct
 }
 
 function EditBar() {
-    const editBarState = useAppSelector((editor => editor.interfaceState.editBarState))
+    const editBarState = useEditBarStateSelector()
     const { setSlideBackgroundColor } = useAppActions()
     const { setSlideBackgroundImage } = useAppActions()
     const { changeImage } = useAppActions()

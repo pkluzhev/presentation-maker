@@ -1,15 +1,16 @@
 import { CSSProperties, useState } from "react";
 import { Slide } from "../../presentation/slide/Slide.tsx";
 import styles from './LeftPanel.module.css'
-import { useAppSelector } from "../../hooks/useAppSelector.ts";
+ import { useTitleSelector, useSlideSelectionSelector, useSlidesSelector } from "../../hooks/useAppSelector.ts";
 import { useAppActions } from "../../hooks/useAppActions.ts";
 
 const SLIDE_PREVIEW_SCALE = 0.2
 
 function LeftPanel() {
-    const title = useAppSelector(editor => editor.presentation.title)
-    const slideSelection = useAppSelector(editor => editor.slideSelection)
-    const slides = useAppSelector(editor => editor.presentation.slides)
+    const title = useTitleSelector()
+    const slideSelection = useSlideSelectionSelector()
+    const slides = useSlidesSelector()
+
     const { addToSlideSelection } = useAppActions()
     const { selectOneSlide } = useAppActions()
     const { renamePresentation } = useAppActions()

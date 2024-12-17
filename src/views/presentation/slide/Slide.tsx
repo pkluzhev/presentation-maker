@@ -2,7 +2,7 @@ import { CSSProperties, useEffect, useRef } from "react";
 import { type Slide, type Position } from "../../../store/types/PresentationTypes.ts";
 import { SlideObject } from "../slide-object/SlideObject.tsx";
 import styles from './Slide.module.css'
-import { useAppSelector } from "../../hooks/useAppSelector.ts";
+import { useElementSelectionSelector } from "../../hooks/useAppSelector.ts";
 
 const SLIDE_WIDTH = 935
 const SLIDE_HEIGHT = 525
@@ -18,7 +18,7 @@ let slideStart: Position = {
 }
 
 function Slide({ slide, scale}: SlideProps) {
-    const elementSelection = useAppSelector(editor => editor.elementSelection)
+    const elementSelection = useElementSelectionSelector()
     const isElementSelected = (array: string[] | undefined, objectId: string): boolean | undefined => {
         let selected: boolean = false
         array?.forEach((element) => {
