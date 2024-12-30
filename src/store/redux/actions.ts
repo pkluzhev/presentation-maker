@@ -1,5 +1,5 @@
 import { OptionsBarState, type Editor } from "../types/EditorTypes"
-import { Position, Presentation, Size } from "../types/PresentationTypes"
+import { Presentation, SlideObjectProperties } from "../types/PresentationTypes"
 
 enum ActionType {
     SET_EDITOR = 'setEditor',
@@ -18,8 +18,7 @@ enum ActionType {
     SET_SLIDE_BACKGROUND_IMAGE = 'setSlideBackgroundImage',
 
     DELETE_ELEMENTS = 'deleteElements',
-    CHANGE_SLIDE_OBJECT_POSITION = 'changeSlideObjectPosition',
-    CHANGE_SLIDE_OBJECT_SIZE = 'changeSlideObjectSize',
+    CHANGE_SLIDE_OBJECT_POSITION_AND_SIZE = 'changeSlideObjectPositionAndSize',
     INC_SLIDE_OBJECT_LAYER = 'incSlideObjectLayer',
     DEC_SLIDE_OBJECT_LAYER = 'decSlideObjectLayer',
 
@@ -102,14 +101,9 @@ type DeleteElementsAction = {
     type: ActionType.DELETE_ELEMENTS,
 }
 
-type ChangeSlideObjectPositionAction = {
-    type: ActionType.CHANGE_SLIDE_OBJECT_POSITION,
-    payload: Position
-}
-
-type ChangeSlideObjectSizeAction = {
-    type: ActionType.CHANGE_SLIDE_OBJECT_SIZE,
-    payload: Size
+type ChangeSlideObjectPositionAndSizeAction = {
+    type: ActionType.CHANGE_SLIDE_OBJECT_POSITION_AND_SIZE,
+    payload: SlideObjectProperties
 }
 
 type IncSlideObjectLayerAction = {
@@ -149,10 +143,10 @@ type openJSONAction = {
 
 type EditorAction = SetEditorAction | RenamePresentationAction
     | AddNewSlideAction | DeleteSlidesAction | SetSlidesOrderAction | SetSlideBackgroundColorAction
-    | SetSlideBackgroundImageAction | DeleteElementsAction | ChangeSlideObjectPositionAction | ChangeSlideObjectSizeAction
+    | SetSlideBackgroundImageAction | DeleteElementsAction
     | IncSlideObjectLayerAction | DecSlideObjectLayerAction | AddNewImageAction | ChangeImageAction | AddNewTextAction | ChangeTextValueAction
     | AddToSlideSelectionAction | SelectOneSlideAction | AddToElementSelectionAction | SelectOneElementAction
-    | ClearElementSelectionAction | RenderOptionsBarAction | saveJSONAction | openJSONAction
+    | ClearElementSelectionAction | RenderOptionsBarAction | saveJSONAction | openJSONAction | ChangeSlideObjectPositionAndSizeAction
 
 export {
     ActionType,
@@ -166,8 +160,6 @@ export {
     type SetSlideBackgroundColorAction,
     type SetSlideBackgroundImageAction,
     type ChangeImageAction,
-    type ChangeSlideObjectPositionAction,
-    type ChangeSlideObjectSizeAction,
     type AddNewImageAction,
     type AddNewTextAction,
     type ChangeTextValueAction,
@@ -177,5 +169,6 @@ export {
     type saveJSONAction,
     type openJSONAction,
     type ClearElementSelectionAction,
-    type SetEditorAction
+    type SetEditorAction,
+    type ChangeSlideObjectPositionAndSizeAction
 }

@@ -1,10 +1,21 @@
 .menuBar {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   text-align: left;
   border: solid 0.5px #009090;
   border-bottom: none;
 }
+
+.button {
+  all: initial;
+  font: 400 16px/22px Montserrat, sans-serif;
+  cursor: pointer;
+  padding: 8px 16px;
+}
+
+.button_active {
+  background-color: #e4e4e4;
+} 
 
 .button:hover {
   background-color: #e4e4e4;

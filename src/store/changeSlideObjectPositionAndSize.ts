@@ -1,9 +1,14 @@
-import { type Editor } from "./types/EditorTypes";
-import { Size } from "./types/PresentationTypes";
-import { ChangeSlideObjectSizeAction } from "./redux/actions.ts";
+import { type Editor } from "./types/EditorTypes.ts";
+import { type Position, type Size } from "./types/PresentationTypes.ts";
+import { ChangeSlideObjectPositionAndSizeAction } from "./redux/actions.ts";
 
-function changeSlideObjectSize(editor: Editor, action: ChangeSlideObjectSizeAction): Editor {
-    function modifySize(size: Size, newSize: Size): Size {
+function changeSlideObjectPositionAndSize(editor: Editor, action: ChangeSlideObjectPositionAndSizeAction): Editor {
+    const modifyPosition = (position: Position, newPos: Position): Position => {
+        position.x = newPos.x
+        position.y = newPos.y
+        return position
+    }
+    const modifySize = (size: Size, newSize: Size): Size => {
         size.width = newSize.width
         size.height = newSize.height
         return size
@@ -24,7 +29,8 @@ function changeSlideObjectSize(editor: Editor, action: ChangeSlideObjectSizeActi
                         }
                         return {
                             ...object,
-                            size: modifySize(structuredClone(object.size), action.payload)
+                            position: modifyPosition(structuredClone(object.position), action.payload.position),
+                            size: modifySize(structuredClone(object.size), action.payload.size)
                         }
                     })
                 }
@@ -34,5 +40,5 @@ function changeSlideObjectSize(editor: Editor, action: ChangeSlideObjectSizeActi
 }
 
 export {
-    changeSlideObjectSize
+    changeSlideObjectPositionAndSize,
 }

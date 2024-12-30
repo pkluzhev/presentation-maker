@@ -1,13 +1,19 @@
 #root {
   width: 100vw;
-  height: 100vh;
+  height: 95.5vh;
   padding: 15px;
   text-align: center;
   background-color: #ebfec86d;
   user-select: none;
 }
 
+.appSpace {
+  display: grid;
+  grid-template-rows: 12.7vh auto;
+}
+
 .mainSpace {
+  grid-row: 2/3;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;

@@ -516,6 +516,7 @@ export {
     type ImageBackground,
     type Position,
     type Size,
+    type SlideObjectProperties,
 
 
 

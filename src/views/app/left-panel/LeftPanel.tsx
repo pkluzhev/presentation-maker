@@ -42,10 +42,10 @@ function LeftPanel() {
         setSlidesOrder(draggableSlides)
     }
     return (
-        <div>
+        <div className={styles.leftPanel}>
             <p className={styles.inputTitleLabel}>Change project name</p>
             <input type='text' className={styles.inputPresentationTitle} value={title} onChange={onRenamePresentation} />
-            <div className={styles.leftPanel}>
+            <div className={styles.slideList}>
                 {slides.map((slide, i) => {
                     const inlineStyles: CSSProperties = {}
                     let isSlideSelected = false

@@ -1,4 +1,8 @@
 .leftPanel {
+  grid-column: 1;
+}
+
+.slideList {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

@@ -12,9 +12,8 @@ import { setSlideBackgroundColor } from "../setSlideBackgroundColor";
 import { setSlideBackgroundImage } from "../setSlideBackgroundImage";
 
 import { deleteElements } from "../deleteElements";
-import { changeSlideObjectPosition } from "../changeSlideObjectPosition";
-import { changeSlideObjectSize } from "../changeSlideObjectSize";
 import { incSlideObjectLayer } from "../incSlideObjectLayer";
+import { changeSlideObjectPositionAndSize } from "../changeSlideObjectPositionAndSize";
 
 import { addNewImage } from "../addNewImage";
 import { changeImage } from "../changeImage";
@@ -32,6 +31,7 @@ import { decSlideObjectLayer } from "../decSlideObjectLayer";
 import { saveJSON } from "../saveJSON";
 import { openJSON } from "../openJSON";
 
+import { setEditor } from "../setEditor";
 
 function editorReducer(editor: Editor = defaultEditor, action: EditorAction): Editor {
     switch (action.type) {
@@ -61,10 +61,10 @@ function editorReducer(editor: Editor = defaultEditor, action: EditorAction): Ed
             return setSlideBackgroundImage(editor, action)
         case ActionType.DELETE_ELEMENTS:
             return deleteElements(editor)
-        case ActionType.CHANGE_SLIDE_OBJECT_POSITION:
-            return changeSlideObjectPosition(editor, action)
-        case ActionType.CHANGE_SLIDE_OBJECT_SIZE:
-            return changeSlideObjectSize(editor, action)
+
+        case ActionType.CHANGE_SLIDE_OBJECT_POSITION_AND_SIZE:
+            return changeSlideObjectPositionAndSize(editor, action)
+
         case ActionType.ADD_NEW_IMAGE:
             return addNewImage(editor)
         case ActionType.ADD_NEW_TEXT:
@@ -84,7 +84,7 @@ function editorReducer(editor: Editor = defaultEditor, action: EditorAction): Ed
         case ActionType.OPEN_JSON:
             return openJSON(editor, action)
         case ActionType.SET_EDITOR:
-            return action.payload
+            return setEditor(action)
         default:
             return editor
     }

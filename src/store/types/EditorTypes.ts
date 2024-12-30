@@ -15,7 +15,6 @@ type EditBarState = "slide" | "image" | "text" | "no-edit"
 
 type OptionsBarState = "file" | "slide" | "element" | "viewmode"
 
-
 export {
     type Editor,
     type EditBarState,
