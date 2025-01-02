@@ -1,37 +1,31 @@
 import { type Editor } from "../types/EditorTypes";
+
 import { ActionType, type EditorAction } from "./actions";
+
 import { defaultEditor } from "../test-data";
 
-import { renderOptionsBar } from "../renderOptionsBar";
-import { renamePresentation } from "../renamePresentation";
-
-import { addNewSlide } from "../addNewSlide";
-import { deleteSlides } from "../deleteSlides";
-import { setSlidesOrder } from "../setSlidesOrder";
-import { setSlideBackgroundColor } from "../setSlideBackgroundColor";
-import { setSlideBackgroundImage } from "../setSlideBackgroundImage";
-
-import { deleteElements } from "../deleteElements";
-import { incSlideObjectLayer } from "../incSlideObjectLayer";
-import { changeSlideObjectPositionAndSize } from "../changeSlideObjectPositionAndSize";
-
-import { addNewImage } from "../addNewImage";
-import { changeImage } from "../changeImage";
-
-import { addNewText } from "../addNewText";
-import { changeTextValue } from "../changeTextValue";
-
-import { addToSlideSelection } from "../addToSlideSelection";
-import { selectOneSlide } from "../selectOneSlide";
-import { addToElementSelection } from "../addToElementSelection";
-import { selectOneElement } from "../selectOneElement";
-import { clearElementSelection } from "../clearElementSelection";
-import { decSlideObjectLayer } from "../decSlideObjectLayer";
-
-import { saveJSON } from "../saveJSON";
-import { openJSON } from "../openJSON";
-
-import { setEditor } from "../setEditor";
+import { renderOptionsBar } from "../callbacks/renderOptionsBar";
+import { renamePresentation } from "../callbacks/renamePresentation";
+import { addNewSlide } from "../callbacks/addNewSlide";
+import { deleteSlides } from "../callbacks/deleteSlides";
+import { setSlidesOrder } from "../callbacks/setSlidesOrder";
+import { setSlideBackgroundColor } from "../callbacks/setSlideBackgroundColor";
+import { setSlideBackgroundImage } from "../callbacks/setSlideBackgroundImage";
+import { deleteElements } from "../callbacks/deleteElements";
+import { incSlideObjectLayer } from "../callbacks/incSlideObjectLayer";
+import { changeSlideObjectPositionAndSize } from "../callbacks/changeSlideObjectPositionAndSize";
+import { addNewImage } from "../callbacks/addNewImage";
+import { changeImage } from "../callbacks/changeImage";
+import { addNewText } from "../callbacks/addNewText";
+import { changeTextValue } from "../callbacks/changeTextValue";
+import { addToSlideSelection } from "../callbacks/addToSlideSelection";
+import { selectOneSlide } from "../callbacks/selectOneSlide";
+import { addToElementSelection } from "../callbacks/addToElementSelection";
+import { selectOneElement } from "../callbacks/selectOneElement";
+import { clearElementSelection } from "../callbacks/clearElementSelection";
+import { decSlideObjectLayer } from "../callbacks/decSlideObjectLayer";
+import { saveJSON } from "../callbacks/saveJSON";
+import { openJSON } from "../callbacks/openJSON";
 
 function editorReducer(editor: Editor = defaultEditor, action: EditorAction): Editor {
     switch (action.type) {
@@ -61,10 +55,8 @@ function editorReducer(editor: Editor = defaultEditor, action: EditorAction): Ed
             return setSlideBackgroundImage(editor, action)
         case ActionType.DELETE_ELEMENTS:
             return deleteElements(editor)
-
         case ActionType.CHANGE_SLIDE_OBJECT_POSITION_AND_SIZE:
             return changeSlideObjectPositionAndSize(editor, action)
-
         case ActionType.ADD_NEW_IMAGE:
             return addNewImage(editor)
         case ActionType.ADD_NEW_TEXT:
@@ -83,8 +75,6 @@ function editorReducer(editor: Editor = defaultEditor, action: EditorAction): Ed
             return saveJSON(editor)
         case ActionType.OPEN_JSON:
             return openJSON(editor, action)
-        case ActionType.SET_EDITOR:
-            return setEditor(action)
         default:
             return editor
     }

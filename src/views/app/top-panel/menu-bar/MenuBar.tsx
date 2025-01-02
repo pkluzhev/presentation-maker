@@ -1,8 +1,9 @@
-import * as React from "react";
+// import * as React from "react";
 import { useAppActions } from "../../../hooks/useAppActions.ts";
 import styles from './MenuBar.module.css'
 import { Button } from '../../../../components/Button'
-import { useOptionsBarStateSelector } from "../../../hooks/useAppSelector.ts";
+import { usePastSelector, useFutureSelector, useOptionsBarStateSelector } from "../../../hooks/useAppSelector.ts";
+import { Editor } from "../../../../store/types/EditorTypes.ts";
 
 function MenuBar() {
     const { renderOptionsBar } = useAppActions()
@@ -19,14 +20,33 @@ function MenuBar() {
         renderOptionsBar("viewmode")
     }
 
-    // const { setEditor } = useAppActions()
+    const statePast = usePastSelector()
+    const stateFuture = useFutureSelector()
+
+    const { setPastEditor } = useAppActions()
+    const { setFutureEditor } = useAppActions()
+
 
     function onUndo() {
-      
+        console.log('undo')
+        console.log(statePast.length, ' ', stateFuture.length)
+
+        let newState: Editor
+        if (statePast.length > 0) {
+            newState = statePast[statePast.length - 1]
+            setPastEditor(newState)
+        }
     }
 
     function onRedo() {
-     
+        console.log('redo')
+        console.log(statePast.length, ' ', stateFuture.length)
+
+        let newState: Editor
+        if (stateFuture.length > 0) {
+            newState = stateFuture[stateFuture.length - 1]
+            setFutureEditor(newState)
+        }
     }
 
     const optionsBarState = useOptionsBarStateSelector()

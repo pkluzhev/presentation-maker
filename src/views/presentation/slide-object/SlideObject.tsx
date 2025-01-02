@@ -18,9 +18,6 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
     const { selectOneElement } = useAppActions()
     const { addToElementSelection } = useAppActions()
 
-    // const { changeSlideObjectPosition } = useAppActions()
-    // const { changeSlideObjectSize } = useAppActions()
-
     const { changeSlideObjectPositionAndSize } = useAppActions()
 
 
@@ -36,8 +33,6 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
         position: object.position,
         size: object.size
     }
-    // let finalObjectPos: Position = object.position
-    // let finalObjectSize: Size = object.size
 
     let delta: Position = {
         x: 0,
@@ -96,7 +91,6 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
     const handleDragEnd = useCallback(() => {
         setDragging(false)
         changeSlideObjectPositionAndSize(elementFinalData)
-        // changeSlideObjectPosition(finalObjectPos)
     }, [])
 
     const handleResizeStart = useCallback((event: any, type: ResizeAttribute) => {
@@ -235,8 +229,6 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
         setResizingType(null)
         setDragging(false)
         changeSlideObjectPositionAndSize(elementFinalData)
-        // changeSlideObjectSize(finalObjectSize)
-        // changeSlideObjectPosition(finalObjectPos)
     }, [])
 
     useEffect(() => {

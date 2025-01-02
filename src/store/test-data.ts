@@ -167,10 +167,9 @@ const defaultEditor: Editor = {
     interfaceState: {
         optionsBarState: "file",
         editBarState: "no-edit",
-        buffer: false
     }
 }
 
 export {
-    defaultEditor
+    defaultEditor,
 }

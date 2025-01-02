@@ -2,7 +2,12 @@ import { OptionsBarState, type Editor } from "../types/EditorTypes"
 import { Presentation, SlideObjectProperties } from "../types/PresentationTypes"
 
 enum ActionType {
-    SET_EDITOR = 'setEditor',
+    DO_NOTHING = '',
+
+    UNDO = 'unDo',
+    REDO = 'reDo',
+
+    // SET_EDITOR = 'setEditor',
 
     RENDER_OPTIONS_BAR = 'renderOptionsBar',
 
@@ -35,10 +40,24 @@ enum ActionType {
     CLEAR_ELEMENT_SELECTION = 'clearElementSelection',
 }
 
-type SetEditorAction = {
-    type: ActionType.SET_EDITOR,
+type UndoAction = {
+    type: ActionType.UNDO,
     payload: Editor,
 }
+
+type RedoAction = {
+    type: ActionType.REDO,
+    payload: Editor,
+}
+
+type EmptyAction = {
+    type: ActionType.DO_NOTHING,
+}
+
+// type SetEditorAction = {
+//     type: ActionType.SET_EDITOR,
+//     payload: Editor,
+// }
 
 type AddToSlideSelectionAction = {
     type: ActionType.ADD_TO_SLIDE_SELECTION,
@@ -141,7 +160,7 @@ type openJSONAction = {
     payload: Presentation
 }
 
-type EditorAction = SetEditorAction | RenamePresentationAction
+type EditorAction = UndoAction | RedoAction | EmptyAction | RenamePresentationAction
     | AddNewSlideAction | DeleteSlidesAction | SetSlidesOrderAction | SetSlideBackgroundColorAction
     | SetSlideBackgroundImageAction | DeleteElementsAction
     | IncSlideObjectLayerAction | DecSlideObjectLayerAction | AddNewImageAction | ChangeImageAction | AddNewTextAction | ChangeTextValueAction
@@ -150,6 +169,9 @@ type EditorAction = SetEditorAction | RenamePresentationAction
 
 export {
     ActionType,
+    type UndoAction,
+    type RedoAction,
+    type EmptyAction,
     type EditorAction,
     type AddToSlideSelectionAction,
     type SelectOneSlideAction,
@@ -169,6 +191,5 @@ export {
     type saveJSONAction,
     type openJSONAction,
     type ClearElementSelectionAction,
-    type SetEditorAction,
     type ChangeSlideObjectPositionAndSizeAction
 }

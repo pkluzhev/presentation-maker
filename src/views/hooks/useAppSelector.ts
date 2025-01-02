@@ -1,21 +1,26 @@
 import { TypedUseSelectorHook, useSelector } from "react-redux"
-import { editorReducer } from "../../store/redux/editorReducer"
+import { undoableReducer } from "../../store/redux/undoableReducer"
 
-// Выведение типа `RootState` из хранилища
-type RootState = ReturnType<typeof editorReducer>
+type RootState = ReturnType<ReturnType<typeof undoableReducer>>
 
-// Используйте во всем приложении вместо `useSelector`
 const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
-const useTitleSelector = () => useAppSelector(editor => editor.presentation.title)
-const useSlideSelectionSelector = () => useAppSelector(editor => editor.slideSelection)
-const useSlidesSelector = () => useAppSelector(editor => editor.presentation.slides)
-const useEditBarStateSelector = () => useAppSelector(editor => editor.interfaceState.editBarState)
-const useOptionsBarStateSelector = () => useAppSelector(editor => editor.interfaceState.optionsBarState)
-const useElementSelectionSelector = () => useAppSelector(editor => editor.elementSelection)
+const usePresentSelector = () => useAppSelector(state => state.present)
+const usePastSelector = () => useAppSelector(state => state.past)
+const useFutureSelector = () => useAppSelector(state => state.future)
+
+const useTitleSelector = () => useAppSelector(state => state.present.presentation.title)
+const useSlideSelectionSelector = () => useAppSelector(state => state.present.slideSelection)
+const useSlidesSelector = () => useAppSelector(state => state.present.presentation.slides)
+const useEditBarStateSelector = () => useAppSelector(state => state.present.interfaceState.editBarState)
+const useOptionsBarStateSelector = () => useAppSelector(state => state.present.interfaceState.optionsBarState)
+const useElementSelectionSelector = () => useAppSelector(state => state.present.elementSelection)
 
 export {
     useAppSelector,
+    usePresentSelector,
+    usePastSelector,
+    useFutureSelector,
     useTitleSelector,
     useSlideSelectionSelector,
     useSlidesSelector,

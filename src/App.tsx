@@ -4,17 +4,37 @@ import { TopPanel } from './views/app/top-panel/TopPanel'
 import { LeftPanel } from './views/app/left-panel/LeftPanel'
 import { WorkSpace } from './views/app/workspace/WorkSpace'
 import { useAppActions } from "./views/hooks/useAppActions";
-
+import { usePastSelector, useFutureSelector } from "./views/hooks/useAppSelector";
+import { Editor } from "./store/types/EditorTypes";
 
 function App() {
   const { clearElementSelection } = useAppActions()
+  const { setPastEditor } = useAppActions()
+  const { setFutureEditor } = useAppActions()
+
+  const statePast = usePastSelector()
+  const stateFuture = useFutureSelector()
 
   function onUndo() {
-   
+    console.log('undo')
+    console.log(statePast, ' ', stateFuture)
+
+    let newState: Editor
+    if (statePast.length > 0) {
+      newState = statePast[statePast.length - 1]
+      setPastEditor(newState)
+    }
   }
 
   function onRedo() {
- 
+    console.log('redo')
+    console.log(statePast.length, ' ', stateFuture.length)
+
+    let newState: Editor
+    if (stateFuture.length > 0) {
+      newState = stateFuture[stateFuture.length - 1]
+      setFutureEditor(newState)
+    }
   }
 
   useEffect(() => {
@@ -35,11 +55,11 @@ function App() {
 
   return (
     <div className='appSpace'>
-        <TopPanel />
-        <div className='mainSpace'>
-          <LeftPanel />
-          <WorkSpace />
-        </div>
+      <TopPanel />
+      <div className='mainSpace'>
+        <LeftPanel />
+        <WorkSpace />
+      </div>
     </div>
   )
 }

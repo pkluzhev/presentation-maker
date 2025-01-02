@@ -1,4 +1,5 @@
-import { Presentation } from "./PresentationTypes";
+import { Presentation, Slide, TextObject, ImageObject } from "./PresentationTypes";
+// import { EditorAction, UndoableAction } from "../redux/actions";
 
 type Editor = {
     presentation: Presentation,
@@ -7,8 +8,9 @@ type Editor = {
     interfaceState: {
         optionsBarState: OptionsBarState,
         editBarState: EditBarState,
-        buffer: boolean
     }
+    // slideBuffer: Slide[],
+    // elementBuffer: TextObject[] | ImageObject[]
 }
 
 type EditBarState = "slide" | "image" | "text" | "no-edit"
