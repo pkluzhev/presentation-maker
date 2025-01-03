@@ -7,7 +7,9 @@ type Editor = {
     interfaceState: {
         optionsBarState: OptionsBarState,
         editBarState: EditBarState,
-        isPreviewActive: boolean
+        isPreviewActive: boolean,
+        isChangeImagePopupActive: boolean,
+        isSetSlideBackgroundImagePopupActive: boolean,
     }
     // slideBuffer: Slide[],
     // elementBuffer: TextObject[] | ImageObject[]

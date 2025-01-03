@@ -7,6 +7,9 @@ import { defaultEditor } from "../test-data";
 import { renderOptionsBar } from "../callbacks/renderOptionsBar";
 import { openPreviewPopup } from "../callbacks/openPreviewPopup";
 import { closePreviewPopup } from "../callbacks/closePreviewPopup";
+import { openChangeImagePopup } from "../callbacks/openChangeImagePopup";
+import { openSetSlideBackgroundImagePopup } from "../callbacks/openSetSlideBackgroundImagePopup";
+import { closeSetImagePopup } from "../callbacks/closeSetImagePopup";
 
 import { renamePresentation } from "../callbacks/renamePresentation";
 import { addNewSlide } from "../callbacks/addNewSlide";
@@ -42,12 +45,20 @@ function editorReducer(editor: Editor = defaultEditor, action: EditorAction): Ed
             return selectOneElement(editor, action)
         case ActionType.CLEAR_ELEMENT_SELECTION:
             return clearElementSelection(editor)
+
         case ActionType.RENDER_OPTIONS_BAR:
             return renderOptionsBar(editor, action)
         case ActionType.OPEN_PREVIEW_POPUP:
             return openPreviewPopup(editor)
         case ActionType.CLOSE_PREVIEW_POPUP:
             return closePreviewPopup(editor)
+        case ActionType.OPEN_CHANGE_IMAGE_POPUP:
+            return openChangeImagePopup(editor)
+        case ActionType.OPEN_SET_SLIDE_BG_IMAGE_POPUP:
+            return openSetSlideBackgroundImagePopup(editor)
+        case ActionType.CLOSE_SET_IMAGE_POPUP:
+            return closeSetImagePopup(editor)
+
         case ActionType.RENAME_PRESENTATION:
             return renamePresentation(editor, action)
         case ActionType.ADD_NEW_SLIDE:

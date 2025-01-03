@@ -167,7 +167,9 @@ const defaultEditor: Editor = {
     interfaceState: {
         optionsBarState: "file",
         editBarState: "no-edit",
-        isPreviewActive: false
+        isPreviewActive: false,
+        isChangeImagePopupActive: false,
+        isSetSlideBackgroundImagePopupActive: false,
     }
 }
 

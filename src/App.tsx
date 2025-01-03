@@ -4,8 +4,9 @@ import { TopPanel } from './views/app/top-panel/TopPanel'
 import { LeftPanel } from './views/app/left-panel/LeftPanel'
 import { WorkSpace } from './views/app/workspace/WorkSpace'
 import { PreviewPopup } from './views/app/preview-popup/PreviewPopup'
+import { SetImagePopup } from './views/app/set-image-popup/SetImagePopup'
 import { useAppActions } from "./views/hooks/useAppActions";
-import { usePastSelector, useFutureSelector, useIsPreviewActiveSelector } from "./views/hooks/useAppSelector";
+import { usePastSelector, useFutureSelector, useIsPreviewActiveSelector, useIsChangeImagePopupActiveSelector, useIsSetSlideBackgroundImagePopupActiveSelector } from "./views/hooks/useAppSelector";
 import { Editor } from "./store/types/EditorTypes";
 
 function App() {
@@ -17,6 +18,8 @@ function App() {
   const stateFuture = useFutureSelector()
 
   const statePreview = useIsPreviewActiveSelector()
+  const stateChangeImagePopup = useIsChangeImagePopupActiveSelector()
+  const stateSetSlideBackgroundImagePopup = useIsSetSlideBackgroundImagePopupActiveSelector()
 
   function onUndo() {
     console.log('undo')
@@ -65,6 +68,9 @@ function App() {
       </div>
       {statePreview &&
         <PreviewPopup />
+      }
+      {(stateChangeImagePopup || stateSetSlideBackgroundImagePopup) &&
+        <SetImagePopup />
       }
     </div>
   )

@@ -12,6 +12,9 @@ enum ActionType {
     RENDER_OPTIONS_BAR = 'renderOptionsBar',
     OPEN_PREVIEW_POPUP = 'openPreviewPopup',
     CLOSE_PREVIEW_POPUP = 'closePreviewPopup',
+    OPEN_CHANGE_IMAGE_POPUP = 'openChangeImagePopup',
+    OPEN_SET_SLIDE_BG_IMAGE_POPUP = 'openSetSlideBackgroundImagePopup',
+    CLOSE_SET_IMAGE_POPUP = 'closeSetImagePopup',
 
     OPEN_JSON = 'openJSON',
     SAVE_JSON = 'saveJSON',
@@ -98,6 +101,18 @@ type ClosePreviewPopupAction = {
     type: ActionType.CLOSE_PREVIEW_POPUP,
 }
 
+type OpenChangeImagePopupAction = {
+    type: ActionType.OPEN_CHANGE_IMAGE_POPUP,
+}
+
+type OpenSetSlideBackgroundImagePopupAction = {
+    type: ActionType.OPEN_SET_SLIDE_BG_IMAGE_POPUP,
+}
+
+type CloseSetImagePopupAction = {
+    type: ActionType.CLOSE_SET_IMAGE_POPUP,
+}
+
 type RenamePresentationAction = {
     type: ActionType.RENAME_PRESENTATION,
     payload: string
@@ -176,7 +191,8 @@ type EditorAction = UndoAction | RedoAction | EmptyAction | RenamePresentationAc
     | IncSlideObjectLayerAction | DecSlideObjectLayerAction | AddNewImageAction | ChangeImageAction | AddNewTextAction | ChangeTextValueAction
     | AddToSlideSelectionAction | SelectOneSlideAction | AddToElementSelectionAction | SelectOneElementAction
     | ClearElementSelectionAction | RenderOptionsBarAction | saveJSONAction | openJSONAction | ChangeSlideObjectPositionAndSizeAction
-    | OpenPreviewPopupAction | ClosePreviewPopupAction
+    | OpenPreviewPopupAction | ClosePreviewPopupAction | OpenChangeImagePopupAction
+    | OpenSetSlideBackgroundImagePopupAction | CloseSetImagePopupAction
 
 export {
     ActionType,
@@ -201,6 +217,9 @@ export {
     type RenderOptionsBarAction,
     type OpenPreviewPopupAction,
     type ClosePreviewPopupAction,
+    type OpenChangeImagePopupAction,
+    type OpenSetSlideBackgroundImagePopupAction,
+    type CloseSetImagePopupAction,
     type saveJSONAction,
     type openJSONAction,
     type ClearElementSelectionAction,

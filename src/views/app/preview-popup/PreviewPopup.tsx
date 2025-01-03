@@ -73,6 +73,13 @@ function PreviewPopup() {
     return (
         <div className={styles.background}>
             <div className={styles.popup}>
+                <div className={styles.buttonContainer}>
+                    {loading &&
+                        <div className={styles.preloader}></div>
+                    }
+                    <Button className={styles.button} text={'Download PDF'} onClick={handleDownloadPdf}></Button>
+                    <Button className={styles.button} text={'Close'} onClick={onClosePreviewPopup}></Button>
+                </div>
                 <div className={styles.previewArea}>
                     {slides.map((slide, index) => (
                         <div className={styles.slideContainer}>
@@ -86,13 +93,6 @@ function PreviewPopup() {
                             <div className={styles.slideContainerGuard} />
                         </div>
                     ))}
-                </div>
-                <div className={styles.buttonContainer}>
-                    {loading &&
-                        <div className={styles.preloader}></div>
-                    }
-                    <Button className={styles.button} text={'Download PDF'} onClick={handleDownloadPdf}></Button>
-                    <Button className={styles.button} text={'Close'} onClick={onClosePreviewPopup}></Button>
                 </div>
             </div>
         </div>

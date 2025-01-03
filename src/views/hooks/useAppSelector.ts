@@ -18,6 +18,9 @@ const useElementSelectionSelector = () => useAppSelector(state => state.present.
 const useEditBarStateSelector = () => useAppSelector(state => state.present.interfaceState.editBarState)
 const useOptionsBarStateSelector = () => useAppSelector(state => state.present.interfaceState.optionsBarState)
 const useIsPreviewActiveSelector = () => useAppSelector(state => state.present.interfaceState.isPreviewActive)
+const useIsChangeImagePopupActiveSelector = () => useAppSelector(state => state.present.interfaceState.isChangeImagePopupActive)
+const useIsSetSlideBackgroundImagePopupActiveSelector = () => useAppSelector(state => state.present.interfaceState.isSetSlideBackgroundImagePopupActive)
+
 
 export {
     useAppSelector,
@@ -30,5 +33,7 @@ export {
     useEditBarStateSelector,
     useOptionsBarStateSelector,
     useElementSelectionSelector,
-    useIsPreviewActiveSelector
+    useIsPreviewActiveSelector,
+    useIsChangeImagePopupActiveSelector,
+    useIsSetSlideBackgroundImagePopupActiveSelector
 }
