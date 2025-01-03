@@ -34,12 +34,14 @@ function undoableReducer(editorReducer: (editor: Editor | undefined, action: Edi
             default:
                 const newPresent = editorReducer(present, action)
                 if (present === newPresent) {
+                    console.log('ничего не изменилось')
                     return state
                 }
                 if ((present.slideSelection !== newPresent.slideSelection 
                     || present.elementSelection !== newPresent.elementSelection
                     || present.interfaceState !== newPresent.interfaceState)
                     && present.presentation === newPresent.presentation) {
+                    console.log('изменилось что-то, кроме презентации')
                     const newPresentModified = structuredClone(newPresent)
                     return {
                         ...state,
@@ -51,6 +53,7 @@ function undoableReducer(editorReducer: (editor: Editor | undefined, action: Edi
                 //         ...state,
                 //     }
                 // }
+                console.log('изменилось что-то и презентация (запишем в Анду)')
                 return {
                     past: [...past, present],
                     present: newPresent,

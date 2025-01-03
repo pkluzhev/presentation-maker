@@ -3,8 +3,9 @@ import { useEffect } from 'react'
 import { TopPanel } from './views/app/top-panel/TopPanel'
 import { LeftPanel } from './views/app/left-panel/LeftPanel'
 import { WorkSpace } from './views/app/workspace/WorkSpace'
+import { PreviewPopup } from './views/app/preview-popup/PreviewPopup'
 import { useAppActions } from "./views/hooks/useAppActions";
-import { usePastSelector, useFutureSelector } from "./views/hooks/useAppSelector";
+import { usePastSelector, useFutureSelector, useIsPreviewActiveSelector } from "./views/hooks/useAppSelector";
 import { Editor } from "./store/types/EditorTypes";
 
 function App() {
@@ -14,6 +15,8 @@ function App() {
 
   const statePast = usePastSelector()
   const stateFuture = useFutureSelector()
+
+  const statePreview = useIsPreviewActiveSelector()
 
   function onUndo() {
     console.log('undo')
@@ -60,6 +63,9 @@ function App() {
         <LeftPanel />
         <WorkSpace />
       </div>
+      {statePreview &&
+        <PreviewPopup />
+      }
     </div>
   )
 }

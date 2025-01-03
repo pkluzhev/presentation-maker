@@ -8,6 +8,20 @@ function renderOptionsBar(newState: OptionsBarState) {
     }
 }
 
+function openPreviewPopup() {
+    return {
+        type: ActionType.OPEN_PREVIEW_POPUP,
+    }
+}
+
+function closePreviewPopup() {
+    return {
+        type: ActionType.CLOSE_PREVIEW_POPUP,
+    }
+}
+
 export {
     renderOptionsBar,
+    openPreviewPopup,
+    closePreviewPopup
 }

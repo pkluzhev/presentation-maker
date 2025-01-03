@@ -5,6 +5,9 @@ import { ActionType, type EditorAction } from "./actions";
 import { defaultEditor } from "../test-data";
 
 import { renderOptionsBar } from "../callbacks/renderOptionsBar";
+import { openPreviewPopup } from "../callbacks/openPreviewPopup";
+import { closePreviewPopup } from "../callbacks/closePreviewPopup";
+
 import { renamePresentation } from "../callbacks/renamePresentation";
 import { addNewSlide } from "../callbacks/addNewSlide";
 import { deleteSlides } from "../callbacks/deleteSlides";
@@ -41,6 +44,10 @@ function editorReducer(editor: Editor = defaultEditor, action: EditorAction): Ed
             return clearElementSelection(editor)
         case ActionType.RENDER_OPTIONS_BAR:
             return renderOptionsBar(editor, action)
+        case ActionType.OPEN_PREVIEW_POPUP:
+            return openPreviewPopup(editor)
+        case ActionType.CLOSE_PREVIEW_POPUP:
+            return closePreviewPopup(editor)
         case ActionType.RENAME_PRESENTATION:
             return renamePresentation(editor, action)
         case ActionType.ADD_NEW_SLIDE:

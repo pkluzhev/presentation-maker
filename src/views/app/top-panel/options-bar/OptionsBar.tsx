@@ -2,17 +2,21 @@ import { Button } from '../../../../components/Button'
 import styles from './OptionsBar.module.css'
 import { useOptionsBarStateSelector } from "../../../hooks/useAppSelector";
 import { useAppActions } from "../../../hooks/useAppActions.ts";
+import React from "react";
 
 function OptionsBar() {
     const optionsBarState = useOptionsBarStateSelector()
-    const {addNewSlide} = useAppActions()
-    const {deleteSlides} = useAppActions()
-    const {addNewText} = useAppActions()
-    const {addNewImage} = useAppActions()
-    const {deleteElements} = useAppActions()
-    const {saveJSON} = useAppActions()
-    const {openJSON} = useAppActions()
-    
+
+    const { addNewSlide } = useAppActions()
+    const { deleteSlides } = useAppActions()
+    const { addNewText } = useAppActions()
+    const { addNewImage } = useAppActions()
+    const { deleteElements } = useAppActions()
+    const { saveJSON } = useAppActions()
+    const { openJSON } = useAppActions()
+
+    const { openPreviewPopup } = useAppActions()
+
     function onAddNewSlide() {
         addNewSlide()
     }
@@ -31,6 +35,10 @@ function OptionsBar() {
     function onSavePresentation() {
         saveJSON()
     }
+    function onOpenPreviewPopup() {
+        openPreviewPopup()
+    }
+    
     function onOpenPresentation(event: React.ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0]
         if (!file) {
@@ -47,7 +55,7 @@ function OptionsBar() {
             }
         }
         reader.onerror = (e) => {
-            console.error('Ошибка FileReader:', e); 
+            console.error('Ошибка FileReader:', e);
         }
         reader.readAsText(file)
     }
@@ -83,11 +91,11 @@ function OptionsBar() {
                         <input
                             className={styles.hiddenInput}
                             type={"file"}
-                            onChange={ onOpenPresentation }
+                            onChange={onOpenPresentation}
                         />
                         Open
                     </div>
-                    <Button className={styles.button} text={'Export as PDF'} onClick={() => { }}></Button>
+                    <Button className={styles.button} text={'Export as PDF'} onClick={onOpenPreviewPopup}></Button>
                     <Button className={styles.button} text={'Save'} onClick={onSavePresentation}></Button>
                     <Button className={styles.button} text={'Close'} onClick={() => { }}></Button>
                 </div>

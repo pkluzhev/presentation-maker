@@ -1,20 +1,15 @@
-import { CSSProperties } from "react";
 import { type ImageObject } from "../../../../store/types/PresentationTypes.ts";
 import styles from './ImageObject.module.css'
 
 type ImageProps = {
-    src: string
+    src: string,
 }
 
 function ImageObject(props: ImageProps) {
-    const imgStyles: CSSProperties = {
-        backgroundImage: `url(${props.src})`,
-    }
     return (
-        <div
-            style={imgStyles}
-            className={styles.imageObject}
-        />
+        <div className={styles.imageContainer}>
+            <img draggable={false} src={props.src} className={styles.imageObject} />
+        </div>
     )
 }
 

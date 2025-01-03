@@ -1,5 +1,4 @@
 import { Presentation, Slide, TextObject, ImageObject } from "./PresentationTypes";
-// import { EditorAction, UndoableAction } from "../redux/actions";
 
 type Editor = {
     presentation: Presentation,
@@ -8,6 +7,7 @@ type Editor = {
     interfaceState: {
         optionsBarState: OptionsBarState,
         editBarState: EditBarState,
+        isPreviewActive: boolean
     }
     // slideBuffer: Slide[],
     // elementBuffer: TextObject[] | ImageObject[]

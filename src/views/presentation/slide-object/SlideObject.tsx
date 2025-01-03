@@ -9,7 +9,7 @@ import { useAppActions } from "../../hooks/useAppActions.ts";
 type SlideObjectProps = {
     object: TextObject | ImageObject,
     scale: number,
-    isSelected?: boolean
+    isSelected: boolean
 }
 
 type ResizeAttribute = null | 'LT' | 'LM' | 'LB' | 'RT' | 'RM' | 'RB' | 'MB' | 'MT'
@@ -262,6 +262,7 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
                 fontSize={object.fontSize * scale}
                 fontWeight={object.fontWeight}
                 fontColor={object.fontColor}
+                isSelected={isSelected}
             />
             break
         case "image":
@@ -277,7 +278,9 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
             style={slideObjectStyles}
             className={styles.slideObject}
         >
-            {slideElement}
+            <div className={styles.elementContainer}>
+                {slideElement}
+            </div>
             {(isSelected && scale === 1) &&
                 <>
                     <div

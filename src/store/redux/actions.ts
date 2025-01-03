@@ -10,6 +10,8 @@ enum ActionType {
     // SET_EDITOR = 'setEditor',
 
     RENDER_OPTIONS_BAR = 'renderOptionsBar',
+    OPEN_PREVIEW_POPUP = 'openPreviewPopup',
+    CLOSE_PREVIEW_POPUP = 'closePreviewPopup',
 
     OPEN_JSON = 'openJSON',
     SAVE_JSON = 'saveJSON',
@@ -86,6 +88,14 @@ type ClearElementSelectionAction = {
 type RenderOptionsBarAction = {
     type: ActionType.RENDER_OPTIONS_BAR,
     payload: OptionsBarState
+}
+
+type OpenPreviewPopupAction = {
+    type: ActionType.OPEN_PREVIEW_POPUP,
+}
+
+type ClosePreviewPopupAction = {
+    type: ActionType.CLOSE_PREVIEW_POPUP,
 }
 
 type RenamePresentationAction = {
@@ -166,6 +176,7 @@ type EditorAction = UndoAction | RedoAction | EmptyAction | RenamePresentationAc
     | IncSlideObjectLayerAction | DecSlideObjectLayerAction | AddNewImageAction | ChangeImageAction | AddNewTextAction | ChangeTextValueAction
     | AddToSlideSelectionAction | SelectOneSlideAction | AddToElementSelectionAction | SelectOneElementAction
     | ClearElementSelectionAction | RenderOptionsBarAction | saveJSONAction | openJSONAction | ChangeSlideObjectPositionAndSizeAction
+    | OpenPreviewPopupAction | ClosePreviewPopupAction
 
 export {
     ActionType,
@@ -188,6 +199,8 @@ export {
     type IncSlideObjectLayerAction,
     type DecSlideObjectLayerAction,
     type RenderOptionsBarAction,
+    type OpenPreviewPopupAction,
+    type ClosePreviewPopupAction,
     type saveJSONAction,
     type openJSONAction,
     type ClearElementSelectionAction,

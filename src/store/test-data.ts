@@ -68,7 +68,7 @@ const elem4: ImageObject = {
 }
 const elem5: TextObject = {
     type: "text",
-    value: "New text!!",
+    value: "New text!!\nNewText",
     fontFamily: "Montserrat",
     fontSize: 30,
     fontWeight: 400,
@@ -156,7 +156,7 @@ const slide5: Slide = {
     objects: []
 }
 const presentation: Presentation = {
-    title: "project1",
+    title: "New project",
     slides: [slide1, slide2, slide3, slide4, slide5]
 }
 
@@ -167,6 +167,7 @@ const defaultEditor: Editor = {
     interfaceState: {
         optionsBarState: "file",
         editBarState: "no-edit",
+        isPreviewActive: false
     }
 }
 

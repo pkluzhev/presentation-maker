@@ -1,7 +1,7 @@
 import { CSSProperties, useState } from "react";
 import { Slide } from "../../presentation/slide/Slide.tsx";
 import styles from './LeftPanel.module.css'
- import { useTitleSelector, useSlideSelectionSelector, useSlidesSelector } from "../../hooks/useAppSelector.ts";
+import { useTitleSelector, useSlideSelectionSelector, useSlidesSelector } from "../../hooks/useAppSelector.ts";
 import { useAppActions } from "../../hooks/useAppActions.ts";
 
 const SLIDE_PREVIEW_SCALE = 0.2
@@ -15,9 +15,16 @@ function LeftPanel() {
     const { selectOneSlide } = useAppActions()
     const { renamePresentation } = useAppActions()
     const { setSlidesOrder } = useAppActions()
-    const onRenamePresentation: React.ChangeEventHandler = (event) => {
-        renamePresentation((event.target as HTMLInputElement).value)
+
+    const [currentTitle, setCurrentTitle] = useState<string>(title)
+    const onChangeTitle: React.ChangeEventHandler = (event) => {
+        setCurrentTitle((event.target as HTMLInputElement).value)
     }
+    const onRenamePresentation: React.ChangeEventHandler = (event) => {
+        (event.target as HTMLInputElement).value = ''
+        renamePresentation(currentTitle)
+    }
+
     const onSlideClick = (slideId: string, event: React.MouseEvent) => {
         if (event.ctrlKey) {
             addToSlideSelection(slideId)
@@ -44,7 +51,13 @@ function LeftPanel() {
     return (
         <div className={styles.leftPanel}>
             <p className={styles.inputTitleLabel}>Change project name</p>
-            <input type='text' className={styles.inputPresentationTitle} value={title} onChange={onRenamePresentation} />
+            <input
+                type='text'
+                className={styles.inputPresentationTitle}
+                placeholder={title}
+                onChange={onChangeTitle}
+                onBlur={onRenamePresentation}
+            />
             <div className={styles.slideList}>
                 {slides.map((slide, i) => {
                     const inlineStyles: CSSProperties = {}

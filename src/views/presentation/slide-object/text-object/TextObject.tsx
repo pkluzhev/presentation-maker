@@ -9,28 +9,46 @@ type TextProps = {
     fontFamily: string,
     fontSize: number,
     fontWeight: number,
-    fontColor: string
+    fontColor: string,
+    isSelected: boolean
 }
 
-function TextObject({ value, fontFamily, fontSize, fontWeight, fontColor }: TextProps) {
+function TextObject({ value, fontFamily, fontSize, fontWeight, fontColor, isSelected }: TextProps) {
     const { changeTextValue } = useAppActions()
 
+    const textareaStyles: CSSProperties = {
+        fontFamily: `${fontFamily}`,
+        fontSize: `${fontSize}px`,
+        fontWeight: `${fontWeight}`,
+        color: `${fontColor}`,
+    }
     const textStyles: CSSProperties = {
         fontFamily: `${fontFamily}`,
         fontSize: `${fontSize}px`,
         fontWeight: `${fontWeight}`,
         color: `${fontColor}`,
     }
-    return (
-        <textarea
-            style={textStyles}
-            className={styles.textObjectInput}
-            onChange={(event) => {
-                changeTextValue((event.target as HTMLTextAreaElement).value)
-            }}
-            value={value}
-        />
-    )
+    return <>
+        {isSelected &&
+            <textarea
+                style={textareaStyles}
+                className={styles.textObjectEditable}
+                onChange={(event) => {
+                    changeTextValue((event.target as HTMLTextAreaElement).value)
+                }}
+                value={value}
+            />
+        }
+        {!isSelected &&
+            <div
+                style={textStyles}
+                className={styles.textObjectView}
+            >
+                {value}
+            </div>
+        }
+    </>
+
 }
 
 export {
