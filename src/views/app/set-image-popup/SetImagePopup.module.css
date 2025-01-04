@@ -44,6 +44,7 @@
 
 .inputImage:hover {
   background-color: #e4e4e4;
+  font-weight: 700;
 }
 
 .hiddenInput {
@@ -57,5 +58,70 @@
   opacity: 0;
 }
 
+.inputContainer{
+  position: relative;
+}
 
+.inputField {
+  all: initial;
+  width: 400px;
+  margin-right: 10px;
+  font: 400 16px/22px Montserrat, sans-serif;
+  padding: 8px 16px;
+  border: 0.5px solid;
+}
 
+.buttonSearch {
+  all: initial;
+  font: 400 16px/22px Montserrat, sans-serif;
+  cursor: pointer;
+  padding: 8px 16px;
+  margin-top: 10px;
+}
+
+.buttonSearch:hover {
+  background-color: #e4e4e4;
+  font-weight: 700;
+}
+
+.logo {
+  position: absolute;
+  display: block;
+  top: -35px;
+  left: 42%;
+  width: 140px;
+  height: 40px;
+  background-image: url('../../../store/images/unsplash_logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: default;
+}
+
+.resultContainer {
+  margin-top: 15px;
+  height: 68vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  overflow-y:auto;
+}
+
+.preloader {
+  position: absolute;
+  display: inline-block;
+  top: 9px;
+  left: 20%;
+  margin: 5px 5px 0 0;
+  width: 30px;
+  height: 30px;
+  background: url('/src/store/images/preloader.gif');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.pageButtonContainer {
+  position: relative;
+  text-align: center;
+}

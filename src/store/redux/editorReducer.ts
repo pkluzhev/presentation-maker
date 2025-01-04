@@ -74,6 +74,7 @@ function editorReducer(editor: Editor = defaultEditor, action: EditorAction): Ed
         case ActionType.DELETE_ELEMENTS:
             return deleteElements(editor)
         case ActionType.CHANGE_SLIDE_OBJECT_POSITION_AND_SIZE:
+            console.log(action.payload.size)
             return changeSlideObjectPositionAndSize(editor, action)
         case ActionType.ADD_NEW_IMAGE:
             return addNewImage(editor)

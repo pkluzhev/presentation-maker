@@ -19,13 +19,15 @@ let slideStart: Position = {
 
 function Slide({ slide, scale}: SlideProps) {
     const elementSelection = useElementSelectionSelector()
-    const isElementSelected = (array: string[] | undefined, objectId: string): boolean | undefined => {
+    const isElementSelected = (array: string[] | undefined, objectId: string): boolean => {
         let selected: boolean = false
         array?.forEach((element) => {
             if (element === objectId) {
                 selected = true
             }
         })
+        if (selected === undefined)
+            selected = false
         return selected
     }
     const slideRef = useRef<HTMLDivElement>(null)

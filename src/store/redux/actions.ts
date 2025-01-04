@@ -19,6 +19,8 @@ enum ActionType {
     OPEN_JSON = 'openJSON',
     SAVE_JSON = 'saveJSON',
 
+    // IMPORT_SLIDE_BACKGROUND_IMAGE_ASYNC = 'importSlideBackgroundImageAsync',
+
     RENAME_PRESENTATION = 'renamePresentation',
 
     ADD_NEW_SLIDE = 'addNewSlide',
@@ -185,6 +187,11 @@ type openJSONAction = {
     payload: Presentation
 }
 
+// type ImportSlideBackgroundImageAsyncAction = {
+//     type: ActionType.IMPORT_SLIDE_BACKGROUND_IMAGE_ASYNC,
+//     payload: string
+// }
+
 type EditorAction = UndoAction | RedoAction | EmptyAction | RenamePresentationAction
     | AddNewSlideAction | DeleteSlidesAction | SetSlidesOrderAction | SetSlideBackgroundColorAction
     | SetSlideBackgroundImageAction | DeleteElementsAction
@@ -223,5 +230,7 @@ export {
     type saveJSONAction,
     type openJSONAction,
     type ClearElementSelectionAction,
-    type ChangeSlideObjectPositionAndSizeAction
+    type ChangeSlideObjectPositionAndSizeAction,
+
+    // type ImportSlideBackgroundImageAsyncAction
 }

@@ -155,9 +155,14 @@ const slide5: Slide = {
     },
     objects: []
 }
+// const presentation: Presentation = {
+//     title: "New project",
+//     slides: [slide1, slide2, slide3, slide4, slide5]
+// }
+
 const presentation: Presentation = {
     title: "New project",
-    slides: [slide1, slide2, slide3, slide4, slide5]
+    slides: [slide1]
 }
 
 const defaultEditor: Editor = {
@@ -169,7 +174,7 @@ const defaultEditor: Editor = {
         editBarState: "no-edit",
         isPreviewActive: false,
         isChangeImagePopupActive: false,
-        isSetSlideBackgroundImagePopupActive: false,
+        isSetSlideBackgroundImagePopupActive: true,
     }
 }
 

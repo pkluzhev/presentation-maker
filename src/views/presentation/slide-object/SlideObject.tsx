@@ -20,7 +20,6 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
 
     const { changeSlideObjectPositionAndSize } = useAppActions()
 
-
     const slideObjectStyles: CSSProperties = {
         left: `${object.position.x * scale}px`,
         top: `${object.position.y * scale}px`,
@@ -38,6 +37,8 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
         x: 0,
         y: 0
     }
+
+    console.log(object.size.width, ' ', object.size.height)
 
     const dragElementRef = useRef<HTMLDivElement>(null)
     const startPointerPosInsideElem = useRef<Position>()
@@ -62,6 +63,9 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
             x: dragElementRect.left - event.pageX,
             y: dragElementRect.top - event.pageY
         }
+
+        console.log(object.size.width, ' ', object.size.height)
+
         setDragging(true)
     }, [])
 
@@ -229,6 +233,7 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
         setResizingType(null)
         setDragging(false)
         changeSlideObjectPositionAndSize(elementFinalData)
+        // console.log(elementFinalData.size.width, ' ', elementFinalData.size.height)
     }, [])
 
     useEffect(() => {

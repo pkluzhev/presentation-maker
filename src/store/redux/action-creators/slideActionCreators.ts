@@ -38,5 +38,5 @@ export {
     deleteSlides,
     setSlidesOrder,
     setSlideBackgroundColor,
-    setSlideBackgroundImage
+    setSlideBackgroundImage,
 }
