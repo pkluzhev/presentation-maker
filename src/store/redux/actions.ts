@@ -1,5 +1,5 @@
 import { OptionsBarState, type Editor } from "../types/EditorTypes"
-import { Presentation, SlideObjectProperties } from "../types/PresentationTypes"
+import { Position, Presentation, SlideObjectProperties } from "../types/PresentationTypes"
 
 enum ActionType {
     DO_NOTHING = '',
@@ -27,6 +27,7 @@ enum ActionType {
     DUPLICATE_SLIDES = 'duplicateSlides',
 
     DELETE_ELEMENTS = 'deleteElements',
+    CHANGE_SLIDE_OBJECT_POSITION = 'changeSlideObjectPosition',
     CHANGE_SLIDE_OBJECT_POSITION_AND_SIZE = 'changeSlideObjectPositionAndSize',
     INC_SLIDE_OBJECT_LAYER = 'incSlideObjectLayer',
     DEC_SLIDE_OBJECT_LAYER = 'decSlideObjectLayer',
@@ -143,6 +144,11 @@ type DeleteElementsAction = {
     type: ActionType.DELETE_ELEMENTS,
 }
 
+type ChangeSlideObjectPositionAction = {
+    type: ActionType.CHANGE_SLIDE_OBJECT_POSITION,
+    payload: Position
+}
+
 type ChangeSlideObjectPositionAndSizeAction = {
     type: ActionType.CHANGE_SLIDE_OBJECT_POSITION_AND_SIZE,
     payload: SlideObjectProperties
@@ -190,7 +196,7 @@ type EditorAction = UndoAction | RedoAction | EmptyAction | RenamePresentationAc
     | AddToSlideSelectionAction | SelectOneSlideAction | AddToElementSelectionAction | SelectOneElementAction
     | ClearElementSelectionAction | RenderOptionsBarAction | saveJSONAction | openJSONAction | ChangeSlideObjectPositionAndSizeAction
     | OpenPreviewPopupAction | ClosePreviewPopupAction | OpenChangeImagePopupAction
-    | OpenSetSlideBackgroundImagePopupAction | CloseSetImagePopupAction | DuplicateSlidesAction
+    | OpenSetSlideBackgroundImagePopupAction | CloseSetImagePopupAction | DuplicateSlidesAction | ChangeSlideObjectPositionAction
 
 export {
     ActionType,
@@ -222,5 +228,6 @@ export {
     type openJSONAction,
     type ClearElementSelectionAction,
     type ChangeSlideObjectPositionAndSizeAction,
+    type ChangeSlideObjectPositionAction,
     type DuplicateSlidesAction,
 }

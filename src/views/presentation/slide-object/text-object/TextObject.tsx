@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import { type TextObject } from "../../../../store/types/PresentationTypes.ts";
 import styles from './TextObject.module.css'
 import { useAppActions } from "../../../hooks/useAppActions.ts";
@@ -28,6 +28,13 @@ function TextObject({ value, fontFamily, fontSize, fontWeight, fontColor, isSele
         fontWeight: `${fontWeight}`,
         color: `${fontColor}`,
     }
+    // const [currentValue, setCurrentValue] = useState<string>(value)
+
+    // const onChangeTextValue = () => {
+    //     changeTextValue(currentValue)
+    // }
+
+    // useEffect(() => {}, [onChangeTextValue])
     return <>
         {isSelected &&
             <textarea
@@ -37,6 +44,13 @@ function TextObject({ value, fontFamily, fontSize, fontWeight, fontColor, isSele
                     changeTextValue((event.target as HTMLTextAreaElement).value)
                 }}
                 value={value}
+                // style={textareaStyles}
+                // className={styles.textObjectEditable}
+                // onChange={(event) => {
+                //     setCurrentValue((event.target as HTMLTextAreaElement).value)
+                // }}
+                // onBlur={onChangeTextValue}
+                // defaultValue={value}
             />
         }
         {!isSelected &&

@@ -22,6 +22,7 @@ import { duplicateSlides } from "../callbacks/duplicateSlides";
 
 import { deleteElements } from "../callbacks/deleteElements";
 import { incSlideObjectLayer } from "../callbacks/incSlideObjectLayer";
+import { changeSlideObjectPosition } from "../callbacks/changeSlideObjectPosition";
 import { changeSlideObjectPositionAndSize } from "../callbacks/changeSlideObjectPositionAndSize";
 import { addNewImage } from "../callbacks/addNewImage";
 import { changeImage } from "../callbacks/changeImage";
@@ -76,8 +77,9 @@ function editorReducer(editor: Editor = defaultEditor, action: EditorAction): Ed
             return duplicateSlides(editor)
         case ActionType.DELETE_ELEMENTS:
             return deleteElements(editor)
+        case ActionType.CHANGE_SLIDE_OBJECT_POSITION:
+            return changeSlideObjectPosition(editor, action)
         case ActionType.CHANGE_SLIDE_OBJECT_POSITION_AND_SIZE:
-            console.log(action.payload.size)
             return changeSlideObjectPositionAndSize(editor, action)
         case ActionType.ADD_NEW_IMAGE:
             return addNewImage(editor)

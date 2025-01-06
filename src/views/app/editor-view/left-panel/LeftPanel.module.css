@@ -8,7 +8,7 @@
   justify-content: flex-start;
   max-width: 290px;
   height: 75vh;
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 
 .inputTitleLabel {

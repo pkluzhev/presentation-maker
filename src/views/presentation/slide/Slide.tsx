@@ -12,11 +12,6 @@ type SlideProps = {
     scale: number,
 }
 
-let slideStart: Position = {
-    x: 0,
-    y: 0,
-}
-
 function Slide({ slide, scale}: SlideProps) {
     const elementSelection = useElementSelectionSelector()
     const isElementSelected = (array: string[] | undefined, objectId: string): boolean => {
@@ -30,14 +25,18 @@ function Slide({ slide, scale}: SlideProps) {
             selected = false
         return selected
     }
+
     const slideRef = useRef<HTMLDivElement>(null)
+    const slideStartRef = useRef<Position>({x: 0, y: 0})
+
     useEffect(() => {
         let rect = slideRef.current?.getBoundingClientRect()
         if (rect) {
-            slideStart.x = rect.x
-            slideStart.y = rect.y
+            slideStartRef.current.x = rect.x
+            slideStartRef.current.y = rect.y
         }
     }, [])
+
     let slideStyles: CSSProperties = {}
     switch (slide.background.type) {
         case "solid":
@@ -70,6 +69,7 @@ function Slide({ slide, scale}: SlideProps) {
                         object={object}
                         scale={scale}
                         isSelected={isElementSelected(elementSelection, object.id)}
+                        slideStart={slideStartRef}
                     />
                 )
             }
@@ -82,5 +82,4 @@ export {
     Slide,
     SLIDE_WIDTH,
     SLIDE_HEIGHT,
-    slideStart
 }

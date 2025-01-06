@@ -6,6 +6,7 @@ import * as ElementActionCreators from './elementActionCreators'
 import * as ImageActionCreators from './imageActionCreators'
 import * as TextActionCreators from './textActionCreators'
 import * as OptionsBarActionCreators from './optionsBarActionCreators'
+//добавить санку без экшн тайпа
 
 export default {
     ...EditorActionCreators,
@@ -16,4 +17,5 @@ export default {
     ...ImageActionCreators,
     ...TextActionCreators,
     ...OptionsBarActionCreators,
+    //добавить санку без экшн тайпа
 }

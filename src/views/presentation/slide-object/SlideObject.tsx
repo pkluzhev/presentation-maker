@@ -1,23 +1,25 @@
-import { CSSProperties, PointerEventHandler, useCallback, useEffect, useRef, useState } from "react";
+import { CSSProperties, PointerEventHandler, RefObject, useCallback, useEffect, useRef, useState } from "react";
 import { type Position, type Size, type SlideObjectProperties } from "../../../store/types/PresentationTypes.ts";
 import { TextObject } from "../slide-object/text-object/TextObject.tsx";
 import { ImageObject } from "../slide-object/image-object/ImageObject.tsx";
 import styles from './SlideObject.module.css'
-import { slideStart, SLIDE_WIDTH, SLIDE_HEIGHT } from "../../presentation/slide/Slide.tsx";
+import { SLIDE_WIDTH, SLIDE_HEIGHT } from "../../presentation/slide/Slide.tsx";
 import { useAppActions } from "../../hooks/useAppActions.ts";
 
 type SlideObjectProps = {
     object: TextObject | ImageObject,
     scale: number,
-    isSelected: boolean
+    isSelected: boolean,
+    slideStart: RefObject<Position>
 }
 
 type ResizeAttribute = null | 'LT' | 'LM' | 'LB' | 'RT' | 'RM' | 'RB' | 'MB' | 'MT'
 
-function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
+function SlideObject({ object, scale, isSelected, slideStart }: SlideObjectProps) {
     const { selectOneElement } = useAppActions()
     const { addToElementSelection } = useAppActions()
 
+    const { changeSlideObjectPosition } = useAppActions()
     const { changeSlideObjectPositionAndSize } = useAppActions()
 
     const slideObjectStyles: CSSProperties = {
@@ -37,8 +39,6 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
         x: 0,
         y: 0
     }
-
-    console.log(object.size.width, ' ', object.size.height)
 
     const dragElementRef = useRef<HTMLDivElement>(null)
     const startPointerPosInsideElem = useRef<Position>()
@@ -63,16 +63,13 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
             x: dragElementRect.left - event.pageX,
             y: dragElementRect.top - event.pageY
         }
-
-        console.log(object.size.width, ' ', object.size.height)
-
         setDragging(true)
     }, [])
 
     const handleDragMove = useCallback((event: PointerEvent) => {
-        if (!dragElementRef.current || !startPointerPosInsideElem.current) return
-        elementFinalData.position.x = event.pageX + startPointerPosInsideElem.current.x - slideStart.x
-        elementFinalData.position.y = event.pageY + startPointerPosInsideElem.current.y - slideStart.y
+        if (!dragElementRef.current || !startPointerPosInsideElem.current || !slideStart.current) return
+        elementFinalData.position.x = event.pageX + startPointerPosInsideElem.current.x - slideStart.current.x
+        elementFinalData.position.y = event.pageY + startPointerPosInsideElem.current.y - slideStart.current.y
         dragElementRef.current.style.left = elementFinalData.position.x + 'px'
         dragElementRef.current.style.top = elementFinalData.position.y + 'px'
         if (elementFinalData.position.x <= 0) {
@@ -94,7 +91,7 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
     }, [])
     const handleDragEnd = useCallback(() => {
         setDragging(false)
-        changeSlideObjectPositionAndSize(elementFinalData)
+        changeSlideObjectPosition(elementFinalData.position)
     }, [])
 
     const handleResizeStart = useCallback((event: any, type: ResizeAttribute) => {
@@ -117,22 +114,22 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
     }, [])
 
     const handleResizeMove = useCallback((event: PointerEvent) => {
-        if (!dragElementRef.current || !startPos.current || !startSize.current || !startPosition.current) return
+        if (!dragElementRef.current || !startPos.current || !startSize.current || !startPosition.current || !slideStart.current) return
         let endPos: Position = {
             x: event.pageX,
             y: event.pageY
         }
-        if (endPos.x < slideStart.x) {
-            endPos.x = slideStart.x
+        if (endPos.x < slideStart.current.x) {
+            endPos.x = slideStart.current.x
         }
-        if (endPos.x > slideStart.x + SLIDE_WIDTH) {
-            endPos.x = slideStart.x + SLIDE_WIDTH
+        if (endPos.x > slideStart.current.x + SLIDE_WIDTH) {
+            endPos.x = slideStart.current.x + SLIDE_WIDTH
         }
-        if (endPos.y < slideStart.y) {
-            endPos.y = slideStart.y
+        if (endPos.y < slideStart.current.y) {
+            endPos.y = slideStart.current.y
         }
-        if (endPos.y > slideStart.y + SLIDE_HEIGHT) {
-            endPos.y = slideStart.y + SLIDE_HEIGHT
+        if (endPos.y > slideStart.current.y + SLIDE_HEIGHT) {
+            endPos.y = slideStart.current.y + SLIDE_HEIGHT
         }
         delta.x = endPos.x - startPos.current.x
         delta.y = endPos.y - startPos.current.y
@@ -162,18 +159,18 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
                 }
                 if (elementFinalData.size.height < 24) {
                     elementFinalData.size.height = 24
-                    elementFinalData.position.y = startPosition.current?.y - slideStart.y + startSize.current.height - elementFinalData.size.height
+                    elementFinalData.position.y = startPosition.current?.y - slideStart.current.y + startSize.current.height - elementFinalData.size.height
                 } else {
-                    elementFinalData.position.y = startPosition.current?.y - slideStart.y + delta.y
+                    elementFinalData.position.y = startPosition.current?.y - slideStart.current.y + delta.y
                 }
                 break
             case 'MT':
                 elementFinalData.size.height = startSize.current.height - delta.y
                 if (elementFinalData.size.height < 24) {
                     elementFinalData.size.height = 24
-                    elementFinalData.position.y = startPosition.current?.y - slideStart.y + startSize.current.height - elementFinalData.size.height
+                    elementFinalData.position.y = startPosition.current?.y - slideStart.current.y + startSize.current.height - elementFinalData.size.height
                 } else {
-                    elementFinalData.position.y = startPosition.current?.y - slideStart.y + delta.y
+                    elementFinalData.position.y = startPosition.current?.y - slideStart.current.y + delta.y
                 }
                 break
             case 'LT':
@@ -181,24 +178,24 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
                 elementFinalData.size.height = startSize.current.height - delta.y
                 if (elementFinalData.size.width < 24) {
                     elementFinalData.size.width = 24
-                    elementFinalData.position.x = startPosition.current?.x - slideStart.x + startSize.current.width - elementFinalData.size.width
+                    elementFinalData.position.x = startPosition.current?.x - slideStart.current.x + startSize.current.width - elementFinalData.size.width
                 } else {
-                    elementFinalData.position.x = startPosition.current?.x - slideStart.x + delta.x
+                    elementFinalData.position.x = startPosition.current?.x - slideStart.current.x + delta.x
                 }
                 if (elementFinalData.size.height < 24) {
                     elementFinalData.size.height = 24
-                    elementFinalData.position.y = startPosition.current?.y - slideStart.y + startSize.current.height - elementFinalData.size.height
+                    elementFinalData.position.y = startPosition.current?.y - slideStart.current.y + startSize.current.height - elementFinalData.size.height
                 } else {
-                    elementFinalData.position.y = startPosition.current?.y - slideStart.y + delta.y
+                    elementFinalData.position.y = startPosition.current?.y - slideStart.current.y + delta.y
                 }
                 break
             case 'LM':
                 elementFinalData.size.width = startSize.current.width - delta.x
                 if (elementFinalData.size.width < 24) {
                     elementFinalData.size.width = 24
-                    elementFinalData.position.x = startPosition.current?.x - slideStart.x + startSize.current.width - elementFinalData.size.width
+                    elementFinalData.position.x = startPosition.current?.x - slideStart.current.x + startSize.current.width - elementFinalData.size.width
                 } else {
-                    elementFinalData.position.x = startPosition.current?.x - slideStart.x + delta.x
+                    elementFinalData.position.x = startPosition.current?.x - slideStart.current.x + delta.x
                 }
                 break
             case 'LB':
@@ -206,9 +203,9 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
                 elementFinalData.size.height = startSize.current.height + delta.y
                 if (elementFinalData.size.width < 24) {
                     elementFinalData.size.width = 24
-                    elementFinalData.position.x = startPosition.current?.x - slideStart.x + startSize.current.width - elementFinalData.size.width
+                    elementFinalData.position.x = startPosition.current?.x - slideStart.current.x + startSize.current.width - elementFinalData.size.width
                 } else {
-                    elementFinalData.position.x = startPosition.current?.x - slideStart.x + delta.x
+                    elementFinalData.position.x = startPosition.current?.x - slideStart.current.x + delta.x
                 }
                 if (elementFinalData.size.height < 24) {
                     elementFinalData.size.height = 24
@@ -228,12 +225,12 @@ function SlideObject({ object, scale, isSelected }: SlideObjectProps) {
         dragElementRef.current.style.width = elementFinalData.size.width + 'px'
         dragElementRef.current.style.height = elementFinalData.size.height + 'px'
     }, [])
+    
     const handleResizeEnd = useCallback(() => {
         resizeAttribute.current = null
         setResizingType(null)
         setDragging(false)
         changeSlideObjectPositionAndSize(elementFinalData)
-        // console.log(elementFinalData.size.width, ' ', elementFinalData.size.height)
     }, [])
 
     useEffect(() => {
