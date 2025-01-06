@@ -1,9 +1,9 @@
 // import * as React from "react";
-import { useAppActions } from "../../../hooks/useAppActions.ts";
+import { useAppActions } from "../../../../hooks/useAppActions.ts";
 import styles from './MenuBar.module.css'
-import { Button } from '../../../../components/Button'
-import { usePastSelector, useFutureSelector, useOptionsBarStateSelector } from "../../../hooks/useAppSelector.ts";
-import { Editor } from "../../../../store/types/EditorTypes.ts";
+import { Button } from '../../../../../components/Button.tsx'
+import { usePastSelector, useFutureSelector, useOptionsBarStateSelector } from "../../../../hooks/useAppSelector.ts";
+import { Editor } from "../../../../../store/types/EditorTypes.ts";
 
 function MenuBar() {
     const { renderOptionsBar } = useAppActions()

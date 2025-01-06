@@ -12,7 +12,7 @@ function deleteSlides() {
     }
 }
 
-function setSlidesOrder(draggableSlides: { dragSlideId: string, dropSlideId: string }) {
+function setSlidesOrder(draggableSlides: { dragSlideId: string[], dropSlideId: string }) {
     return {
         type: ActionType.SET_SLIDES_ORDER,
         payload: draggableSlides
@@ -33,10 +33,17 @@ function setSlideBackgroundImage(backgroundImage: string) {
     }
 }
 
+function duplicateSlides() {
+    return {
+        type: ActionType.DUPLICATE_SLIDES,
+    }
+}
+
 export {
     addNewSlide,
     deleteSlides,
     setSlidesOrder,
     setSlideBackgroundColor,
     setSlideBackgroundImage,
+    duplicateSlides
 }

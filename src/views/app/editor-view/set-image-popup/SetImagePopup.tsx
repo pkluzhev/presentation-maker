@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styles from './SetImagePopup.module.css'
-import { useIsChangeImagePopupActiveSelector, useIsSetSlideBackgroundImagePopupActiveSelector } from "../../hooks/useAppSelector.ts";
-import { useAppActions } from "../../hooks/useAppActions.ts";
-import { setBase64Image } from "../../../utils/setBase64Image.ts";
-import { Button } from '../../../components/Button.tsx'
+import { useIsChangeImagePopupActiveSelector, useIsSetSlideBackgroundImagePopupActiveSelector } from "../../../hooks/useAppSelector.ts";
+import { useAppActions } from "../../../hooks/useAppActions.ts";
+import { setBase64Image } from "../../../../utils/setBase64Image.ts";
+import { Button } from '../../../../components/Button.tsx'
 import { ResultImage } from './ResultImage.tsx'
-import { useAxios } from "../../hooks/useAxios.ts";
+import { useAxios } from "../../../hooks/useAxios.ts";
 
 const UNSPLASH_CLIENT_ID: string = 'HBbHA_QvbYr6CQAb2_e0-wW0zdFCnWlJIlRtgu5hDWk'
 

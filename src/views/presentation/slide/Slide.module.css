@@ -1,3 +1,4 @@
 .slide {
     position: relative;
+    overflow: hidden;
 }

@@ -2,10 +2,10 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import React from "react";
 import styles from './PreviewPopup.module.css'
-import { useSlidesSelector, useTitleSelector } from "../../hooks/useAppSelector.ts";
-import { useAppActions } from "../../hooks/useAppActions.ts";
-import { Slide } from "../../presentation/slide/Slide.tsx";
-import { Button } from '../../../components/Button'
+import { useSlidesSelector, useTitleSelector } from "../../../hooks/useAppSelector.ts";
+import { useAppActions } from "../../../hooks/useAppActions.ts";
+import { Slide } from "../../../presentation/slide/Slide.tsx";
+import { Button } from '../../../../components/Button.tsx'
 import { useEffect, useState } from 'react';
 
 function PreviewPopup() {
@@ -85,7 +85,7 @@ function PreviewPopup() {
                         <div className={styles.slideContainer}>
                             <div ref={refs[index]}>
                                 <Slide
-                                    key={slide.id}
+                                    key={crypto.randomUUID()}
                                     slide={slide}
                                     scale={1}
                                 />

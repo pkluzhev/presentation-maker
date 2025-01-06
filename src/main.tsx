@@ -5,7 +5,6 @@ import './index.css'
 import { Provider } from 'react-redux';
 import { store } from './store/redux/store.ts';
 
-
 const root = createRoot(document.getElementById('root')!)
 function render() {
     root.render(

@@ -17,6 +17,9 @@ import { deleteSlides } from "../callbacks/deleteSlides";
 import { setSlidesOrder } from "../callbacks/setSlidesOrder";
 import { setSlideBackgroundColor } from "../callbacks/setSlideBackgroundColor";
 import { setSlideBackgroundImage } from "../callbacks/setSlideBackgroundImage";
+
+import { duplicateSlides } from "../callbacks/duplicateSlides";
+
 import { deleteElements } from "../callbacks/deleteElements";
 import { incSlideObjectLayer } from "../callbacks/incSlideObjectLayer";
 import { changeSlideObjectPositionAndSize } from "../callbacks/changeSlideObjectPositionAndSize";
@@ -45,7 +48,6 @@ function editorReducer(editor: Editor = defaultEditor, action: EditorAction): Ed
             return selectOneElement(editor, action)
         case ActionType.CLEAR_ELEMENT_SELECTION:
             return clearElementSelection(editor)
-
         case ActionType.RENDER_OPTIONS_BAR:
             return renderOptionsBar(editor, action)
         case ActionType.OPEN_PREVIEW_POPUP:
@@ -58,7 +60,6 @@ function editorReducer(editor: Editor = defaultEditor, action: EditorAction): Ed
             return openSetSlideBackgroundImagePopup(editor)
         case ActionType.CLOSE_SET_IMAGE_POPUP:
             return closeSetImagePopup(editor)
-
         case ActionType.RENAME_PRESENTATION:
             return renamePresentation(editor, action)
         case ActionType.ADD_NEW_SLIDE:
@@ -71,6 +72,8 @@ function editorReducer(editor: Editor = defaultEditor, action: EditorAction): Ed
             return setSlideBackgroundColor(editor, action)
         case ActionType.SET_SLIDE_BACKGROUND_IMAGE:
             return setSlideBackgroundImage(editor, action)
+        case ActionType.DUPLICATE_SLIDES:
+            return duplicateSlides(editor)
         case ActionType.DELETE_ELEMENTS:
             return deleteElements(editor)
         case ActionType.CHANGE_SLIDE_OBJECT_POSITION_AND_SIZE:

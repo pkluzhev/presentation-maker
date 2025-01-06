@@ -1,14 +1,18 @@
-import { Button } from '../../../../components/Button'
+import { Button } from '../../../../../components/Button.tsx'
 import styles from './OptionsBar.module.css'
-import { useOptionsBarStateSelector } from "../../../hooks/useAppSelector";
-import { useAppActions } from "../../../hooks/useAppActions.ts";
+import { useOptionsBarStateSelector, usePresentationSelector } from "../../../../hooks/useAppSelector.ts";
+import { useAppActions } from "../../../../hooks/useAppActions.ts";
 import React from "react";
+import { NavLink } from "react-router";
+import { saveToLocalStorage } from "../../../../../store/callbacks/saveToLocalStorage.ts";
 
 function OptionsBar() {
     const optionsBarState = useOptionsBarStateSelector()
+    const presentation = usePresentationSelector()
 
     const { addNewSlide } = useAppActions()
     const { deleteSlides } = useAppActions()
+    const { duplicateSlides } = useAppActions()
     const { addNewText } = useAppActions()
     const { addNewImage } = useAppActions()
     const { deleteElements } = useAppActions()
@@ -38,7 +42,13 @@ function OptionsBar() {
     function onOpenPreviewPopup() {
         openPreviewPopup()
     }
-    
+    function onDuplicateSlides() {
+        duplicateSlides()
+    }
+    function onSavePresentationToLocalStorage() {
+        saveToLocalStorage(presentation)
+    }
+
     function onOpenPresentation(event: React.ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0]
         if (!file) {
@@ -65,7 +75,7 @@ function OptionsBar() {
                 <div className={styles.optionsBar}>
                     <Button className={styles.button} text={'Add new'} onClick={onAddNewSlide}></Button>
                     <Button className={styles.button} text={'Delete'} onClick={onDeleteSlides}></Button>
-                    <Button className={styles.button} text={'Dublicate'} onClick={() => { }}></Button>
+                    <Button className={styles.button} text={'Dublicate'} onClick={onDuplicateSlides}></Button>
                 </div>
             )
         case "element":
@@ -74,13 +84,14 @@ function OptionsBar() {
                     <Button className={styles.button} text={'Add new text'} onClick={onAddNewText}></Button>
                     <Button className={styles.button} text={'Add new image'} onClick={onAddNewImage}></Button>
                     <Button className={styles.button} text={'Delete'} onClick={onDeleteElements}></Button>
-                    <Button className={styles.button} text={'Dublicate'} onClick={() => { }}></Button>
                 </div>
             )
         case "viewmode":
             return (
                 <div className={styles.optionsBar}>
-                    <Button className={styles.button} text={'Start'} onClick={() => { }}></Button>
+                    <NavLink to="/player">
+                        <Button className={styles.button} text={'Start'} onClick={() => {}}></Button>
+                    </NavLink>
                 </div>
             )
         default:
@@ -96,7 +107,8 @@ function OptionsBar() {
                         Open
                     </div>
                     <Button className={styles.button} text={'Export as PDF'} onClick={onOpenPreviewPopup}></Button>
-                    <Button className={styles.button} text={'Save'} onClick={onSavePresentation}></Button>
+                    <Button className={styles.button} text={'Save'} onClick={onSavePresentationToLocalStorage}></Button>
+                    <Button className={styles.button} text={'Save to disk'} onClick={onSavePresentation}></Button>
                     <Button className={styles.button} text={'Close'} onClick={() => { }}></Button>
                 </div>
             )

@@ -1,6 +1,6 @@
-import { Slide } from "../../presentation/slide/Slide.tsx";
+import { Slide } from "../../../presentation/slide/Slide.tsx";
 import styles from './WorkSpace.module.css'
-import { useSlidesSelector, useSlideSelectionSelector } from "../../hooks/useAppSelector.ts";
+import { useSlidesSelector, useSlideSelectionSelector } from "../../../hooks/useAppSelector.ts";
 
 const SLIDE_WORKSPACE_SCALE = 1
 

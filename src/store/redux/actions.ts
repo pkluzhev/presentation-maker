@@ -7,8 +7,6 @@ enum ActionType {
     UNDO = 'unDo',
     REDO = 'reDo',
 
-    // SET_EDITOR = 'setEditor',
-
     RENDER_OPTIONS_BAR = 'renderOptionsBar',
     OPEN_PREVIEW_POPUP = 'openPreviewPopup',
     CLOSE_PREVIEW_POPUP = 'closePreviewPopup',
@@ -19,8 +17,6 @@ enum ActionType {
     OPEN_JSON = 'openJSON',
     SAVE_JSON = 'saveJSON',
 
-    // IMPORT_SLIDE_BACKGROUND_IMAGE_ASYNC = 'importSlideBackgroundImageAsync',
-
     RENAME_PRESENTATION = 'renamePresentation',
 
     ADD_NEW_SLIDE = 'addNewSlide',
@@ -28,6 +24,7 @@ enum ActionType {
     SET_SLIDES_ORDER = 'setSlidesOrder',
     SET_SLIDE_BACKGROUND_COLOR = 'setSlideBackgroundColor',
     SET_SLIDE_BACKGROUND_IMAGE = 'setSlideBackgroundImage',
+    DUPLICATE_SLIDES = 'duplicateSlides',
 
     DELETE_ELEMENTS = 'deleteElements',
     CHANGE_SLIDE_OBJECT_POSITION_AND_SIZE = 'changeSlideObjectPositionAndSize',
@@ -60,11 +57,6 @@ type RedoAction = {
 type EmptyAction = {
     type: ActionType.DO_NOTHING,
 }
-
-// type SetEditorAction = {
-//     type: ActionType.SET_EDITOR,
-//     payload: Editor,
-// }
 
 type AddToSlideSelectionAction = {
     type: ActionType.ADD_TO_SLIDE_SELECTION,
@@ -130,7 +122,7 @@ type DeleteSlidesAction = {
 
 type SetSlidesOrderAction = {
     type: ActionType.SET_SLIDES_ORDER,
-    payload: { dragSlideId: string, dropSlideId: string }
+    payload: { dragSlideId: string[], dropSlideId: string }
 }
 
 type SetSlideBackgroundColorAction = {
@@ -141,6 +133,10 @@ type SetSlideBackgroundColorAction = {
 type SetSlideBackgroundImageAction = {
     type: ActionType.SET_SLIDE_BACKGROUND_IMAGE,
     payload: string
+}
+
+type DuplicateSlidesAction = {
+    type: ActionType.DUPLICATE_SLIDES,
 }
 
 type DeleteElementsAction = {
@@ -187,11 +183,6 @@ type openJSONAction = {
     payload: Presentation
 }
 
-// type ImportSlideBackgroundImageAsyncAction = {
-//     type: ActionType.IMPORT_SLIDE_BACKGROUND_IMAGE_ASYNC,
-//     payload: string
-// }
-
 type EditorAction = UndoAction | RedoAction | EmptyAction | RenamePresentationAction
     | AddNewSlideAction | DeleteSlidesAction | SetSlidesOrderAction | SetSlideBackgroundColorAction
     | SetSlideBackgroundImageAction | DeleteElementsAction
@@ -199,7 +190,7 @@ type EditorAction = UndoAction | RedoAction | EmptyAction | RenamePresentationAc
     | AddToSlideSelectionAction | SelectOneSlideAction | AddToElementSelectionAction | SelectOneElementAction
     | ClearElementSelectionAction | RenderOptionsBarAction | saveJSONAction | openJSONAction | ChangeSlideObjectPositionAndSizeAction
     | OpenPreviewPopupAction | ClosePreviewPopupAction | OpenChangeImagePopupAction
-    | OpenSetSlideBackgroundImagePopupAction | CloseSetImagePopupAction
+    | OpenSetSlideBackgroundImagePopupAction | CloseSetImagePopupAction | DuplicateSlidesAction
 
 export {
     ActionType,
@@ -231,6 +222,5 @@ export {
     type openJSONAction,
     type ClearElementSelectionAction,
     type ChangeSlideObjectPositionAndSizeAction,
-
-    // type ImportSlideBackgroundImageAsyncAction
+    type DuplicateSlidesAction,
 }

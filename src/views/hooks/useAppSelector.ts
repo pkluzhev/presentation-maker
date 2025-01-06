@@ -9,6 +9,7 @@ const usePresentSelector = () => useAppSelector(state => state.present)
 const usePastSelector = () => useAppSelector(state => state.past)
 const useFutureSelector = () => useAppSelector(state => state.future)
 
+const usePresentationSelector = () => useAppSelector(state => state.present.presentation)
 const useTitleSelector = () => useAppSelector(state => state.present.presentation.title)
 const useSlideSelectionSelector = () => useAppSelector(state => state.present.slideSelection)
 const useSlidesSelector = () => useAppSelector(state => state.present.presentation.slides)
@@ -27,6 +28,7 @@ export {
     usePresentSelector,
     usePastSelector,
     useFutureSelector,
+    usePresentationSelector,
     useTitleSelector,
     useSlideSelectionSelector,
     useSlidesSelector,

@@ -1,7 +1,7 @@
-import { Button } from '../../../../components/Button'
+import { Button } from '../../../../../components/Button.tsx'
 import styles from './EditBar.module.css'
-import { useEditBarStateSelector } from "../../../hooks/useAppSelector";
-import { useAppActions } from "../../../hooks/useAppActions.ts";
+import { useEditBarStateSelector } from "../../../../hooks/useAppSelector.ts";
+import { useAppActions } from "../../../../hooks/useAppActions.ts";
 
 function EditBar() {
     const editBarState = useEditBarStateSelector()

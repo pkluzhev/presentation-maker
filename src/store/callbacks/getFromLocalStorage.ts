@@ -1,7 +1,7 @@
 import { Presentation } from "../types/PresentationTypes.ts";
 import { validate } from "../../../ajvValidator.ts";
 
-function getFromLocalStorage() {
+function getFromLocalStorage(): Presentation | undefined {
     const localStoragePresentation = localStorage.getItem('presentation')
     if (localStoragePresentation) {
         const presentation: Presentation = JSON.parse(localStoragePresentation)

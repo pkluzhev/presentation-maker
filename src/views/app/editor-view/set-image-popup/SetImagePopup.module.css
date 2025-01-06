@@ -91,7 +91,7 @@
   left: 42%;
   width: 140px;
   height: 40px;
-  background-image: url('../../../store/images/unsplash_logo.png');
+  background-image: url('../../../../store/images/unsplash_logo.png');
   background-size: contain;
   background-repeat: no-repeat;
   cursor: default;

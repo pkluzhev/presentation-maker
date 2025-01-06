@@ -1,6 +1,6 @@
 import styles from './ResultImage.module.css'
-import { importImageAsync } from '../../../thunk/importImageAsync'
-import { useAppActions } from "../../../views/hooks/useAppActions.ts";
+import { importImageAsync } from '../../../../thunk/importImageAsync.ts'
+import { useAppActions } from "../../../hooks/useAppActions.ts";
 
 type ResultImageProps = {
     src: string
