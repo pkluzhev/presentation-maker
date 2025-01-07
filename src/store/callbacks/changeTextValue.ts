@@ -13,12 +13,12 @@ function changeTextValue(editor: Editor, action: ChangeTextValueAction): Editor 
                 return {
                     ...slide,
                     objects: slide.objects.map((object) => {
-                        if (object.id !== editor.elementSelection[editor.elementSelection.length - 1]) {
+                        if (object.id !== action.payload.elementId) {
                             return object
                         }
                         return {
                             ...object,
-                            value: action.payload
+                            value: action.payload.newValue
                         }
                     })
                 }
@@ -27,7 +27,6 @@ function changeTextValue(editor: Editor, action: ChangeTextValueAction): Editor 
 
     }
 }
-
 
 export {
     changeTextValue,

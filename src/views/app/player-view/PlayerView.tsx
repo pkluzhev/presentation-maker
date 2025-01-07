@@ -66,6 +66,7 @@ function PlayerView() {
                 key={crypto.randomUUID()}
                 slide={slides[currentSlide - 1]}
                 scale={setScale()}
+                elementSelection={[]}
               />
               <div className={styles.slideContainerGuard} />
             </div>

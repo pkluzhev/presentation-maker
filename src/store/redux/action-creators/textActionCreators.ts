@@ -6,10 +6,10 @@ function addNewText() {
     }
 }
 
-function changeTextValue(newValue: string) {
+function changeTextValue({elementId, newValue}: {elementId: string, newValue: string}) {
     return {
         type: ActionType.CHANGE_TEXT_VALUE,
-        payload: newValue
+        payload: {elementId, newValue}
     }
 }
 

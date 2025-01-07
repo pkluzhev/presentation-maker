@@ -22,7 +22,6 @@ const useIsPreviewActiveSelector = () => useAppSelector(state => state.present.i
 const useIsChangeImagePopupActiveSelector = () => useAppSelector(state => state.present.interfaceState.isChangeImagePopupActive)
 const useIsSetSlideBackgroundImagePopupActiveSelector = () => useAppSelector(state => state.present.interfaceState.isSetSlideBackgroundImagePopupActive)
 
-
 export {
     useAppSelector,
     usePresentSelector,

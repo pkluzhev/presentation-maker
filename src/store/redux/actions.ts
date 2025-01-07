@@ -43,6 +43,8 @@ enum ActionType {
     ADD_TO_ELEMENT_SELECTION = 'addToElementSelection',
     SELECT_ONE_ELEMENT = 'selectOneElement',
     CLEAR_ELEMENT_SELECTION = 'clearElementSelection',
+
+    IMPORT_IMAGE_ASYNC = 'importImageAsync',
 }
 
 type UndoAction = {
@@ -177,7 +179,7 @@ type AddNewTextAction = {
 
 type ChangeTextValueAction = {
     type: ActionType.CHANGE_TEXT_VALUE,
-    payload: string
+    payload: {elementId: string, newValue: string}
 }
 
 type saveJSONAction = {
@@ -189,6 +191,11 @@ type openJSONAction = {
     payload: Presentation
 }
 
+// type ImportImageAsyncAction = {
+//     type: ActionType.IMPORT_IMAGE_ASYNC,
+//     payload: string
+// }
+
 type EditorAction = UndoAction | RedoAction | EmptyAction | RenamePresentationAction
     | AddNewSlideAction | DeleteSlidesAction | SetSlidesOrderAction | SetSlideBackgroundColorAction
     | SetSlideBackgroundImageAction | DeleteElementsAction
@@ -197,6 +204,7 @@ type EditorAction = UndoAction | RedoAction | EmptyAction | RenamePresentationAc
     | ClearElementSelectionAction | RenderOptionsBarAction | saveJSONAction | openJSONAction | ChangeSlideObjectPositionAndSizeAction
     | OpenPreviewPopupAction | ClosePreviewPopupAction | OpenChangeImagePopupAction
     | OpenSetSlideBackgroundImagePopupAction | CloseSetImagePopupAction | DuplicateSlidesAction | ChangeSlideObjectPositionAction
+    // | ImportImageAsyncAction
 
 export {
     ActionType,
@@ -230,4 +238,5 @@ export {
     type ChangeSlideObjectPositionAndSizeAction,
     type ChangeSlideObjectPositionAction,
     type DuplicateSlidesAction,
+    // type ImportImageAsyncAction
 }

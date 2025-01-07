@@ -35,6 +35,7 @@
   margin: 15px;
   cursor: grab;
   z-index: 20;
+  transition: all 0.35s ease-out;
 }
 
 .slidePreviewContainer:hover{

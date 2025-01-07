@@ -8,9 +8,11 @@
 
 .button {
   all: initial;
+  position: relative;
   font: 400 16px/22px Montserrat, sans-serif;
   cursor: pointer;
   padding: 8px 16px;
+  transition: all 0.25s ease-out;
 }
 
 .button_active {

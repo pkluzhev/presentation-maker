@@ -6,8 +6,18 @@ import { WorkSpace } from '../editor-view/workspace/WorkSpace'
 import { PreviewPopup } from '../editor-view/preview-popup/PreviewPopup'
 import { SetImagePopup } from '../editor-view/set-image-popup/SetImagePopup'
 import { useAppActions } from "../../../views/hooks/useAppActions";
-import { usePastSelector, useFutureSelector, useIsPreviewActiveSelector, useIsChangeImagePopupActiveSelector, useIsSetSlideBackgroundImagePopupActiveSelector } from "../../../views/hooks/useAppSelector";
+
+import {
+  usePastSelector,
+  useFutureSelector,
+  useIsPreviewActiveSelector,
+  useIsChangeImagePopupActiveSelector,
+  useIsSetSlideBackgroundImagePopupActiveSelector,
+  usePresentationSelector
+} from "../../../views/hooks/useAppSelector";
+
 import { Editor } from "../../../store/types/EditorTypes";
+import { saveToLocalStorage } from "../../../store/callbacks/saveToLocalStorage.ts";
 
 const EditorView = () => {
   const { clearElementSelection } = useAppActions()
@@ -21,6 +31,8 @@ const EditorView = () => {
   const statePreview = useIsPreviewActiveSelector()
   const stateChangeImagePopup = useIsChangeImagePopupActiveSelector()
   const stateSetSlideBackgroundImagePopup = useIsSetSlideBackgroundImagePopupActiveSelector()
+
+  const presentation = usePresentationSelector()
 
   const onUndo = () => {
     if (statePast.length > 0) {
@@ -36,6 +48,10 @@ const EditorView = () => {
     }
   }
 
+  function onSavePresentationToLocalStorage() {
+    saveToLocalStorage(presentation)
+  }
+
   const onHandleKeyboardEvents = (event: KeyboardEvent) => {
     if ((event.key === "Escape" || event.keyCode === 27) && !event.shiftKey && !event.ctrlKey && !event.altKey) {
       clearElementSelection()
@@ -45,6 +61,9 @@ const EditorView = () => {
     }
     if ((event.ctrlKey || event.metaKey) && event.keyCode === 89) {
       onRedo()
+    }
+    if ((event.shiftKey || event.metaKey) && event.keyCode === 83) {
+      onSavePresentationToLocalStorage()
     }
   }
 

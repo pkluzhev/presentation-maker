@@ -272,6 +272,7 @@ function SlideObject({ object, scale, isSelected, slideStart }: SlideObjectProps
                 fontWeight={object.fontWeight}
                 fontColor={object.fontColor}
                 isSelected={isSelected}
+                id={object.id}
             />
             break
         case "image":

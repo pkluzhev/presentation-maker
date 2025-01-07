@@ -1,5 +1,4 @@
 import styles from './ResultImage.module.css'
-import { importImageAsync } from '../../../../thunk/importImageAsync.ts'
 import { useAppActions } from "../../../hooks/useAppActions.ts";
 
 type ResultImageProps = {
@@ -13,6 +12,7 @@ type ResultImageProps = {
 function ResultImage(props: ResultImageProps) {
     const { setSlideBackgroundImage } = useAppActions()
     const { changeImage } = useAppActions()
+    const { importImageAsync } = useAppActions()
 
     const onImportImage = () => {
         if (props.isImageObject) {

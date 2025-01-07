@@ -88,6 +88,7 @@ function PreviewPopup() {
                                     key={crypto.randomUUID()}
                                     slide={slide}
                                     scale={1}
+                                    elementSelection={[]}
                                 />
                             </div>
                             <div className={styles.slideContainerGuard} />

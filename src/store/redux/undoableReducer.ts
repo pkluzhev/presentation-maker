@@ -48,11 +48,6 @@ function undoableReducer(editorReducer: (editor: Editor | undefined, action: Edi
                         present: newPresentModified
                     }
                 }
-                // if (present.presentation === newPresent.presentation) {
-                //     return {
-                //         ...state,
-                //     }
-                // }
                 console.log('изменилось что-то и презентация (запишем в Анду)')
                 return {
                     past: [...past, present],

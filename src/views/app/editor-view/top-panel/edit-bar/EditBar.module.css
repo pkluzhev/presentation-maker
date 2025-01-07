@@ -3,6 +3,7 @@
   margin-left: 15px;
   text-align: center;
   border: solid 0.5px #009090;
+  transition: all 0.35s ease-out;
 }
 
 .editBarTitle {
@@ -65,8 +66,10 @@
   font: 400 16px/22px Montserrat, sans-serif;
   cursor: pointer;
   padding: 8px 6px;
+  transition: all 0.2s ease-out;
 }
 
 .selectButton:hover {
   background-color: #e4e4e4;
+  font-weight: 700;
 }

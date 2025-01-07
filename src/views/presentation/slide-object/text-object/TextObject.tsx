@@ -3,19 +3,18 @@ import { type TextObject } from "../../../../store/types/PresentationTypes.ts";
 import styles from './TextObject.module.css'
 import { useAppActions } from "../../../hooks/useAppActions.ts";
 
-
 type TextProps = {
     value: string,
     fontFamily: string,
     fontSize: number,
     fontWeight: number,
     fontColor: string,
-    isSelected: boolean
+    isSelected: boolean,
+    id: string
 }
 
-function TextObject({ value, fontFamily, fontSize, fontWeight, fontColor, isSelected }: TextProps) {
+function TextObject({ value, fontFamily, fontSize, fontWeight, fontColor, isSelected, id }: TextProps) {
     const { changeTextValue } = useAppActions()
-
     const textareaStyles: CSSProperties = {
         fontFamily: `${fontFamily}`,
         fontSize: `${fontSize}px`,
@@ -28,29 +27,31 @@ function TextObject({ value, fontFamily, fontSize, fontWeight, fontColor, isSele
         fontWeight: `${fontWeight}`,
         color: `${fontColor}`,
     }
-    // const [currentValue, setCurrentValue] = useState<string>(value)
+    const [currentValue, setCurrentValue] = useState<string>(value)
+    const [hasBeenSelected, setHasBeenSelected] = useState<boolean>(false)
 
-    // const onChangeTextValue = () => {
-    //     changeTextValue(currentValue)
-    // }
+    useEffect(() => {
+        if (isSelected) {
+            setHasBeenSelected(true)
+        }
+    }, [isSelected, setHasBeenSelected])
 
-    // useEffect(() => {}, [onChangeTextValue])
+    useEffect(() => {
+        if (!isSelected && hasBeenSelected && currentValue !== value) {
+            changeTextValue({elementId: id, newValue: currentValue})
+            setHasBeenSelected(false)
+        }
+    }, [isSelected, currentValue, value, hasBeenSelected, setHasBeenSelected])
+
     return <>
         {isSelected &&
             <textarea
                 style={textareaStyles}
                 className={styles.textObjectEditable}
+                value={currentValue}
                 onChange={(event) => {
-                    changeTextValue((event.target as HTMLTextAreaElement).value)
+                    setCurrentValue((event.target as HTMLTextAreaElement).value)
                 }}
-                value={value}
-                // style={textareaStyles}
-                // className={styles.textObjectEditable}
-                // onChange={(event) => {
-                //     setCurrentValue((event.target as HTMLTextAreaElement).value)
-                // }}
-                // onBlur={onChangeTextValue}
-                // defaultValue={value}
             />
         }
         {!isSelected &&

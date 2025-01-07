@@ -37,6 +37,9 @@ import { decSlideObjectLayer } from "../callbacks/decSlideObjectLayer";
 import { saveJSON } from "../callbacks/saveJSON";
 import { openJSON } from "../callbacks/openJSON";
 
+// import { importImageAsync } from "../../thunk/importImageAsync";
+
+
 function editorReducer(editor: Editor = defaultEditor, action: EditorAction): Editor {
     switch (action.type) {
         case ActionType.ADD_TO_SLIDE_SELECTION:

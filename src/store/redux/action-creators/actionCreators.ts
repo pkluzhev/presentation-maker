@@ -6,6 +6,7 @@ import * as ElementActionCreators from './elementActionCreators'
 import * as ImageActionCreators from './imageActionCreators'
 import * as TextActionCreators from './textActionCreators'
 import * as OptionsBarActionCreators from './optionsBarActionCreators'
+import * as ImportImageAsync from '../../../thunk/importImageAsync'
 
 export default {
     ...EditorActionCreators,
@@ -16,4 +17,5 @@ export default {
     ...ImageActionCreators,
     ...TextActionCreators,
     ...OptionsBarActionCreators,
+    ...ImportImageAsync,
 }

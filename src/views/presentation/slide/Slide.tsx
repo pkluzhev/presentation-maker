@@ -10,20 +10,12 @@ const SLIDE_HEIGHT = 525
 type SlideProps = {
     slide: Slide,
     scale: number,
+    elementSelection: string[],
 }
 
-function Slide({ slide, scale}: SlideProps) {
-    const elementSelection = useElementSelectionSelector()
+function Slide({ slide, scale, elementSelection}: SlideProps) {
     const isElementSelected = (array: string[] | undefined, objectId: string): boolean => {
-        let selected: boolean = false
-        array?.forEach((element) => {
-            if (element === objectId) {
-                selected = true
-            }
-        })
-        if (selected === undefined)
-            selected = false
-        return selected
+        return array?.includes(objectId) || false
     }
 
     const slideRef = useRef<HTMLDivElement>(null)
