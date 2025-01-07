@@ -4,12 +4,15 @@
   justify-content: flex-start;
   background-color: #e4e4e4;
   text-align: left;
-  border: solid 0.5px #009090;
+  /* border: solid 0.5px #009090; */
   border-top: none;
+  border-radius: 0 0 7px 7px;
 }
 
 .button:hover {
   font-weight: 700;
+  border-radius: 7px;
+  box-shadow: 2px 2px 4px #414141;
 }
 
 .inputFile {
@@ -23,6 +26,8 @@
 .inputFile:hover {
   background-color: #e4e4e4;
   font-weight: 700;
+  border-radius: 7px;
+  box-shadow: 2px 2px 4px #414141;
 }
 
 .hiddenInput {

@@ -1,9 +1,9 @@
 .editBar {
   position: relative;
-  margin-left: 15px;
+  margin-left: 50px;
   text-align: center;
-  border: solid 0.5px #009090;
-  transition: all 0.35s ease-out;
+  /* border: solid 0.5px #009090; */
+  transition: all 0.2s ease-out;
 }
 
 .editBarTitle {
@@ -11,6 +11,14 @@
   font: 400 16px/22px Montserrat, sans-serif;
   padding: 8px 16px;
   background-color: #e4e4e4;
+  border-radius: 7px 7px 0 0;
+}
+
+.buttonEditbar:hover {
+  background-color: #e4e4e4;
+  font-weight: 700;
+  border-radius: 0 0 7px 7px;
+  box-shadow: 2px 2px 4px #414141;
 }
 
 .inputColorTitle {
@@ -67,9 +75,11 @@
   cursor: pointer;
   padding: 8px 6px;
   transition: all 0.2s ease-out;
+  border-radius: 0 0 7px 7px;
 }
 
 .selectButton:hover {
   background-color: #e4e4e4;
   font-weight: 700;
+  box-shadow: 2px 2px 4px #414141;
 }

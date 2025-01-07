@@ -11,8 +11,7 @@ type Editor = {
         isChangeImagePopupActive: boolean,
         isSetSlideBackgroundImagePopupActive: boolean,
     }
-    // slideBuffer: Slide[],
-    // elementBuffer: TextObject[] | ImageObject[]
+    elementBuffer: (TextObject | ImageObject)[]
 }
 
 type EditBarState = "slide" | "image" | "text" | "no-edit"

@@ -33,10 +33,24 @@ function decSlideObjectLayer() {
     }
 }
 
+function copyElements() {
+    return {
+        type: ActionType.COPY_ELEMENTS,
+    }
+}
+
+function pasteElements() {
+    return {
+        type: ActionType.PASTE_ELEMENTS,
+    }
+}
+
 export {
     deleteElements,
     changeSlideObjectPosition,
     incSlideObjectLayer,
     decSlideObjectLayer,
-    changeSlideObjectPositionAndSize
+    changeSlideObjectPositionAndSize,
+    copyElements,
+    pasteElements
 }

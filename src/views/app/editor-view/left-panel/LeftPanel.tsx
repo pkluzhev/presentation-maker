@@ -83,6 +83,7 @@ function LeftPanel() {
                     })
                     if (isSlideSelected) {
                         inlineStyles.backgroundColor = "#e4e4e4"
+                        inlineStyles.boxShadow = "2px 2px 4px #414141"
                     }
                     return <div
                         ref={isSlideSelected ? selectedSlideRef : null}

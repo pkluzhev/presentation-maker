@@ -37,6 +37,9 @@ import { decSlideObjectLayer } from "../callbacks/decSlideObjectLayer";
 import { saveJSON } from "../callbacks/saveJSON";
 import { openJSON } from "../callbacks/openJSON";
 
+import { copyElements } from "../callbacks/copyElements";
+
+
 // import { importImageAsync } from "../../thunk/importImageAsync";
 
 
@@ -102,6 +105,8 @@ function editorReducer(editor: Editor = defaultEditor, action: EditorAction): Ed
             return saveJSON(editor)
         case ActionType.OPEN_JSON:
             return openJSON(editor, action)
+        case ActionType.COPY_ELEMENTS:
+            return copyElements(editor)
         default:
             return editor
     }

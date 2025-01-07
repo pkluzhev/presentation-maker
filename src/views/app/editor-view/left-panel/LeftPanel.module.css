@@ -35,11 +35,13 @@
   margin: 15px;
   cursor: grab;
   z-index: 20;
-  transition: all 0.35s ease-out;
+  transition: all 0.2s ease-out;
+  border-radius: 7px;
 }
 
 .slidePreviewContainer:hover{
   background-color: #e4e4e4;
+  box-shadow: 2px 2px 4px #414141;
 }
 
 .slideIndex {

@@ -32,6 +32,9 @@ enum ActionType {
     INC_SLIDE_OBJECT_LAYER = 'incSlideObjectLayer',
     DEC_SLIDE_OBJECT_LAYER = 'decSlideObjectLayer',
 
+    COPY_ELEMENTS = 'copyElements',
+    PASTE_ELEMENTS = 'pasteElements',
+
     ADD_NEW_IMAGE = 'addNewImage',
     CHANGE_IMAGE = 'changeImage',
 
@@ -191,6 +194,14 @@ type openJSONAction = {
     payload: Presentation
 }
 
+type CopyElementsAction = {
+    type: ActionType.COPY_ELEMENTS,
+}
+
+type PasteElementsAction = {
+    type: ActionType.PASTE_ELEMENTS,
+}
+
 // type ImportImageAsyncAction = {
 //     type: ActionType.IMPORT_IMAGE_ASYNC,
 //     payload: string
@@ -203,7 +214,7 @@ type EditorAction = UndoAction | RedoAction | EmptyAction | RenamePresentationAc
     | AddToSlideSelectionAction | SelectOneSlideAction | AddToElementSelectionAction | SelectOneElementAction
     | ClearElementSelectionAction | RenderOptionsBarAction | saveJSONAction | openJSONAction | ChangeSlideObjectPositionAndSizeAction
     | OpenPreviewPopupAction | ClosePreviewPopupAction | OpenChangeImagePopupAction
-    | OpenSetSlideBackgroundImagePopupAction | CloseSetImagePopupAction | DuplicateSlidesAction | ChangeSlideObjectPositionAction
+    | OpenSetSlideBackgroundImagePopupAction | CloseSetImagePopupAction | DuplicateSlidesAction | ChangeSlideObjectPositionAction | CopyElementsAction | PasteElementsAction
     // | ImportImageAsyncAction
 
 export {
@@ -238,5 +249,8 @@ export {
     type ChangeSlideObjectPositionAndSizeAction,
     type ChangeSlideObjectPositionAction,
     type DuplicateSlidesAction,
+
+    type CopyElementsAction,
+    type PasteElementsAction,
     // type ImportImageAsyncAction
 }

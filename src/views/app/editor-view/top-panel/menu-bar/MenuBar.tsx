@@ -79,8 +79,8 @@ function MenuBar() {
                 <button className={viewmodeButtonClassname} onClick={openViewModeOptions}>View mode</button>
             </div>
             <div>
-                <Button className={styles.button} text={' ← '} onClick={onUndo} />
-                <Button className={styles.button} text={' → '} onClick={onRedo} />
+                <Button className={styles.buttonArrow} text={' ← '} onClick={onUndo} />
+                <Button className={styles.buttonArrow} text={' → '} onClick={onRedo} />
             </div>
         </div>
     )

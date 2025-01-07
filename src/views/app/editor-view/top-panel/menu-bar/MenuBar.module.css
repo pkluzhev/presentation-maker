@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   text-align: left;
-  border: solid 0.5px #009090;
+  /* border: solid 0.5px #009090; */
   border-bottom: none;
 }
 
@@ -13,6 +13,7 @@
   cursor: pointer;
   padding: 8px 16px;
   transition: all 0.25s ease-out;
+  border-radius: 7px 7px 0 0;
 }
 
 .button_active {
@@ -22,6 +23,12 @@
 .button:hover {
   background-color: #e4e4e4;
   font-weight: 700;
+  border-radius: 7px;
+  box-shadow: 2px 2px 4px #414141;
 }
 
-
+.buttonArrow:hover {
+  background-color: #e4e4e4;
+  font-weight: 700;
+  border-radius: 7px 7px 0 0;
+}

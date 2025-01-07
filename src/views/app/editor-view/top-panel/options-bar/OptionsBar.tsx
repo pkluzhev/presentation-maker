@@ -18,6 +18,8 @@ function OptionsBar() {
     const { deleteElements } = useAppActions()
     const { saveJSON } = useAppActions()
     const { openJSON } = useAppActions()
+    const { copyElements } = useAppActions()
+
 
     const { openPreviewPopup } = useAppActions()
 
@@ -47,6 +49,9 @@ function OptionsBar() {
     }
     function onSavePresentationToLocalStorage() {
         saveToLocalStorage(presentation)
+    }
+    function onCopyElements() {
+        copyElements()
     }
 
     function onOpenPresentation(event: React.ChangeEvent<HTMLInputElement>) {
@@ -84,6 +89,9 @@ function OptionsBar() {
                     <Button className={styles.button} text={'Add new text'} onClick={onAddNewText}></Button>
                     <Button className={styles.button} text={'Add new image'} onClick={onAddNewImage}></Button>
                     <Button className={styles.button} text={'Delete'} onClick={onDeleteElements}></Button>
+                    <Button className={styles.button} text={'Copy'} onClick={onCopyElements}></Button>
+                    <Button className={styles.button} text={'Paste'} onClick={()=>{}}></Button>
+
                 </div>
             )
         case "viewmode":

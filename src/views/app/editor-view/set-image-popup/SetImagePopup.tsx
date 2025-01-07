@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from './SetImagePopup.module.css'
 import { useIsChangeImagePopupActiveSelector, useIsSetSlideBackgroundImagePopupActiveSelector } from "../../../hooks/useAppSelector.ts";
 import { useAppActions } from "../../../hooks/useAppActions.ts";
@@ -10,47 +10,26 @@ import { useUnsplashActions } from "../../../hooks/useUnsplashActions.ts";
 function SetImagePopup() {
     const stateChangeImage = useIsChangeImagePopupActiveSelector()
     const stateSetSlideBackgroundImage = useIsSetSlideBackgroundImagePopupActiveSelector()
+
     const { closeSetImagePopup } = useAppActions()
     const { setSlideBackgroundImage } = useAppActions()
     const { changeImage } = useAppActions()
 
-    const [searchValue, setSearchValue] = useState('')
-    const [currentPage, setCurrentPage] = useState(1)
-
-    const { responseData, getData } = useUnsplashActions(currentPage, searchValue);
-
+    const {
+        responseData,
+        searchValue,
+        handleButtonSearch,
+        handleInputChange,
+        handleNextPage,
+        handlePreviousPage,
+    } = useUnsplashActions();
+   
     const onUploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (stateChangeImage) {
             setBase64Image(event, changeImage)
         } else if (stateSetSlideBackgroundImage) {
             setBase64Image(event, setSlideBackgroundImage)
         }
-    }
-
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchValue(event.target.value)
-    }
-
-    const handleButtonSearch = () => {
-        if (searchValue != '') {
-            let newPage: number = 1
-            getData(newPage, searchValue)
-            setCurrentPage(newPage)
-        }
-    }
-   
-    const handlePreviousPage = () => {
-        if (currentPage > 1) {
-            let newPage: number = currentPage - 1
-            getData(newPage, searchValue)
-            setCurrentPage(newPage)
-        }
-    }
-   
-    const handleNextPage = () => {
-        let newPage: number = currentPage + 1
-        getData(newPage, searchValue)
-        setCurrentPage(newPage)
     }
 
     return (

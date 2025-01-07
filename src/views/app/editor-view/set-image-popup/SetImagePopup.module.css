@@ -14,6 +14,7 @@
   height: 90%;
   background-color: #f4ffdf;
   padding: 15px;
+  border-radius: 7px;
 }
 
 .buttonContainer {
@@ -27,6 +28,8 @@
   cursor: pointer;
   padding: 8px 16px;
   margin-top: 10px;
+  transition: all 0.2s ease-out;
+  border-radius: 7px;
 }
 
 .button:hover {
@@ -40,6 +43,8 @@
   display: inline-block;
   font: 400 16px/22px Montserrat, sans-serif;
   padding: 8px 16px;
+  transition: all 0.2s ease-out;
+  border-radius: 7px;
 }
 
 .inputImage:hover {
@@ -58,7 +63,7 @@
   opacity: 0;
 }
 
-.inputContainer{
+.inputContainer {
   position: relative;
 }
 
@@ -77,6 +82,8 @@
   cursor: pointer;
   padding: 8px 16px;
   margin-top: 10px;
+  transition: all 0.2s ease-out;
+  border-radius: 7px;
 }
 
 .buttonSearch:hover {
@@ -91,7 +98,7 @@
   left: 42%;
   width: 140px;
   height: 40px;
-  background-image: url('../../../../store/images/unsplash_logo.png');
+  background-image: url("../../../../store/images/unsplash_logo.png");
   background-size: contain;
   background-repeat: no-repeat;
   cursor: default;
@@ -105,7 +112,7 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  overflow-y:auto;
+  overflow-y: auto;
 }
 
 .preloader {
@@ -116,7 +123,7 @@
   margin: 5px 5px 0 0;
   width: 30px;
   height: 30px;
-  background: url('/src/store/images/preloader.gif');
+  background: url("/src/store/images/preloader.gif");
   background-size: contain;
   background-repeat: no-repeat;
 }
