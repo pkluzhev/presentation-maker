@@ -1,4 +1,3 @@
-// import * as React from "react";
 import { useAppActions } from "../../../../hooks/useAppActions.ts";
 import styles from './MenuBar.module.css'
 import { Button } from '../../../../../components/Button.tsx'
@@ -28,7 +27,7 @@ function MenuBar() {
 
 
     function onUndo() {
-        console.log('undo')
+        console.log('undo (menuBar)')
         console.log(statePast.length, ' ', stateFuture.length)
 
         let newState: Editor
@@ -39,7 +38,7 @@ function MenuBar() {
     }
 
     function onRedo() {
-        console.log('redo')
+        console.log('redo (menuBar)')
         console.log(statePast.length, ' ', stateFuture.length)
 
         let newState: Editor

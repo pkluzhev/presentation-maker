@@ -17,7 +17,6 @@ function undoableReducer(editorReducer: (editor: Editor | undefined, action: Edi
         switch (action.type) {
             case ActionType.UNDO:
                 const previous = past[past.length - 1]
-                console.log(previous.presentation.slides[0].objects[0].size)
                 const newPast = past.slice(0, past.length - 1)
                 return {
                     past: newPast,
@@ -55,7 +54,6 @@ function undoableReducer(editorReducer: (editor: Editor | undefined, action: Edi
                 //     }
                 // }
                 console.log('изменилось что-то и презентация (запишем в Анду)')
-                // console.log(newPresent.presentation.slides[0].objects[0].size)
                 return {
                     past: [...past, present],
                     present: newPresent,

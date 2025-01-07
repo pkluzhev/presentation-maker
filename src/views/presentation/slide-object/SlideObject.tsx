@@ -29,11 +29,17 @@ function SlideObject({ object, scale, isSelected, slideStart }: SlideObjectProps
         height: `${object.size.height * scale}px`,
     }
 
-    let elementFinalData: SlideObjectProperties = {
+    const elementFinalData = useRef<SlideObjectProperties>({
         id: object.id,
         position: object.position,
         size: object.size
-    }
+    })
+
+    // let elementFinalData: SlideObjectProperties = {
+    //     id: object.id,
+    //     position: object.position,
+    //     size: object.size
+    // }
 
     let delta: Position = {
         x: 0,
@@ -67,31 +73,32 @@ function SlideObject({ object, scale, isSelected, slideStart }: SlideObjectProps
     }, [])
 
     const handleDragMove = useCallback((event: PointerEvent) => {
-        if (!dragElementRef.current || !startPointerPosInsideElem.current || !slideStart.current) return
-        elementFinalData.position.x = event.pageX + startPointerPosInsideElem.current.x - slideStart.current.x
-        elementFinalData.position.y = event.pageY + startPointerPosInsideElem.current.y - slideStart.current.y
-        dragElementRef.current.style.left = elementFinalData.position.x + 'px'
-        dragElementRef.current.style.top = elementFinalData.position.y + 'px'
-        if (elementFinalData.position.x <= 0) {
+        if (!dragElementRef.current || !startPointerPosInsideElem.current || !slideStart.current || !elementFinalData.current) return
+        elementFinalData.current.position.x = event.pageX + startPointerPosInsideElem.current.x - slideStart.current.x
+        elementFinalData.current.position.y = event.pageY + startPointerPosInsideElem.current.y - slideStart.current.y
+        dragElementRef.current.style.left = elementFinalData.current.position.x + 'px'
+        dragElementRef.current.style.top = elementFinalData.current.position.y + 'px'
+        if (elementFinalData.current.position.x <= 0) {
             dragElementRef.current.style.left = 0 + 'px'
-            elementFinalData.position.x = 0
+            elementFinalData.current.position.x = 0
         }
-        if (elementFinalData.position.x + object.size.width >= SLIDE_WIDTH) {
+        if (elementFinalData.current.position.x + object.size.width >= SLIDE_WIDTH) {
             dragElementRef.current.style.left = (SLIDE_WIDTH - object.size.width - 2) + 'px'
-            elementFinalData.position.x = SLIDE_WIDTH - object.size.width - 2
+            elementFinalData.current.position.x = SLIDE_WIDTH - object.size.width - 2
         }
-        if (elementFinalData.position.y <= 0) {
+        if (elementFinalData.current.position.y <= 0) {
             dragElementRef.current.style.top = 0 + 'px'
-            elementFinalData.position.y = 0
+            elementFinalData.current.position.y = 0
         }
-        if (elementFinalData.position.y + object.size.height >= SLIDE_HEIGHT - 2) {
+        if (elementFinalData.current.position.y + object.size.height >= SLIDE_HEIGHT - 2) {
             dragElementRef.current.style.top = (SLIDE_HEIGHT - object.size.height - 2) + 'px'
-            elementFinalData.position.y = SLIDE_HEIGHT - object.size.height - 2
+            elementFinalData.current.position.y = SLIDE_HEIGHT - object.size.height - 2
         }
     }, [])
+
     const handleDragEnd = useCallback(() => {
         setDragging(false)
-        changeSlideObjectPosition(elementFinalData.position)
+        changeSlideObjectPosition(elementFinalData.current.position)
     }, [])
 
     const handleResizeStart = useCallback((event: any, type: ResizeAttribute) => {
@@ -135,102 +142,102 @@ function SlideObject({ object, scale, isSelected, slideStart }: SlideObjectProps
         delta.y = endPos.y - startPos.current.y
         switch (resizeAttribute.current) {
             case 'RB':
-                elementFinalData.size.width = startSize.current.width + delta.x
-                elementFinalData.size.height = startSize.current.height + delta.y
-                if (elementFinalData.size.width < 24) {
-                    elementFinalData.size.width = 24
+                elementFinalData.current.size.width = startSize.current.width + delta.x
+                elementFinalData.current.size.height = startSize.current.height + delta.y
+                if (elementFinalData.current.size.width < 24) {
+                    elementFinalData.current.size.width = 24
                 }
-                if (elementFinalData.size.height < 24) {
-                    elementFinalData.size.height = 24
+                if (elementFinalData.current.size.height < 24) {
+                    elementFinalData.current.size.height = 24
                 }
                 break
             case 'RM':
-                elementFinalData.size.width = startSize.current.width + delta.x
-                if (elementFinalData.size.width < 24) {
-                    elementFinalData.size.width = 24
+                elementFinalData.current.size.width = startSize.current.width + delta.x
+                if (elementFinalData.current.size.width < 24) {
+                    elementFinalData.current.size.width = 24
                 }
                 break
             case 'RT':
-                elementFinalData.size.width = startSize.current.width + delta.x
-                elementFinalData.size.height = startSize.current.height - delta.y
-                if (elementFinalData.size.width < 24) {
-                    elementFinalData.size.width = 24
-                    delta.x = startPos.current.x - elementFinalData.size.width
+                elementFinalData.current.size.width = startSize.current.width + delta.x
+                elementFinalData.current.size.height = startSize.current.height - delta.y
+                if (elementFinalData.current.size.width < 24) {
+                    elementFinalData.current.size.width = 24
+                    delta.x = startPos.current.x - elementFinalData.current.size.width
                 }
-                if (elementFinalData.size.height < 24) {
-                    elementFinalData.size.height = 24
-                    elementFinalData.position.y = startPosition.current?.y - slideStart.current.y + startSize.current.height - elementFinalData.size.height
+                if (elementFinalData.current.size.height < 24) {
+                    elementFinalData.current.size.height = 24
+                    elementFinalData.current.position.y = startPosition.current?.y - slideStart.current.y + startSize.current.height - elementFinalData.current.size.height
                 } else {
-                    elementFinalData.position.y = startPosition.current?.y - slideStart.current.y + delta.y
+                    elementFinalData.current.position.y = startPosition.current?.y - slideStart.current.y + delta.y
                 }
                 break
             case 'MT':
-                elementFinalData.size.height = startSize.current.height - delta.y
-                if (elementFinalData.size.height < 24) {
-                    elementFinalData.size.height = 24
-                    elementFinalData.position.y = startPosition.current?.y - slideStart.current.y + startSize.current.height - elementFinalData.size.height
+                elementFinalData.current.size.height = startSize.current.height - delta.y
+                if (elementFinalData.current.size.height < 24) {
+                    elementFinalData.current.size.height = 24
+                    elementFinalData.current.position.y = startPosition.current?.y - slideStart.current.y + startSize.current.height - elementFinalData.current.size.height
                 } else {
-                    elementFinalData.position.y = startPosition.current?.y - slideStart.current.y + delta.y
+                    elementFinalData.current.position.y = startPosition.current?.y - slideStart.current.y + delta.y
                 }
                 break
             case 'LT':
-                elementFinalData.size.width = startSize.current.width - delta.x
-                elementFinalData.size.height = startSize.current.height - delta.y
-                if (elementFinalData.size.width < 24) {
-                    elementFinalData.size.width = 24
-                    elementFinalData.position.x = startPosition.current?.x - slideStart.current.x + startSize.current.width - elementFinalData.size.width
+                elementFinalData.current.size.width = startSize.current.width - delta.x
+                elementFinalData.current.size.height = startSize.current.height - delta.y
+                if (elementFinalData.current.size.width < 24) {
+                    elementFinalData.current.size.width = 24
+                    elementFinalData.current.position.x = startPosition.current?.x - slideStart.current.x + startSize.current.width - elementFinalData.current.size.width
                 } else {
-                    elementFinalData.position.x = startPosition.current?.x - slideStart.current.x + delta.x
+                    elementFinalData.current.position.x = startPosition.current?.x - slideStart.current.x + delta.x
                 }
-                if (elementFinalData.size.height < 24) {
-                    elementFinalData.size.height = 24
-                    elementFinalData.position.y = startPosition.current?.y - slideStart.current.y + startSize.current.height - elementFinalData.size.height
+                if (elementFinalData.current.size.height < 24) {
+                    elementFinalData.current.size.height = 24
+                    elementFinalData.current.position.y = startPosition.current?.y - slideStart.current.y + startSize.current.height - elementFinalData.current.size.height
                 } else {
-                    elementFinalData.position.y = startPosition.current?.y - slideStart.current.y + delta.y
+                    elementFinalData.current.position.y = startPosition.current?.y - slideStart.current.y + delta.y
                 }
                 break
             case 'LM':
-                elementFinalData.size.width = startSize.current.width - delta.x
-                if (elementFinalData.size.width < 24) {
-                    elementFinalData.size.width = 24
-                    elementFinalData.position.x = startPosition.current?.x - slideStart.current.x + startSize.current.width - elementFinalData.size.width
+                elementFinalData.current.size.width = startSize.current.width - delta.x
+                if (elementFinalData.current.size.width < 24) {
+                    elementFinalData.current.size.width = 24
+                    elementFinalData.current.position.x = startPosition.current?.x - slideStart.current.x + startSize.current.width - elementFinalData.current.size.width
                 } else {
-                    elementFinalData.position.x = startPosition.current?.x - slideStart.current.x + delta.x
+                    elementFinalData.current.position.x = startPosition.current?.x - slideStart.current.x + delta.x
                 }
                 break
             case 'LB':
-                elementFinalData.size.width = startSize.current.width - delta.x
-                elementFinalData.size.height = startSize.current.height + delta.y
-                if (elementFinalData.size.width < 24) {
-                    elementFinalData.size.width = 24
-                    elementFinalData.position.x = startPosition.current?.x - slideStart.current.x + startSize.current.width - elementFinalData.size.width
+                elementFinalData.current.size.width = startSize.current.width - delta.x
+                elementFinalData.current.size.height = startSize.current.height + delta.y
+                if (elementFinalData.current.size.width < 24) {
+                    elementFinalData.current.size.width = 24
+                    elementFinalData.current.position.x = startPosition.current?.x - slideStart.current.x + startSize.current.width - elementFinalData.current.size.width
                 } else {
-                    elementFinalData.position.x = startPosition.current?.x - slideStart.current.x + delta.x
+                    elementFinalData.current.position.x = startPosition.current?.x - slideStart.current.x + delta.x
                 }
-                if (elementFinalData.size.height < 24) {
-                    elementFinalData.size.height = 24
+                if (elementFinalData.current.size.height < 24) {
+                    elementFinalData.current.size.height = 24
                 }
                 break
             case 'MB':
-                elementFinalData.size.height = startSize.current.height + delta.y
-                if (elementFinalData.size.height < 24) {
-                    elementFinalData.size.height = 24
+                elementFinalData.current.size.height = startSize.current.height + delta.y
+                if (elementFinalData.current.size.height < 24) {
+                    elementFinalData.current.size.height = 24
                 }
                 break
             default:
                 break
         }
-        dragElementRef.current.style.top = elementFinalData.position.y + 'px'
-        dragElementRef.current.style.left = elementFinalData.position.x + 'px'
-        dragElementRef.current.style.width = elementFinalData.size.width + 'px'
-        dragElementRef.current.style.height = elementFinalData.size.height + 'px'
+        dragElementRef.current.style.top = elementFinalData.current.position.y + 'px'
+        dragElementRef.current.style.left = elementFinalData.current.position.x + 'px'
+        dragElementRef.current.style.width = elementFinalData.current.size.width + 'px'
+        dragElementRef.current.style.height = elementFinalData.current.size.height + 'px'
     }, [])
-    
+
     const handleResizeEnd = useCallback(() => {
         resizeAttribute.current = null
         setResizingType(null)
         setDragging(false)
-        changeSlideObjectPositionAndSize(elementFinalData)
+        changeSlideObjectPositionAndSize(elementFinalData.current)
     }, [])
 
     useEffect(() => {
