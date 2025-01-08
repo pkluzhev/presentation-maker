@@ -2,7 +2,6 @@
   position: relative;
   margin-left: 50px;
   text-align: center;
-  /* border: solid 0.5px #009090; */
   transition: all 0.2s ease-out;
 }
 
@@ -17,7 +16,7 @@
 .buttonEditbar:hover {
   background-color: #e4e4e4;
   font-weight: 700;
-  border-radius: 0 0 7px 7px;
+  border-radius: 7px;
   box-shadow: 2px 2px 4px #414141;
 }
 
@@ -75,7 +74,7 @@
   cursor: pointer;
   padding: 8px 6px;
   transition: all 0.2s ease-out;
-  border-radius: 0 0 7px 7px;
+  border-radius: 7px;
 }
 
 .selectButton:hover {

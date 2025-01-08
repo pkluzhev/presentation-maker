@@ -35,6 +35,7 @@
 .button:hover {
   background-color: #e4e4e4;
   font-weight: 700;
+  box-shadow: 2px 2px 4px #414141;
 }
 
 .inputImage {
@@ -50,6 +51,7 @@
 .inputImage:hover {
   background-color: #e4e4e4;
   font-weight: 700;
+  box-shadow: 2px 2px 4px #414141;
 }
 
 .hiddenInput {
@@ -89,6 +91,7 @@
 .buttonSearch:hover {
   background-color: #e4e4e4;
   font-weight: 700;
+  box-shadow: 2px 2px 4px #414141;
 }
 
 .logo {

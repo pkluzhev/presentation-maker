@@ -50,6 +50,11 @@
 .button:hover {
   background-color: #e4e4e4;
   font-weight: 700;
+  box-shadow: 2px 2px 4px #414141;
+}
+
+.button:focus {
+  outline: none;
 }
 
 .buttonContainer {
@@ -66,7 +71,7 @@
   margin: 5px 5px 0 0;
   width: 30px;
   height: 30px;
-  background: url('/src/store/images/preloader.gif');
+  background: url("/src/store/images/preloader.gif");
   background-size: contain;
   background-repeat: no-repeat;
 }
