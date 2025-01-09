@@ -1,36 +1,34 @@
 import { type Editor } from "../types/EditorTypes";
-import { ImageObject, TextObject } from "../types/PresentationTypes";
+import { ImageObject, Slide, TextObject } from "../types/PresentationTypes";
 
 function pasteElements(editor: Editor): Editor {
-    console.log('paste')
     if (editor.slideSelection.length <= 0 || editor.elementBuffer.length <= 0) {
         return editor
     }
-    
-    let copyingObjects: (TextObject | ImageObject)[] = []
-    editor.presentation.slides.forEach((slide)=>{
-        slide.objects.forEach((object)=>{
-            editor.elementSelection.forEach((id)=>{
-                if(id === object.id) {
-                    copyingObjects.push(object)
-                }
-            })
+    const newSlides: Slide[] = structuredClone(editor.presentation.slides)
+    newSlides.forEach((slide) => {
+        editor.slideSelection.forEach((slideId) => {
+            if (slideId === slide.id) {
+                editor.elementBuffer.forEach((element) => {
+                    const newElement: TextObject | ImageObject = structuredClone(element)
+                    newElement.id = crypto.randomUUID()
+                    slide.objects.push(newElement)
+                })
+            }
         })
-    })
-    let newElementSelection: string[] = []
-    copyingObjects.forEach((object)=>{
-        object.id = crypto.randomUUID()
-        newElementSelection.push(object.id)
     })
 
     return {
         ...editor,
-        elementSelection: newElementSelection,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        },
+        elementSelection: [],
         interfaceState: {
             ...editor.interfaceState,
             editBarState: "no-edit"
         },
-        elementBuffer: copyingObjects
     }
 }
 

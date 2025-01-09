@@ -12,6 +12,17 @@ function deleteSlides(editor: Editor): Editor {
     let newSelectedSlideId: string = ""
     if (newSlides.length > 0) {
         newSelectedSlideId = newSlides[0].id
+    } else {
+        const newSlide: Slide = {
+            id: crypto.randomUUID(),
+            background: {
+                type: "solid",
+                color: "#ffffff"
+            },
+            objects: []
+        }
+        newSlides.push(newSlide)
+        newSelectedSlideId = newSlide.id
     }
     return {
         ...editor,

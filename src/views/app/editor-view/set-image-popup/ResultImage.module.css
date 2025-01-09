@@ -1,10 +1,18 @@
 .resultUnitPreview {
+  position: relative;
   width: 15%;
   height: 20%;
   margin: 0 5px 10px;
   border: 1px solid;
   padding: 15px;
   cursor: pointer;
+  transition: all 0.2s ease-out;
+}
+
+.resultUnitPreview:hover {
+  background-color: #e4e4e4;
+  box-shadow: 2px 2px 4px #414141;
+  top: -3px;
 }
 
 .resultImage {

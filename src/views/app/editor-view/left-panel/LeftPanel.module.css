@@ -41,7 +41,7 @@
 
 .slidePreviewContainer:hover{
   background-color: #e4e4e4;
-  box-shadow: 2px 2px 4px #414141;
+  box-shadow: 2px 2px 10px #414141;
 }
 
 .slideIndex {

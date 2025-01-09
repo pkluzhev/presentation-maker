@@ -1,4 +1,4 @@
-import { Presentation, Slide, TextObject, ImageObject } from "./PresentationTypes";
+import { Presentation, TextObject, ImageObject } from "./PresentationTypes";
 
 type Editor = {
     presentation: Presentation,
@@ -10,6 +10,7 @@ type Editor = {
         isPreviewActive: boolean,
         isChangeImagePopupActive: boolean,
         isSetSlideBackgroundImagePopupActive: boolean,
+        isSavePopupActive: boolean,
     }
     elementBuffer: (TextObject | ImageObject)[]
 }

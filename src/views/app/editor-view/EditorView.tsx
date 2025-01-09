@@ -5,6 +5,7 @@ import { LeftPanel } from '../editor-view/left-panel/LeftPanel'
 import { WorkSpace } from '../editor-view/workspace/WorkSpace'
 import { PreviewPopup } from '../editor-view/preview-popup/PreviewPopup'
 import { SetImagePopup } from '../editor-view/set-image-popup/SetImagePopup'
+import { SavePopup } from '../editor-view/save-popup/SavePopup.tsx'
 import { useAppActions } from "../../../views/hooks/useAppActions";
 
 import {
@@ -13,7 +14,8 @@ import {
   useIsPreviewActiveSelector,
   useIsChangeImagePopupActiveSelector,
   useIsSetSlideBackgroundImagePopupActiveSelector,
-  usePresentationSelector
+  usePresentationSelector,
+  useIsSavePopupActiveSelector
 } from "../../../views/hooks/useAppSelector";
 
 import { Editor } from "../../../store/types/EditorTypes";
@@ -21,16 +23,20 @@ import { saveToLocalStorage } from "../../../store/callbacks/saveToLocalStorage.
 
 const EditorView = () => {
   const { clearElementSelection } = useAppActions()
+  const { copyElements } = useAppActions()
+  const { pasteElements } = useAppActions()
+  const { deleteElements } = useAppActions()
+
 
   const statePast = usePastSelector()
   const stateFuture = useFutureSelector()
-
   const { setPastEditor } = useAppActions()
   const { setFutureEditor } = useAppActions()
 
   const statePreview = useIsPreviewActiveSelector()
   const stateChangeImagePopup = useIsChangeImagePopupActiveSelector()
   const stateSetSlideBackgroundImagePopup = useIsSetSlideBackgroundImagePopupActiveSelector()
+  const stateSavePopup = useIsSavePopupActiveSelector()
 
   const presentation = usePresentationSelector()
 
@@ -48,22 +54,27 @@ const EditorView = () => {
     }
   }
 
-  function onSavePresentationToLocalStorage() {
-    saveToLocalStorage(presentation)
-  }
-
   const onHandleKeyboardEvents = (event: KeyboardEvent) => {
     if ((event.key === "Escape" || event.keyCode === 27) && !event.shiftKey && !event.ctrlKey && !event.altKey) {
-      clearElementSelection()
+      clearElementSelection()         // esc (очистка селекшна с элементами)
     }
-    if ((event.ctrlKey || event.metaKey) && event.keyCode === 90) {
+    if ((event.ctrlKey || event.metaKey) && event.keyCode === 90) {  // ctrl + Z (unDO)
       onUndo()
     }
-    if ((event.ctrlKey || event.metaKey) && event.keyCode === 89) {
+    if ((event.ctrlKey || event.metaKey) && event.keyCode === 89) {  // ctrl + Y (reDO)
       onRedo()
     }
-    if ((event.shiftKey || event.metaKey) && event.keyCode === 83) {
-      onSavePresentationToLocalStorage()
+    if ((event.shiftKey || event.metaKey) && event.keyCode === 83) {  // shift + S (сохранение в локалсторадж)
+      saveToLocalStorage(presentation)
+    }
+    if ((event.ctrlKey || event.metaKey) && event.keyCode === 67) {  // ctrl + C (копирвоание элементов)
+      copyElements()
+    }
+    if ((event.ctrlKey || event.metaKey) && event.keyCode === 86) {  // ctrl + V (вставка элементов)
+      pasteElements()
+    }
+    if ((event.key === "Delete" || event.keyCode === 46) && !event.shiftKey && !event.ctrlKey && !event.altKey) {
+      deleteElements()                                            // delete (удаление выбранных элементов)
     }
   }
 
@@ -85,6 +96,12 @@ const EditorView = () => {
       }
       {(stateChangeImagePopup || stateSetSlideBackgroundImagePopup) &&
         <SetImagePopup />
+      }
+      {(stateChangeImagePopup || stateSetSlideBackgroundImagePopup) &&
+        <SetImagePopup />
+      }
+      {stateSavePopup &&
+        <SavePopup />
       }
     </div>
   )

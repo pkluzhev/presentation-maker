@@ -185,9 +185,9 @@ const defaultEditor: Editor = {
         isPreviewActive: false,
         isChangeImagePopupActive: false,
         isSetSlideBackgroundImagePopupActive: false,
+        isSavePopupActive: false
     },
     elementBuffer:[]
-
 }
 
 export {

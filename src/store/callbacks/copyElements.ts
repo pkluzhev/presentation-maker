@@ -2,7 +2,6 @@ import { type Editor } from "../types/EditorTypes";
 import { ImageObject, TextObject } from "../types/PresentationTypes";
 
 function copyElements(editor: Editor): Editor {
-    console.log('copy')
     if (editor.slideSelection.length <= 0 || editor.elementSelection.length <= 0) {
         return editor
     }
@@ -11,20 +10,15 @@ function copyElements(editor: Editor): Editor {
         slide.objects.forEach((object)=>{
             editor.elementSelection.forEach((id)=>{
                 if(id === object.id) {
-                    copyingObjects.push(object)
+                    const newObject: TextObject | ImageObject = structuredClone(object)
+                    copyingObjects.push(newObject)
                 }
             })
         })
     })
-    let newElementSelection: string[] = []
-    copyingObjects.forEach((object)=>{
-        object.id = crypto.randomUUID()
-        newElementSelection.push(object.id)
-    })
 
     return {
         ...editor,
-        elementSelection: newElementSelection,
         interfaceState: {
             ...editor.interfaceState,
             editBarState: "no-edit"

@@ -21,6 +21,7 @@ const useOptionsBarStateSelector = () => useAppSelector(state => state.present.i
 const useIsPreviewActiveSelector = () => useAppSelector(state => state.present.interfaceState.isPreviewActive)
 const useIsChangeImagePopupActiveSelector = () => useAppSelector(state => state.present.interfaceState.isChangeImagePopupActive)
 const useIsSetSlideBackgroundImagePopupActiveSelector = () => useAppSelector(state => state.present.interfaceState.isSetSlideBackgroundImagePopupActive)
+const useIsSavePopupActiveSelector = () => useAppSelector(state => state.present.interfaceState.isSavePopupActive)
 
 export {
     useAppSelector,
@@ -36,5 +37,6 @@ export {
     useElementSelectionSelector,
     useIsPreviewActiveSelector,
     useIsChangeImagePopupActiveSelector,
-    useIsSetSlideBackgroundImagePopupActiveSelector
+    useIsSetSlideBackgroundImagePopupActiveSelector,
+    useIsSavePopupActiveSelector,
 }
