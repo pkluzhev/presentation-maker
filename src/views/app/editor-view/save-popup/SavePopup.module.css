@@ -11,10 +11,11 @@
 
 .popup {
   width: 40%;
-  height: 35%;
   background-color: #f4ffdf;
   padding: 15px;
   border-radius: 7px;
+  opacity: 0;
+  animation: ani 0.75s forwards;
 }
 
 .buttonContainer {
@@ -41,5 +42,19 @@
   background-color: #e4e4e4;
   font-weight: 700;
   box-shadow: 2px 2px 4px #414141;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.pageButtonContainer {
+  position: relative;
+  margin-bottom: 50px;
+}
+
+@keyframes ani {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }
 

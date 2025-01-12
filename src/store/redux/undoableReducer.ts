@@ -14,7 +14,6 @@ function undoableReducer(editorReducer: (editor: Editor | undefined, action: Edi
 
     return function (state = initialState, action: EditorAction) {
         const { past, present, future } = state
-
         switch (action.type) {
             case ActionType.UNDO:
                 // const previous: Editor = past[past.length - 1]
@@ -26,7 +25,8 @@ function undoableReducer(editorReducer: (editor: Editor | undefined, action: Edi
                 previous.interfaceState.isPreviewActive = false
                 previous.interfaceState.isChangeImagePopupActive = false
                 previous.interfaceState.isSetSlideBackgroundImagePopupActive = false
-                previous.interfaceState.isSavePopupActive = false
+                previous.interfaceState.savePopupState.isActive = false
+                previous.interfaceState.isSetSlideBackgroundPopupActive = false
                 const newPast = past.slice(0, past.length - 1)
                 return {
                     past: newPast,
@@ -43,7 +43,8 @@ function undoableReducer(editorReducer: (editor: Editor | undefined, action: Edi
                 next.interfaceState.isPreviewActive = false
                 next.interfaceState.isChangeImagePopupActive = false
                 next.interfaceState.isSetSlideBackgroundImagePopupActive = false
-                next.interfaceState.isSavePopupActive = false
+                next.interfaceState.savePopupState.isActive = false
+                next.interfaceState.isSetSlideBackgroundPopupActive = false
                 const newFuture = future.slice(1)
                 return {
                     past: [...past, present],
@@ -53,21 +54,18 @@ function undoableReducer(editorReducer: (editor: Editor | undefined, action: Edi
             default:
                 const newPresent = editorReducer(present, action)
                 if (present === newPresent) {
-                    // console.log('ничего не изменилось')
                     return state
                 }
-                if ((present.slideSelection !== newPresent.slideSelection 
+                if ((present.slideSelection !== newPresent.slideSelection
                     || present.elementSelection !== newPresent.elementSelection
                     || present.interfaceState !== newPresent.interfaceState)
                     && present.presentation === newPresent.presentation) {
-                    // console.log('изменилось что-то, кроме презентации')
                     const newPresentModified = structuredClone(newPresent)
                     return {
                         ...state,
                         present: newPresentModified
                     }
                 }
-                // console.log('изменилось что-то и презентация (запишем в Анду)')
                 return {
                     past: [...past, present],
                     present: newPresent,

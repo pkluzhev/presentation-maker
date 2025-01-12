@@ -38,11 +38,41 @@ function closeSetImagePopup() {
     }
 }
 
+function closeSetBackgroundPopup() {
+    return {
+        type: ActionType.CLOSE_SET_BACKGROUND_POPUP,
+    }
+}
+
+function openSetBackgroundPopup() {
+    return {
+        type: ActionType.OPEN_SET_BACKGROUND_POPUP,
+    }
+}
+
+function openSavePopup(newType: "createNew" | "open") {
+    return {
+        type: ActionType.OPEN_SAVE_POPUP,
+        payload: newType
+    }
+}
+
+function closeSavePopup() {
+    return {
+        type: ActionType.CLOSE_SAVE_POPUP,
+    }
+}
+
+
 export {
     renderOptionsBar,
     openPreviewPopup,
     closePreviewPopup,
     openChangeImagePopup,
     openSetSlideBackgroundImagePopup,
-    closeSetImagePopup
+    closeSetImagePopup,
+    closeSetBackgroundPopup,
+    openSetBackgroundPopup,
+    openSavePopup,
+    closeSavePopup,
 }

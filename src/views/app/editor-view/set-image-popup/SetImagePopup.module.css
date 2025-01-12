@@ -15,6 +15,8 @@
   background-color: #f4ffdf;
   padding: 15px;
   border-radius: 7px;
+  opacity: 0;
+  animation: ani 0.75s forwards;
 }
 
 .buttonContainer {
@@ -76,6 +78,7 @@
   font: 400 16px/22px Montserrat, sans-serif;
   padding: 8px 16px;
   border: 0.5px solid;
+  border-radius: 7px;
 }
 
 .buttonSearch {
@@ -134,4 +137,9 @@
 .pageButtonContainer {
   position: relative;
   text-align: center;
+}
+
+@keyframes ani {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }

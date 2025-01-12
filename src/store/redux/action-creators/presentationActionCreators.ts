@@ -7,6 +7,13 @@ function renamePresentation(newName: string) {
     }
 }
 
+function createNewPresentation() {
+    return {
+        type: ActionType.CREATE_NEW_PRESENTATION,
+    }
+}
+
 export {
-    renamePresentation
+    renamePresentation,
+    createNewPresentation
 }

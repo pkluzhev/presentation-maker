@@ -2,7 +2,6 @@ import { CSSProperties, useEffect, useRef } from "react";
 import { type Slide, type Position } from "../../../store/types/PresentationTypes.ts";
 import { SlideObject } from "../slide-object/SlideObject.tsx";
 import styles from './Slide.module.css'
-import { useElementSelectionSelector } from "../../hooks/useAppSelector.ts";
 
 const SLIDE_WIDTH = 935
 const SLIDE_HEIGHT = 525
@@ -13,13 +12,13 @@ type SlideProps = {
     elementSelection: string[],
 }
 
-function Slide({ slide, scale, elementSelection}: SlideProps) {
+function Slide({ slide, scale, elementSelection }: SlideProps) {
     const isElementSelected = (array: string[] | undefined, objectId: string): boolean => {
         return array?.includes(objectId) || false
     }
 
     const slideRef = useRef<HTMLDivElement>(null)
-    const slideStartRef = useRef<Position>({x: 0, y: 0})
+    const slideStartRef = useRef<Position>({ x: 0, y: 0 })
 
     useEffect(() => {
         let rect = slideRef.current?.getBoundingClientRect()
@@ -44,6 +43,13 @@ function Slide({ slide, scale, elementSelection}: SlideProps) {
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
+                width: `${SLIDE_WIDTH * scale}px`,
+                height: `${SLIDE_HEIGHT * scale}px`,
+            }
+            break
+        case "gradient":
+            slideStyles = {
+                background: `linear-gradient(${slide.background.angle}deg, ${slide.background.colorOne}, ${slide.background.colorTwo})`,
                 width: `${SLIDE_WIDTH * scale}px`,
                 height: `${SLIDE_HEIGHT * scale}px`,
             }

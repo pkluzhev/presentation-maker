@@ -181,30 +181,6 @@
                                     "type"
                                 ],
                                 "type": "object"
-                            },
-                            {
-                                "properties": {
-                                    "angle": {
-                                        "type": "number"
-                                    },
-                                    "colorOne": {
-                                        "type": "string"
-                                    },
-                                    "colorTwo": {
-                                        "type": "string"
-                                    },
-                                    "type": {
-                                        "const": "gradient",
-                                        "type": "string"
-                                    }
-                                },
-                                "required": [
-                                    "angle",
-                                    "colorOne",
-                                    "colorTwo",
-                                    "type"
-                                ],
-                                "type": "object"
                             }
                         ]
                     },

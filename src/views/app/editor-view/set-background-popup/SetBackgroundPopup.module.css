@@ -1,0 +1,126 @@
+.background {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: #00000073;
+  z-index: 30;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.popup {
+  margin-top: 20vh;
+  width: 34%;
+  background-color: #f4ffdf;
+  padding: 15px;
+  border-radius: 7px;
+  opacity: 0;
+  animation: ani 0.75s forwards;
+}
+
+.buttonContainer {
+  position: relative;
+  text-align: right;
+}
+
+.button {
+  all: initial;
+  font: 400 16px/22px Montserrat, sans-serif;
+  cursor: pointer;
+  padding: 8px 16px;
+  transition: all 0.2s ease-out;
+  border-radius: 7px;
+}
+
+.button:hover {
+  background-color: #e4e4e4;
+  font-weight: 700;
+  box-shadow: 2px 2px 4px #414141;
+}
+
+.buttonActive {
+  background-color: #e4e4e4;
+  font-weight: 700;
+  border-radius: 7px;
+  box-shadow: 2px 2px 4px #414141;
+}
+
+.titleContainer {
+  position: relative;
+  font: 400 16px/22px Montserrat, sans-serif;
+  max-width: 360px;
+  margin: 10px auto 30px;
+  padding: 8px 16px;
+  background-color: #e4e4e4;
+  border-radius: 7px 7px 0 0;
+}
+
+.formContainer {
+  position: relative;
+  display: inline-block;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.inputContainer {
+  position: relative;
+  font: 400 16px/22px Montserrat, sans-serif;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputTitle {
+  display: inline-block;
+  font: 400 16px/22px Montserrat, sans-serif;
+  padding: 8px 16px;
+}
+
+.inputField {
+  display: inline-block;
+  font: 400 16px/22px Montserrat, sans-serif;
+  padding: 8px 16px;
+  border: 0.5px solid;
+  border-radius: 7px;
+}
+
+.inputColor {
+  border: none;
+  height: 34px;
+  width: 34px;
+  margin-left: 2px;
+  margin-right: 2px;
+  cursor: pointer;
+}
+
+.inputColor:hover {
+  background-color: #e4e4e4;
+}
+
+.dropdownContainer {
+  position: absolute;
+  right: 100%;
+  top: 40px;
+}
+
+.inputTilt {
+  all: initial;
+  font: 400 16px/22px Montserrat, sans-serif;
+  padding: 8px 16px;
+  border: 0.5px solid;
+  border-radius: 7px;
+  max-width: 60px;
+  cursor: pointer;
+}
+
+.applyButtonContainer {
+  position: relative;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+@keyframes ani {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}

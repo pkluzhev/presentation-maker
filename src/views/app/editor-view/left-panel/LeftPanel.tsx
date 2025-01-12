@@ -21,8 +21,10 @@ function LeftPanel() {
         setCurrentTitle((event.target as HTMLInputElement).value)
     }
     const onRenamePresentation: React.ChangeEventHandler = (event) => {
-        (event.target as HTMLInputElement).value = ''
-        renamePresentation(currentTitle)
+        if ((event.target as HTMLInputElement).value !== '') {
+            (event.target as HTMLInputElement).value = ''
+            renamePresentation(currentTitle)
+        }
     }
 
     const onSlideClick = (slideId: string, event: React.MouseEvent) => {
@@ -56,12 +58,12 @@ function LeftPanel() {
 
     const selectedSlideRef = useRef<HTMLDivElement>(null)
 
-    useEffect(()=>{
+    useEffect(() => {
         if (selectedSlideRef.current) {
-            selectedSlideRef.current.scrollIntoView({behavior: "smooth", block: "center"})
+            selectedSlideRef.current.scrollIntoView({ behavior: "smooth", block: "center" })
         }
     }, [slideSelection])
-    
+
     return (
         <div className={styles.leftPanel}>
             <p className={styles.inputTitleLabel}>Change project name</p>

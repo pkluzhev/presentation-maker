@@ -10,7 +10,8 @@ type Editor = {
         isPreviewActive: boolean,
         isChangeImagePopupActive: boolean,
         isSetSlideBackgroundImagePopupActive: boolean,
-        isSavePopupActive: boolean,
+        isSetSlideBackgroundPopupActive: boolean,
+        savePopupState: SavePopupState
     }
     elementBuffer: (TextObject | ImageObject)[]
 }
@@ -19,8 +20,14 @@ type EditBarState = "slide" | "image" | "text" | "no-edit"
 
 type OptionsBarState = "file" | "slide" | "element" | "viewmode"
 
+type SavePopupState = {
+    type: "createNew" | "open",
+    isActive: boolean
+}
+
 export {
     type Editor,
     type EditBarState,
-    type OptionsBarState
+    type OptionsBarState,
+    type SavePopupState,
 }

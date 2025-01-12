@@ -39,11 +39,19 @@ function duplicateSlides() {
     }
 }
 
+function setSlideBackgroundGradient(color1: string, color2: string, tilt: number) {
+    return {
+        type: ActionType.SET_SLIDE_BACKGROUND_GRADIENT,
+        payload: { color1, color2, tilt }
+    }
+}
+
 export {
     addNewSlide,
     deleteSlides,
     setSlidesOrder,
     setSlideBackgroundColor,
     setSlideBackgroundImage,
-    duplicateSlides
+    duplicateSlides,
+    setSlideBackgroundGradient
 }

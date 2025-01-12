@@ -16,12 +16,6 @@ function setFutureEditor(newEditor: Editor) {
     }
 }
 
-function saveJSON() {
-    return {
-        type: ActionType.SAVE_JSON,
-    }
-}
-
 function openJSON(newPresentation: Presentation) {
     return {
         type: ActionType.OPEN_JSON,
@@ -32,6 +26,5 @@ function openJSON(newPresentation: Presentation) {
 export {
     setPastEditor,
     setFutureEditor,
-    saveJSON,
     openJSON
 }

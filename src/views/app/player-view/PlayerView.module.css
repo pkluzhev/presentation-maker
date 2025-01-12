@@ -3,6 +3,8 @@
   margin: 5px auto;
   display: flex;
   justify-content: center;
+  opacity: 0;
+  animation: ani 0.75s forwards;
 }
 
 .slideContainerGuard {
@@ -42,4 +44,9 @@
   width: 30px;
   margin: 10px 40px 0;
   text-align: center;
+}
+
+@keyframes ani {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }

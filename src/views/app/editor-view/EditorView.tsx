@@ -6,6 +6,7 @@ import { WorkSpace } from '../editor-view/workspace/WorkSpace'
 import { PreviewPopup } from '../editor-view/preview-popup/PreviewPopup'
 import { SetImagePopup } from '../editor-view/set-image-popup/SetImagePopup'
 import { SavePopup } from '../editor-view/save-popup/SavePopup.tsx'
+import { SetBackgroundPopup } from '../editor-view/set-background-popup/SetBackgroundPopup.tsx'
 import { useAppActions } from "../../../views/hooks/useAppActions";
 
 import {
@@ -15,7 +16,8 @@ import {
   useIsChangeImagePopupActiveSelector,
   useIsSetSlideBackgroundImagePopupActiveSelector,
   usePresentationSelector,
-  useIsSavePopupActiveSelector
+  useIsSavePopupActiveSelector,
+  useIsSetBackgroundPopupActiveSelector
 } from "../../../views/hooks/useAppSelector";
 
 import { Editor } from "../../../store/types/EditorTypes";
@@ -27,7 +29,6 @@ const EditorView = () => {
   const { pasteElements } = useAppActions()
   const { deleteElements } = useAppActions()
 
-
   const statePast = usePastSelector()
   const stateFuture = useFutureSelector()
   const { setPastEditor } = useAppActions()
@@ -36,6 +37,8 @@ const EditorView = () => {
   const statePreview = useIsPreviewActiveSelector()
   const stateChangeImagePopup = useIsChangeImagePopupActiveSelector()
   const stateSetSlideBackgroundImagePopup = useIsSetSlideBackgroundImagePopupActiveSelector()
+  const stateSetBackgroundPopup = useIsSetBackgroundPopupActiveSelector()
+
   const stateSavePopup = useIsSavePopupActiveSelector()
 
   const presentation = usePresentationSelector()
@@ -64,17 +67,17 @@ const EditorView = () => {
     if ((event.ctrlKey || event.metaKey) && event.keyCode === 89) {  // ctrl + Y (reDO)
       onRedo()
     }
-    if ((event.shiftKey || event.metaKey) && event.keyCode === 83) {  // shift + S (сохранение в локалсторадж)
+    if (event.shiftKey && event.keyCode === 83) {  // shift + S (сохранение в локалсторадж)
       saveToLocalStorage(presentation)
     }
-    if ((event.ctrlKey || event.metaKey) && event.keyCode === 67) {  // ctrl + C (копирвоание элементов)
+    if (event.shiftKey && event.keyCode === 67) {  // shift + C (копирвоание элементов)
       copyElements()
     }
-    if ((event.ctrlKey || event.metaKey) && event.keyCode === 86) {  // ctrl + V (вставка элементов)
+    if (event.shiftKey && event.keyCode === 86) {  // shift + V (вставка элементов)
       pasteElements()
     }
-    if ((event.key === "Delete" || event.keyCode === 46) && !event.shiftKey && !event.ctrlKey && !event.altKey) {
-      deleteElements()                                            // delete (удаление выбранных элементов)
+    if (event.shiftKey && event.keyCode === 46) {
+      deleteElements()                              // shift + delete (удаление выбранных элементов)
     }
   }
 
@@ -102,6 +105,9 @@ const EditorView = () => {
       }
       {stateSavePopup &&
         <SavePopup />
+      }
+      {stateSetBackgroundPopup &&
+        <SetBackgroundPopup />
       }
     </div>
   )
