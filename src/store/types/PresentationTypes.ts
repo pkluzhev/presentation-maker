@@ -73,7 +73,7 @@ const defaultImageElement: ImageObject = {
 const defaultTextElement: TextObject = {
     type: "text",
     value: "New text",
-    fontFamily: "Noto Sana",
+    fontFamily: "Noto Sans",
     fontSize: 30,
     fontWeight: 400,
     fontColor: "#000000",
