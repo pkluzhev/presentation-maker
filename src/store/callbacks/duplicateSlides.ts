@@ -23,14 +23,6 @@ function duplicateSlides(editor: Editor): Editor {
     })
     const newSlides: Slide[] = structuredClone(editor.presentation.slides)
 
-    const lastSelectedSlideIndex: number = editor.presentation.slides.findIndex(slide => {
-        slide.id === editor.slideSelection[editor.slideSelection.length - 1]
-    })
-
-    // slideCopies.forEach((slide, i) => {
-    //     newSlides.splice(lastSelectedSlideIndex + i, 0, slide)
-    // })
-
     slideCopies.forEach(slide => {
         newSlides.push(slide)
     })

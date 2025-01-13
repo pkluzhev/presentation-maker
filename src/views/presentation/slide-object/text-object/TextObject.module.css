@@ -9,8 +9,7 @@
   overflow: hidden;
   user-select: none;
   vertical-align: top;
-  line-height: 1;
-  white-space: nowrap;
+  line-height: 1.1;
 }
 
 .textObjectView {
@@ -22,5 +21,6 @@
   overflow: hidden;
   user-select: none;
   vertical-align: top;
-  line-height: 1;
+  line-height: 1.1;
+  white-space: pre;
 }

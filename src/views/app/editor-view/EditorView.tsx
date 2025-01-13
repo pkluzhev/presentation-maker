@@ -67,17 +67,17 @@ const EditorView = () => {
     if ((event.ctrlKey || event.metaKey) && event.keyCode === 89) {  // ctrl + Y (reDO)
       onRedo()
     }
-    if (event.shiftKey && event.keyCode === 83) {  // shift + S (сохранение в локалсторадж)
+    if (event.altKey && event.keyCode === 83) {  // alt + S (сохранение в локалсторадж)
       saveToLocalStorage(presentation)
     }
-    if (event.shiftKey && event.keyCode === 67) {  // shift + C (копирвоание элементов)
+    if (event.altKey && event.keyCode === 67) {  // alt + C (копирвоание элементов)
       copyElements()
     }
-    if (event.shiftKey && event.keyCode === 86) {  // shift + V (вставка элементов)
+    if (event.altKey && event.keyCode === 86) {  // alt + V (вставка элементов)
       pasteElements()
     }
-    if (event.shiftKey && event.keyCode === 46) {
-      deleteElements()                              // shift + delete (удаление выбранных элементов)
+    if (event.altKey && event.keyCode === 46) {
+      deleteElements()                              // alt + delete (удаление выбранных элементов)
     }
   }
 

@@ -38,7 +38,7 @@ function TextObject({ value, fontFamily, fontSize, fontWeight, fontColor, isSele
 
     useEffect(() => {
         if (!isSelected && hasBeenSelected && currentValue !== value) {
-            changeTextValue({elementId: id, newValue: currentValue})
+            changeTextValue({ elementId: id, newValue: currentValue })
             setHasBeenSelected(false)
         }
     }, [isSelected, currentValue, value, hasBeenSelected, setHasBeenSelected])
@@ -46,6 +46,8 @@ function TextObject({ value, fontFamily, fontSize, fontWeight, fontColor, isSele
     return <>
         {isSelected &&
             <textarea
+                wrap={"hard"}
+                spellCheck={false}
                 style={textareaStyles}
                 className={styles.textObjectEditable}
                 value={currentValue}

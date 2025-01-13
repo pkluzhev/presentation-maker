@@ -29,6 +29,9 @@ function Slide({ slide, scale, elementSelection }: SlideProps) {
     }, [])
 
     let slideStyles: CSSProperties = {}
+    if (scale < 1) {
+        slideStyles.overflow = 'hidden'
+    }
     switch (slide.background.type) {
         case "solid":
             slideStyles = {
