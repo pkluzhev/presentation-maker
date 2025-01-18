@@ -3,7 +3,7 @@ import styles from './OptionsBar.module.css'
 import { useOptionsBarStateSelector, usePresentationSelector } from "../../../../hooks/useAppSelector.ts";
 import { useAppActions } from "../../../../hooks/useAppActions.ts";
 import { NavLink } from "react-router";
-import { saveToLocalStorage } from "../../../../../store/callbacks/saveToLocalStorage.ts";
+// import { saveToLocalStorage } from "../../../../../store/callbacks/saveToLocalStorage.ts";
 import { saveJSON } from "../../../../../utils/saveJSON.ts";
 
 function OptionsBar() {
@@ -53,9 +53,9 @@ function OptionsBar() {
     function onDuplicateSlides() {
         duplicateSlides()
     }
-    function onSavePresentationToLocalStorage() {
-        saveToLocalStorage(presentation)
-    }
+    // function onSavePresentationToLocalStorage() {
+    //     saveToLocalStorage(presentation)
+    // }
     function onCopyElements() {
         copyElements()
     }
@@ -97,7 +97,7 @@ function OptionsBar() {
                     <Button className={styles.button} text={'Create new'} onClick={onOpenCreateNewSavePopup}></Button>
                     <div className={styles.inputFile} onClick={onOpenOpenSavePopup}>Open</div>
                     <Button className={styles.button} text={'Export as PDF'} onClick={onOpenPreviewPopup}></Button>
-                    <Button className={styles.button} text={'Save'} onClick={onSavePresentationToLocalStorage}></Button>
+                    {/* <Button className={styles.button} text={'Save'} onClick={onSavePresentationToLocalStorage}></Button> */}
                     <Button className={styles.button} text={'Save to disk'} onClick={onSavePresentation}></Button>
                 </div>
             )

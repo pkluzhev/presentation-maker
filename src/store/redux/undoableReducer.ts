@@ -1,6 +1,7 @@
 import { type Editor } from "../types/EditorTypes";
 import { ImageObject, TextObject } from "../types/PresentationTypes";
 import { ActionType, type EditorAction } from "./actions";
+import { saveToLocalStorage } from "../callbacks/saveToLocalStorage";
 
 function undoableReducer(editorReducer: (editor: Editor | undefined, action: EditorAction) => Editor) {
     const undoStack: Editor[] = [];
@@ -28,6 +29,8 @@ function undoableReducer(editorReducer: (editor: Editor | undefined, action: Edi
                 previous.interfaceState.savePopupState.isActive = false
                 previous.interfaceState.isSetSlideBackgroundPopupActive = false
                 const newPast = past.slice(0, past.length - 1)
+
+                saveToLocalStorage(previous.presentation)
                 return {
                     past: newPast,
                     present: previous,
@@ -46,6 +49,8 @@ function undoableReducer(editorReducer: (editor: Editor | undefined, action: Edi
                 next.interfaceState.savePopupState.isActive = false
                 next.interfaceState.isSetSlideBackgroundPopupActive = false
                 const newFuture = future.slice(1)
+
+                saveToLocalStorage(next.presentation)
                 return {
                     past: [...past, present],
                     present: next,
@@ -66,6 +71,8 @@ function undoableReducer(editorReducer: (editor: Editor | undefined, action: Edi
                         present: newPresentModified
                     }
                 }
+
+                saveToLocalStorage(newPresent.presentation)
                 return {
                     past: [...past, present],
                     present: newPresent,

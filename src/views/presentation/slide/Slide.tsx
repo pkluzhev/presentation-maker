@@ -1,5 +1,6 @@
 import { CSSProperties, useEffect, useRef } from "react";
 import { type Slide, type Position } from "../../../store/types/PresentationTypes.ts";
+// import { useSlidesSelector } from "../../hooks/useAppSelector.ts";
 import { SlideObject } from "../slide-object/SlideObject.tsx";
 import styles from './Slide.module.css'
 
@@ -19,6 +20,22 @@ function Slide({ slide, scale, elementSelection }: SlideProps) {
 
     const slideRef = useRef<HTMLDivElement>(null)
     const slideStartRef = useRef<Position>({ x: 0, y: 0 })
+
+    const alignmentsRef = useRef<{ objectId: string, x: number, y: number }[]>([])
+    const getAlignments = (slideElement: Slide): { objectId: string, x: number, y: number }[] => {
+        let alignmentsData: { objectId: string, x: number, y: number }[] = []
+
+        slideElement.objects.forEach((elem) => {
+            const newElemData: { objectId: string, x: number, y: number } = {
+                objectId: elem.id,
+                x: elem.position.x,
+                y: elem.position.y,
+            }
+            alignmentsData.push(newElemData)
+        })
+        return alignmentsData
+    }
+    alignmentsRef.current = getAlignments(slide)
 
     useEffect(() => {
         let rect = slideRef.current?.getBoundingClientRect()
@@ -71,6 +88,7 @@ function Slide({ slide, scale, elementSelection }: SlideProps) {
                         scale={scale}
                         isSelected={isElementSelected(elementSelection, object.id)}
                         slideStart={slideStartRef}
+                        alignmentsRef={alignmentsRef}
                     />
                 )
             }

@@ -10,12 +10,13 @@ type SlideObjectProps = {
     object: TextObject | ImageObject,
     scale: number,
     isSelected: boolean,
-    slideStart: RefObject<Position>
+    slideStart: RefObject<Position>,
+    alignmentsRef: RefObject<{ objectId: string, x: number, y: number }[]>
 }
 
 type ResizeAttribute = null | 'LT' | 'LM' | 'LB' | 'RT' | 'RM' | 'RB' | 'MB' | 'MT'
 
-function SlideObject({ object, scale, isSelected, slideStart }: SlideObjectProps) {
+function SlideObject({ object, scale, isSelected, slideStart, alignmentsRef }: SlideObjectProps) {
     const { selectOneElement } = useAppActions()
     const { addToElementSelection } = useAppActions()
 
@@ -50,6 +51,14 @@ function SlideObject({ object, scale, isSelected, slideStart }: SlideObjectProps
     const startPointerPosInsideElem = useRef<Position>()
     const [dragging, setDragging] = useState(false);
 
+    const [verticalCenterAlignment, setVerticalCenterAlignment] = useState(false);
+
+    const [objectVerticalAlignment, setObjectVerticalAlignment] = useState<boolean>();
+    const [objectHorizontalAlignment, setObjectHorizontalAlignment] = useState<boolean>();
+
+    const [verticalAlignPos, setVerticalAlignPos] = useState<CSSProperties>({})
+    const [horizontalAlignPos, setHorizontalAlignPos] = useState<CSSProperties>({})
+
     const [resizingType, setResizingType] = useState<ResizeAttribute>(null);
 
     const startPos = useRef<Position>()
@@ -73,7 +82,10 @@ function SlideObject({ object, scale, isSelected, slideStart }: SlideObjectProps
     }, [])
 
     const handleDragMove = useCallback((event: PointerEvent) => {
-        if (!dragElementRef.current || !startPointerPosInsideElem.current || !slideStart.current || !elementFinalData.current) return
+        if (!dragElementRef.current || !startPointerPosInsideElem.current
+            || !slideStart.current || !elementFinalData.current
+            || !alignmentsRef.current) return
+
         elementFinalData.current.position.x = event.pageX + startPointerPosInsideElem.current.x - slideStart.current.x
         elementFinalData.current.position.y = event.pageY + startPointerPosInsideElem.current.y - slideStart.current.y
         dragElementRef.current.style.left = elementFinalData.current.position.x + 'px'
@@ -94,10 +106,54 @@ function SlideObject({ object, scale, isSelected, slideStart }: SlideObjectProps
             dragElementRef.current.style.top = (SLIDE_HEIGHT - object.size.height - 2) + 'px'
             elementFinalData.current.position.y = SLIDE_HEIGHT - object.size.height - 2
         }
+
+        if ((elementFinalData.current.position.x + object.size.width / 2) >= (SLIDE_WIDTH / 2 - 5)
+            && (elementFinalData.current.position.x + object.size.width / 2) <= (SLIDE_WIDTH / 2 + 5)) {
+            dragElementRef.current.style.left = (SLIDE_WIDTH / 2 - object.size.width / 2) + 'px'
+            elementFinalData.current.position.x = SLIDE_WIDTH / 2 - object.size.width / 2
+            setVerticalCenterAlignment(true)
+        } else {
+            setVerticalCenterAlignment(false)
+        }
+
+        setObjectVerticalAlignment(false)
+        alignmentsRef.current.forEach((elem) => {
+            if (elem.objectId !== object.id) {
+                if (elementFinalData.current.position.x >= (elem.x - 5)
+                    && elementFinalData.current.position.x <= (elem.x + 5)
+                    && dragElementRef.current) {
+                    dragElementRef.current.style.left = elem.x + 'px'
+                    elementFinalData.current.position.x = elem.x
+                    setObjectVerticalAlignment(true)
+                    setVerticalAlignPos({ left: elem.x + 'px' })
+                    return
+                }
+            }
+        })
+
+        setObjectHorizontalAlignment(false)
+        alignmentsRef.current.forEach((elem) => {
+            if (elem.objectId !== object.id) {
+                if (elementFinalData.current.position.y >= (elem.y - 5)
+                    && elementFinalData.current.position.y <= (elem.y + 5)
+                    && dragElementRef.current) {
+                    dragElementRef.current.style.top = elem.y + 'px'
+                    elementFinalData.current.position.y = elem.y
+                    setObjectHorizontalAlignment(true)
+                    setHorizontalAlignPos({ top: elem.y + 'px' })
+                    return
+                }
+            }
+        })
     }, [])
 
     const handleDragEnd = useCallback(() => {
         setDragging(false)
+        setVerticalCenterAlignment(false)
+        setObjectVerticalAlignment(false)
+        setObjectHorizontalAlignment(false)
+        setVerticalAlignPos({})
+        setHorizontalAlignPos({})
         changeSlideObjectPosition(elementFinalData.current.position)
     }, [])
 
@@ -257,7 +313,7 @@ function SlideObject({ object, scale, isSelected, slideStart }: SlideObjectProps
                 window.removeEventListener('pointerup', handleDragEnd)
             }
         }
-    }, [dragging, handleDragMove, handleDragEnd, handleResizeMove, handleResizeEnd,])
+    }, [dragging, handleDragMove, handleDragEnd, handleResizeMove, handleResizeEnd])
 
     if (isSelected && scale === 1) {
         slideObjectStyles.border = "solid 1px #4071db"
@@ -283,51 +339,62 @@ function SlideObject({ object, scale, isSelected, slideStart }: SlideObjectProps
             throw new Error(`Unknown slide-object type: ${object}`)
     }
     return (
-        <div
-            ref={dragElementRef}
-            onPointerDown={handleDragStart}
-            style={slideObjectStyles}
-            className={styles.slideObject}
-        >
-            <div className={styles.elementContainer}>
-                {slideElement}
-            </div>
-            {(isSelected && scale === 1) &&
-                <>
-                    <div
-                        onPointerDown={(e) => handleResizeStart(e, 'LT')}
-                        className={styles.resizePointLT}
-                    />
-                    <div
-                        onPointerDown={(e) => handleResizeStart(e, 'LM')}
-                        className={styles.resizePointLM}
-                    />
-                    <div
-                        onPointerDown={(e) => handleResizeStart(e, 'LB')}
-                        className={styles.resizePointLB}
-                    />
-                    <div
-                        onPointerDown={(e) => handleResizeStart(e, 'RT')}
-                        className={styles.resizePointRT}
-                    />
-                    <div
-                        onPointerDown={(e) => handleResizeStart(e, 'RM')}
-                        className={styles.resizePointRM}
-                    />
-                    <div
-                        onPointerDown={(e) => handleResizeStart(e, 'RB')}
-                        className={styles.resizePointRB}
-                    />
-                    <div
-                        onPointerDown={(e) => handleResizeStart(e, 'MT')}
-                        className={styles.resizePointMT}
-                    />
-                    <div
-                        onPointerDown={(e) => handleResizeStart(e, 'MB')}
-                        className={styles.resizePointMB}
-                    />
-                </>
+        <div>
+            {verticalCenterAlignment &&
+                <div className={styles.verticalCenterLine}></div>
             }
+            {objectVerticalAlignment &&
+                <div style={verticalAlignPos} className={styles.verticalLine}></div>
+            }
+            {objectHorizontalAlignment &&
+                <div style={horizontalAlignPos} className={styles.horizontalLine}></div>
+            }
+            <div
+                ref={dragElementRef}
+                onPointerDown={handleDragStart}
+                style={slideObjectStyles}
+                className={styles.slideObject}
+            >
+                <div className={styles.elementContainer}>
+                    {slideElement}
+                </div>
+                {(isSelected && scale === 1) &&
+                    <>
+                        <div
+                            onPointerDown={(e) => handleResizeStart(e, 'LT')}
+                            className={styles.resizePointLT}
+                        />
+                        <div
+                            onPointerDown={(e) => handleResizeStart(e, 'LM')}
+                            className={styles.resizePointLM}
+                        />
+                        <div
+                            onPointerDown={(e) => handleResizeStart(e, 'LB')}
+                            className={styles.resizePointLB}
+                        />
+                        <div
+                            onPointerDown={(e) => handleResizeStart(e, 'RT')}
+                            className={styles.resizePointRT}
+                        />
+                        <div
+                            onPointerDown={(e) => handleResizeStart(e, 'RM')}
+                            className={styles.resizePointRM}
+                        />
+                        <div
+                            onPointerDown={(e) => handleResizeStart(e, 'RB')}
+                            className={styles.resizePointRB}
+                        />
+                        <div
+                            onPointerDown={(e) => handleResizeStart(e, 'MT')}
+                            className={styles.resizePointMT}
+                        />
+                        <div
+                            onPointerDown={(e) => handleResizeStart(e, 'MB')}
+                            className={styles.resizePointMB}
+                        />
+                    </>
+                }
+            </div>
         </div>
     )
 }
