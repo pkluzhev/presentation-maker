@@ -41,6 +41,13 @@ function setFontFamily(newFamily: string) {
     }
 }
 
+function setTextAlign(newValue: "left" | "center" | "right") {
+    return {
+        type: ActionType.SET_TEXT_ALIGN,
+        payload: newValue
+    }
+}
+
 export {
     addNewText,
     changeTextValue,
@@ -48,4 +55,5 @@ export {
     setFontWeight,
     setFontSize,
     setFontFamily,
+    setTextAlign,
 }

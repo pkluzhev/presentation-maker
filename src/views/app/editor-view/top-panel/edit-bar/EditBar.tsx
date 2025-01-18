@@ -13,6 +13,7 @@ function EditBar() {
     const { decSlideObjectLayer } = useAppActions()
 
     const { setFontColor } = useAppActions()
+    const { setTextAlign } = useAppActions()
 
     const { openChangeImagePopup } = useAppActions()
     const { openSetSlideBackgroundImagePopup } = useAppActions()
@@ -45,47 +46,58 @@ function EditBar() {
             return (
                 <div className={styles.editBar}>
                     <div className={styles.editBarTitle}>Text — Edit mode</div>
-                    <Button className={styles.buttonEditbar} text={'Layer-Up'} onClick={() => { incSlideObjectLayer() }}></Button>
-                    <Button className={styles.buttonEditbar} text={'Layer-Down'} onClick={() => { decSlideObjectLayer() }}></Button>
-                    <span> | </span>
-                    <div className={styles.buttonWithDropdown}>
-                        <Button className={isFontDropdownActive ? styles.buttonEditbarActive : styles.buttonEditbar} text={'Font'} onClick={() => { isFontDropdownActive ? setFontDropdownActive(false) : setFontDropdownActive(true) }}></Button>
-                        {isFontDropdownActive &&
-                            <div ref={fontMenuRef}>
-                                <DropdownMenu type={'fontFamily'}/>
-                            </div>
-                        }
-                    </div>
-                    <div className={styles.buttonWithDropdown}>
-                        <Button className={isFontSizeDropdownActive ? styles.buttonEditbarActive : styles.buttonEditbar} text={'Size'} onClick={() => { isFontSizeDropdownActive ? setFontSizeDropdownActive(false) : setFontSizeDropdownActive(true) }}></Button>
-                        {isFontSizeDropdownActive &&
-                            <div ref={fontSizeMenuRef}>
-                                <DropdownMenu type={'fontSize'}/>
-                            </div>
-                        }
-                    </div>
-                    <div className={styles.buttonWithDropdown}>
-                        <Button className={isFontWeightDropdownActive ? styles.buttonEditbarActive : styles.buttonEditbar} text={'Weight'} onClick={() => { isFontWeightDropdownActive ? setFontWeightDropdownActive(false) : setFontWeightDropdownActive(true) }}></Button>
-                        {isFontWeightDropdownActive &&
-                            <div ref={fontWeightMenuRef}>
-                                <DropdownMenu type={'fontWeight'}/>
-                            </div>
-                        }
-                    </div>
-                    <div className={styles.buttonsContainer}>
-                        <p className={styles.inputColorTitle}>Color :</p>
-                        <input
-                            className={styles.inputColor}
-                            type={'color'}
-                            onChange={(event) => {
-                                selectedFontColor = (event.target as HTMLInputElement).value
-                            }}
-                        />
-                        <Button
-                            className={styles.selectButton}
-                            text={'Set color'}
-                            onClick={() => { setFontColor(selectedFontColor) }}
-                        />
+                    <div className={styles.editBarMainContainer}>
+                        <div className={styles.buttonWithDropdown}>
+                            <div title={'Align left'} className={isFontDropdownActive ? styles.buttonIconEditbarActive : styles.buttonIconEditbar} onClick={() => { setTextAlign("left") }}><div className={styles.buttonAlignLeft}></div></div>
+                        </div>
+                        <div className={styles.buttonWithDropdown}>
+                            <div title={'Align center'} className={isFontDropdownActive ? styles.buttonIconEditbarActive : styles.buttonIconEditbar} onClick={() => { setTextAlign("center") }}><div className={styles.buttonAlignCenter}></div></div>
+                        </div>
+                        <div className={styles.buttonWithDropdown}>
+                            <div title={'Align right'} className={isFontDropdownActive ? styles.buttonIconEditbarActive : styles.buttonIconEditbar} onClick={() => { setTextAlign("right") }}><div className={styles.buttonAlignRight}></div></div>
+                        </div>
+                        <span> | </span>
+                        <div className={styles.buttonWithDropdown}>
+                            <div title={'Font family'} className={isFontDropdownActive ? styles.buttonIconEditbarActive : styles.buttonIconEditbar} onClick={() => { isFontDropdownActive ? setFontDropdownActive(false) : setFontDropdownActive(true) }}><div className={styles.buttonFont}></div></div>
+                            {isFontDropdownActive &&
+                                <div ref={fontMenuRef}>
+                                    <DropdownMenu type={'fontFamily'} />
+                                </div>
+                            }
+                        </div>
+                        <div className={styles.buttonWithDropdown}>
+                            <div title={'Font size'} className={isFontSizeDropdownActive ? styles.buttonIconEditbarActive : styles.buttonIconEditbar} onClick={() => { isFontSizeDropdownActive ? setFontSizeDropdownActive(false) : setFontSizeDropdownActive(true) }}><div className={styles.buttonSize}></div></div>
+                            {isFontSizeDropdownActive &&
+                                <div ref={fontSizeMenuRef}>
+                                    <DropdownMenu type={'fontSize'} />
+                                </div>
+                            }
+                        </div>
+                        <div className={styles.buttonWithDropdown}>
+                            <div title={'Font weight'} className={isFontWeightDropdownActive ? styles.buttonIconEditbarActive : styles.buttonIconEditbar} onClick={() => { isFontWeightDropdownActive ? setFontWeightDropdownActive(false) : setFontWeightDropdownActive(true) }}><div className={styles.buttonWeight}></div></div>
+                            {isFontWeightDropdownActive &&
+                                <div ref={fontWeightMenuRef}>
+                                    <DropdownMenu type={'fontWeight'} />
+                                </div>
+                            }
+                        </div>
+                        <div className={styles.buttonsContainer}>
+                            <input
+                                className={styles.inputColor}
+                                type={'color'}
+                                onChange={(event) => {
+                                    selectedFontColor = (event.target as HTMLInputElement).value
+                                }}
+                            />
+                            <Button
+                                className={styles.selectButton}
+                                text={'Set color'}
+                                onClick={() => { setFontColor(selectedFontColor) }}
+                            />
+                        </div>
+                        <span> | </span>
+                        <Button className={styles.buttonEditbar} text={'Layer-Up'} onClick={() => { incSlideObjectLayer() }}></Button>
+                        <Button className={styles.buttonEditbar} text={'Layer-Down'} onClick={() => { decSlideObjectLayer() }}></Button>
                     </div>
                 </div>
             )

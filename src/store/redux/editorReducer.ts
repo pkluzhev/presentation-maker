@@ -38,6 +38,7 @@ import { setFontColor } from "../callbacks/setFontColor";
 import { setFontWeight } from "../callbacks/setFontWeight";
 import { setFontSize } from "../callbacks/setFontSize";
 import { setFontFamily } from "../callbacks/setFontFamily";
+import { setTextAlign } from "../callbacks/setTextAlign";
 
 import { addToSlideSelection } from "../callbacks/addToSlideSelection";
 import { selectOneSlide } from "../callbacks/selectOneSlide";
@@ -135,6 +136,8 @@ function editorReducer(editor: Editor = defaultEditor, action: EditorAction): Ed
             return setFontSize(editor, action)
         case ActionType.SET_FONT_FAMILY:
             return setFontFamily(editor, action)
+        case ActionType.SET_TEXT_ALIGN:
+            return setTextAlign(editor, action)
         default:
             return editor
     }

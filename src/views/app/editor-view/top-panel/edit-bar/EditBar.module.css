@@ -9,22 +9,118 @@
   text-align: center;
   font: 400 16px/22px Montserrat, sans-serif;
   padding: 8px 16px;
-  background-color: #e4e4e4;
+  background-color: #f4f4f4;
   border-radius: 7px 7px 0 0;
+}
+
+.editBarMainContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .buttonEditbarActive {
   background-color: #e4e4e4;
   font-weight: 700;
   border-radius: 7px;
-  box-shadow: 2px 2px 10px #414141;
+  box-shadow: 2px 2px 4px #A2AC86;
+
 }
 
 .buttonEditbar:hover {
   background-color: #e4e4e4;
   font-weight: 700;
   border-radius: 7px;
-  box-shadow: 2px 2px 10px #414141;
+  box-shadow: 2px 2px 4px #A2AC86;
+
+}
+
+.buttonIconEditbar {
+  display: block;
+  font: 400 16px/22px Montserrat, sans-serif;
+  cursor: pointer;
+  padding: 10px;
+  transition: all 0.2s ease-out;
+  border-radius: 7px;
+}
+
+.buttonIconEditbarActive {
+  display: block;
+  font: 400 16px/22px Montserrat, sans-serif;
+  cursor: pointer;
+  padding: 10px;
+  transition: all 0.2s ease-out;
+  border-radius: 7px;
+  background-color: #e4e4e4;
+  box-shadow: 2px 2px 4px #A2AC86;
+
+}
+
+.buttonIconEditbar:hover {
+  background-color: #e4e4e4;
+  border-radius: 7px;
+  box-shadow: 2px 2px 4px #A2AC86;
+
+}
+
+.buttonFont {
+  width: 16px;
+  height: 16px;
+  background: url('/src/store/images/text.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  box-sizing: border-box;;
+}
+
+.buttonSize {
+  width: 16px;
+  height: 16px;
+  background: url('/src/store/images/font-size.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  box-sizing: border-box;;
+}
+
+.buttonWeight {
+  width: 16px;
+  height: 16px;
+  background: url('/src/store/images/bold.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  box-sizing: border-box;;
+}
+
+.buttonAlignLeft {
+  width: 16px;
+  height: 16px;
+  background: url('/src/store/images/align-left.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  box-sizing: border-box;;
+}
+
+.buttonAlignCenter {
+  width: 16px;
+  height: 16px;
+  background: url('/src/store/images/align-center.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  box-sizing: border-box;;
+}
+
+.buttonAlignRight {
+  width: 16px;
+  height: 16px;
+  background: url('/src/store/images/align-right.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  box-sizing: border-box;;
 }
 
 .inputColorTitle {
@@ -38,7 +134,7 @@
   border: none;
   height: 34px;
   width: 34px;
-  margin-left: 2px;
+  margin-left: 12px;
   margin-right: 2px;
   cursor: pointer;
 }
@@ -87,7 +183,7 @@
 .selectButton:hover {
   background-color: #e4e4e4;
   font-weight: 700;
-  box-shadow: 2px 2px 10px #414141;
+  box-shadow: 2px 2px 4px #A2AC86;
 }
 
 .buttonWithDropdown {

@@ -27,9 +27,6 @@ function MenuBar() {
 
 
     function onUndo() {
-        console.log('undo (menuBar)')
-        console.log(statePast.length, ' ', stateFuture.length)
-
         let newState: Editor
         if (statePast.length > 0) {
             newState = statePast[statePast.length - 1]
@@ -38,9 +35,6 @@ function MenuBar() {
     }
 
     function onRedo() {
-        console.log('redo (menuBar)')
-        console.log(statePast.length, ' ', stateFuture.length)
-
         let newState: Editor
         if (stateFuture.length > 0) {
             newState = stateFuture[stateFuture.length - 1]
@@ -79,8 +73,8 @@ function MenuBar() {
                 <button className={viewmodeButtonClassname} onClick={openViewModeOptions}>View mode</button>
             </div>
             <div>
-                <Button className={styles.buttonArrow} text={' ← '} onClick={onUndo} />
-                <Button className={styles.buttonArrow} text={' → '} onClick={onRedo} />
+                <div className={styles.buttonArrow + ' ' + styles.buttonArrowLeft} onClick={onUndo}> ← </div>
+                <div className={styles.buttonArrow + ' ' + styles.buttonArrowRight} onClick={onRedo}> → </div>
             </div>
         </div>
     )

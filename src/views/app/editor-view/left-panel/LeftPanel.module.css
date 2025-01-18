@@ -19,10 +19,12 @@
 .inputPresentationTitle {
   all: initial;
   text-align: center;
-  border: solid 0.5px #000000;
   font: 400 14px/22px Montserrat, sans-serif;
   padding: 3px;
   margin: 0 0 20px;
+  border-radius: 6px;
+  background-color: #f4f4f4;
+  box-shadow: 2px 2px 4px #A2AC86;
 }
 
 .slidePreviewContainer{
@@ -41,7 +43,7 @@
 
 .slidePreviewContainer:hover{
   background-color: #e4e4e4;
-  box-shadow: 2px 2px 10px #414141;
+  box-shadow: 2px 2px 4px #A2AC86;
 }
 
 .slideIndex {

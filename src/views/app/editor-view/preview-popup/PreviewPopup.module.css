@@ -52,7 +52,7 @@
 .button:hover {
   background-color: #e4e4e4;
   font-weight: 700;
-  box-shadow: 2px 2px 4px #414141;
+  box-shadow: 2px 2px 4px #A2AC86;
 }
 
 .button:focus {

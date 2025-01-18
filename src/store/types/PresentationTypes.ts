@@ -15,7 +15,8 @@ type TextObject = SlideObjectProperties & {
     fontFamily: string,
     fontSize: number,
     fontWeight: number,
-    fontColor: string
+    fontColor: string,
+    textAlign: "left" | "center" | "right"
 }
 
 type ImageObject = SlideObjectProperties & {
@@ -77,6 +78,7 @@ const defaultTextElement: TextObject = {
     fontSize: 30,
     fontWeight: 400,
     fontColor: "#000000",
+    textAlign: "center",
     id: crypto.randomUUID(),
     position: {
         x: 0,

@@ -2,7 +2,6 @@
   display: flex;
   justify-content: space-between;
   text-align: left;
-  /* border: solid 0.5px #009090; */
   border-bottom: none;
 }
 
@@ -17,25 +16,42 @@
 }
 
 .button_active {
-  background-color: #e4e4e4;
+  background-color: #f4f4f4;
 } 
 
 .button:hover {
   background-color: #e4e4e4;
   font-weight: 700;
   border-radius: 7px;
-  box-shadow: 2px 2px 4px #414141;
+  box-shadow: 2px 2px 4px #A2AC86;
 }
 
 .button:focus {
   outline: none;
 }
 
+.buttonArrow {
+  display: inline-block;
+  font: 400 16px/22px Montserrat, sans-serif;
+  cursor: pointer;
+  padding: 8px 16px;
+  transition: all 0.2s ease-out;
+  background-color: #f4f4f4;
+}
+
+.buttonArrowLeft {
+  border-radius: 7px 0 0 0;
+}
+
+.buttonArrowRight {
+  border-radius: 0 7px 0 0;
+}
+
 .buttonArrow:hover {
+  border-radius: 7px;
   background-color: #e4e4e4;
   font-weight: 700;
-  border-radius: 7px;
-  box-shadow: 2px 2px 4px #414141;
+  box-shadow: 2px 2px 4px #A2AC86;
 }
 
 .buttonArrow:focus {

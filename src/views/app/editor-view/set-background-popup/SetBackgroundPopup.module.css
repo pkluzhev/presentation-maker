@@ -36,14 +36,14 @@
 .button:hover {
   background-color: #e4e4e4;
   font-weight: 700;
-  box-shadow: 2px 2px 4px #414141;
+  box-shadow: 2px 2px 4px #A2AC86;
 }
 
 .buttonActive {
   background-color: #e4e4e4;
   font-weight: 700;
   border-radius: 7px;
-  box-shadow: 2px 2px 4px #414141;
+  box-shadow: 2px 2px 4px #A2AC86;
 }
 
 .titleContainer {
@@ -108,10 +108,11 @@
   all: initial;
   font: 400 16px/22px Montserrat, sans-serif;
   padding: 8px 16px;
-  border: 0.5px solid;
   border-radius: 7px;
   max-width: 60px;
   cursor: pointer;
+  background-color: #f4f4f4;
+  box-shadow: 2px 2px 4px #A2AC86;
 }
 
 .applyButtonContainer {

@@ -37,7 +37,7 @@
 .button:hover {
   background-color: #e4e4e4;
   font-weight: 700;
-  box-shadow: 2px 2px 4px #414141;
+  box-shadow: 2px 2px 4px #A2AC86;
 }
 
 .inputImage {
@@ -53,7 +53,7 @@
 .inputImage:hover {
   background-color: #e4e4e4;
   font-weight: 700;
-  box-shadow: 2px 2px 4px #414141;
+  box-shadow: 2px 2px 4px #A2AC86;
 }
 
 .hiddenInput {
@@ -77,8 +77,11 @@
   margin-right: 10px;
   font: 400 16px/22px Montserrat, sans-serif;
   padding: 8px 16px;
-  border: 0.5px solid;
+  /* border: 0.5px solid; */
   border-radius: 7px;
+  box-shadow: 2px 2px 4px #A2AC86;
+  background-color: #f4f4f4;
+
 }
 
 .buttonSearch {
@@ -94,7 +97,7 @@
 .buttonSearch:hover {
   background-color: #e4e4e4;
   font-weight: 700;
-  box-shadow: 2px 2px 4px #414141;
+  box-shadow: 2px 2px 4px #A2AC86;
 }
 
 .logo {

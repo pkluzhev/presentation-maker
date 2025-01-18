@@ -2,7 +2,6 @@
   width: 100vw;
   height: 100vh;
   text-align: center;
-  /* background-color: #a4c3a2b3; */
-  background: linear-gradient(135deg, #a4c3a2b3, #f6e29f);
+  background: linear-gradient(135deg, #a4c3a2b3, #c6cca5ba);
   user-select: none;
 }

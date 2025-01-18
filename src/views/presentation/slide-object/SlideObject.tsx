@@ -271,6 +271,7 @@ function SlideObject({ object, scale, isSelected, slideStart }: SlideObjectProps
                 fontSize={object.fontSize * scale}
                 fontWeight={object.fontWeight}
                 fontColor={object.fontColor}
+                textAlign={object.textAlign}
                 isSelected={isSelected}
                 id={object.id}
             />

@@ -9,23 +9,26 @@ type TextProps = {
     fontSize: number,
     fontWeight: number,
     fontColor: string,
+    textAlign: "center" | "left" | "right",
     isSelected: boolean,
     id: string
 }
 
-function TextObject({ value, fontFamily, fontSize, fontWeight, fontColor, isSelected, id }: TextProps) {
+function TextObject({ value, fontFamily, fontSize, fontWeight, fontColor, textAlign, isSelected, id }: TextProps) {
     const { changeTextValue } = useAppActions()
     const textareaStyles: CSSProperties = {
         fontFamily: `${fontFamily}`,
         fontSize: `${fontSize}px`,
         fontWeight: `${fontWeight}`,
         color: `${fontColor}`,
+        textAlign: `${textAlign}`,
     }
     const textStyles: CSSProperties = {
         fontFamily: `${fontFamily}`,
         fontSize: `${fontSize}px`,
         fontWeight: `${fontWeight}`,
         color: `${fontColor}`,
+        textAlign: `${textAlign}`,
     }
     const [currentValue, setCurrentValue] = useState<string>(value)
     const [hasBeenSelected, setHasBeenSelected] = useState<boolean>(false)

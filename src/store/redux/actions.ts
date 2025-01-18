@@ -49,6 +49,7 @@ enum ActionType {
     SET_FONT_WEIGHT = 'setFontWeight',
     SET_FONT_SIZE = 'setFontSize',
     SET_FONT_FAMILY = 'setFontFamily',
+    SET_TEXT_ALIGN = 'setTextAlign',
 
     ADD_TO_SLIDE_SELECTION = 'addToSlideSelection',
     SELECT_ONE_SLIDE = 'selectOneSlide',
@@ -240,6 +241,12 @@ type SetFontFamilyAction = {
     payload: string
 }
 
+type SetTextAlignAction = {
+    type: ActionType.SET_TEXT_ALIGN,
+    payload: "left" | "center" | "right",
+}
+
+
 type openJSONAction = {
     type: ActionType.OPEN_JSON,
     payload: Presentation
@@ -265,7 +272,7 @@ type EditorAction = UndoAction | RedoAction | EmptyAction | RenamePresentationAc
     | CopyElementsAction | PasteElementsAction
     | SetFontColorAction | SetFontWeightAction | SetFontSizeAction | SetFontFamilyAction | CloseSetBackgroundPopupAction 
     | OpenSetBackgroundPopupAction | SetSlideBackgroundGradientAction
-    | OpenSavePopupAction | CloseSavePopupAction | CreateNewPresentationAction
+    | OpenSavePopupAction | CloseSavePopupAction | CreateNewPresentationAction | SetTextAlignAction
 
 export {
     ActionType,
@@ -310,4 +317,5 @@ export {
     type OpenSavePopupAction,
     type CloseSavePopupAction,
     type CreateNewPresentationAction,
+    type SetTextAlignAction
 }
