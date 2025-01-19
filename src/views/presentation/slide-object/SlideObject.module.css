@@ -29,10 +29,26 @@
   z-index: 1;
 }
 
+.verticalObjectCenterLine {
+  position: absolute;
+  width: 0.5px;
+  background: #ff9900;
+  height: 100%;
+  z-index: 1;
+}
+
 .horizontalLine {
   position: absolute;
   height: 0.5px;
   background: #ff0000;
+  width: 100%;
+  z-index: 1;
+}
+
+.horizontalObjectCenterLine {
+  position: absolute;
+  height: 0.5px;
+  background: #ff9900;
   width: 100%;
   z-index: 1;
 }

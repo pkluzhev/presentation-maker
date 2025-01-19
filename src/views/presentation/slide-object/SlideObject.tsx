@@ -50,8 +50,14 @@ function SlideObject({ object, scale, isSelected, slideStart, alignmentsRef }: S
     const [objectVerticalAlignment, setObjectVerticalAlignment] = useState<boolean>();
     const [objectHorizontalAlignment, setObjectHorizontalAlignment] = useState<boolean>();
 
+    const [objectVerticalCenterAlignment, setObjectVerticalCenterAlignment] = useState<boolean>();
+    const [objectHorizontalCenterAlignment, setObjectHorizontalCenterAlignment] = useState<boolean>();
+
     const [verticalAlignPos, setVerticalAlignPos] = useState<CSSProperties>({})
     const [horizontalAlignPos, setHorizontalAlignPos] = useState<CSSProperties>({})
+
+    const [verticalCenterObjectAlignPos, setVerticalCenterObjectAlignPos] = useState<CSSProperties>({})
+    const [horizontalCenterObjectAlignPos, setHorizontalCenterObjectAlignPos] = useState<CSSProperties>({})
 
     const [resizingType, setResizingType] = useState<ResizeAttribute>(null);
 
@@ -100,7 +106,6 @@ function SlideObject({ object, scale, isSelected, slideStart, alignmentsRef }: S
             dragElementRef.current.style.top = (SLIDE_HEIGHT - object.size.height - 2) + 'px'
             elementFinalData.current.position.y = SLIDE_HEIGHT - object.size.height - 2
         }
-
         if ((elementFinalData.current.position.x + object.size.width / 2) >= (SLIDE_WIDTH / 2 - 5)
             && (elementFinalData.current.position.x + object.size.width / 2) <= (SLIDE_WIDTH / 2 + 5)) {
             dragElementRef.current.style.left = (SLIDE_WIDTH / 2 - object.size.width / 2) + 'px'
@@ -109,8 +114,8 @@ function SlideObject({ object, scale, isSelected, slideStart, alignmentsRef }: S
         } else {
             setVerticalCenterAlignment(false)
         }
-
         setObjectVerticalAlignment(false)
+        setObjectVerticalCenterAlignment(false)
         alignmentsRef.current.forEach((elem) => {
             if (elem.objectId !== object.id) {
                 if (elementFinalData.current.position.x >= (elem.x - 5)
@@ -131,10 +136,20 @@ function SlideObject({ object, scale, isSelected, slideStart, alignmentsRef }: S
                     setVerticalAlignPos({ left: elem.x + elem.width + 'px' })
                     return
                 }
+                if (elementFinalData.current.position.x + elementFinalData.current.size.width / 2 >= (elem.x + elem.width / 2 - 5)
+                    && elementFinalData.current.position.x + elementFinalData.current.size.width / 2 <= (elem.x + elem.width / 2 + 5)
+                    && dragElementRef.current) {
+                    dragElementRef.current.style.left = elem.x + elem.width / 2 - elementFinalData.current.size.width / 2 + 'px'
+                    elementFinalData.current.position.x = elem.x + elem.width / 2 - elementFinalData.current.size.width / 2
+                    setObjectVerticalCenterAlignment(true)
+                    setVerticalCenterObjectAlignPos({ left: elem.x + elem.width / 2 + 'px' })
+                    return
+                }
             }
         })
 
         setObjectHorizontalAlignment(false)
+        setObjectHorizontalCenterAlignment(false)
         alignmentsRef.current.forEach((elem) => {
             if (elem.objectId !== object.id) {
                 if (elementFinalData.current.position.y >= (elem.y - 5)
@@ -155,6 +170,15 @@ function SlideObject({ object, scale, isSelected, slideStart, alignmentsRef }: S
                     setHorizontalAlignPos({ top: elem.y + elem.height + 'px' })
                     return
                 }
+                if (elementFinalData.current.position.y + elementFinalData.current.size.height / 2 >= (elem.y + elem.height / 2 - 5)
+                    && elementFinalData.current.position.y + elementFinalData.current.size.height / 2 <= (elem.y + elem.height / 2 + 5)
+                    && dragElementRef.current) {
+                    dragElementRef.current.style.top = elem.y + elem.height / 2 - elementFinalData.current.size.height / 2 + 'px'
+                    elementFinalData.current.position.y = elem.y + elem.height / 2 - elementFinalData.current.size.height / 2
+                    setObjectHorizontalCenterAlignment(true)
+                    setHorizontalCenterObjectAlignPos({ top: elem.y + elem.height / 2 + 'px' })
+                    return
+                }
             }
         })
     }, [])
@@ -164,8 +188,16 @@ function SlideObject({ object, scale, isSelected, slideStart, alignmentsRef }: S
         setVerticalCenterAlignment(false)
         setObjectVerticalAlignment(false)
         setObjectHorizontalAlignment(false)
+
+        setObjectVerticalCenterAlignment(false)
+        setObjectHorizontalCenterAlignment(false)
+
         setVerticalAlignPos({})
         setHorizontalAlignPos({})
+
+        setVerticalCenterObjectAlignPos({})
+        setHorizontalCenterObjectAlignPos({})
+
         changeSlideObjectPosition(elementFinalData.current.position)
     }, [])
 
@@ -360,6 +392,12 @@ function SlideObject({ object, scale, isSelected, slideStart, alignmentsRef }: S
             }
             {objectHorizontalAlignment &&
                 <div style={horizontalAlignPos} className={styles.horizontalLine}></div>
+            }
+            {objectVerticalCenterAlignment &&
+                <div style={verticalCenterObjectAlignPos} className={styles.verticalObjectCenterLine}></div>
+            }
+            {objectHorizontalCenterAlignment &&
+                <div style={horizontalCenterObjectAlignPos} className={styles.horizontalObjectCenterLine}></div>
             }
             <div
                 ref={dragElementRef}
