@@ -15,7 +15,7 @@
 .verticalCenterLine {
   position: absolute;
   width: 0.5px;
-  background: #ff0000;
+  background: #1500ff;
   height: 100%;
   left: 50%;
   z-index: 1;

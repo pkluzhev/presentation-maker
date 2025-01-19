@@ -11,7 +11,7 @@ type SlideObjectProps = {
     scale: number,
     isSelected: boolean,
     slideStart: RefObject<Position>,
-    alignmentsRef: RefObject<{ objectId: string, x: number, y: number }[]>
+    alignmentsRef: RefObject<{ objectId: string, x: number, y: number, width: number, height: number }[]>
 }
 
 type ResizeAttribute = null | 'LT' | 'LM' | 'LB' | 'RT' | 'RM' | 'RB' | 'MB' | 'MT'
@@ -35,12 +35,6 @@ function SlideObject({ object, scale, isSelected, slideStart, alignmentsRef }: S
         position: object.position,
         size: object.size
     })
-
-    // let elementFinalData: SlideObjectProperties = {
-    //     id: object.id,
-    //     position: object.position,
-    //     size: object.size
-    // }
 
     let delta: Position = {
         x: 0,
@@ -128,6 +122,15 @@ function SlideObject({ object, scale, isSelected, slideStart, alignmentsRef }: S
                     setVerticalAlignPos({ left: elem.x + 'px' })
                     return
                 }
+                if (elementFinalData.current.position.x + elementFinalData.current.size.width >= (elem.x + elem.width - 5)
+                    && elementFinalData.current.position.x + elementFinalData.current.size.width <= (elem.x + elem.width + 5)
+                    && dragElementRef.current) {
+                    dragElementRef.current.style.left = elem.x + elem.width - elementFinalData.current.size.width + 'px'
+                    elementFinalData.current.position.x = elem.x + elem.width - elementFinalData.current.size.width
+                    setObjectVerticalAlignment(true)
+                    setVerticalAlignPos({ left: elem.x + elem.width + 'px' })
+                    return
+                }
             }
         })
 
@@ -141,6 +144,15 @@ function SlideObject({ object, scale, isSelected, slideStart, alignmentsRef }: S
                     elementFinalData.current.position.y = elem.y
                     setObjectHorizontalAlignment(true)
                     setHorizontalAlignPos({ top: elem.y + 'px' })
+                    return
+                }
+                if (elementFinalData.current.position.y + elementFinalData.current.size.height >= (elem.y + elem.height - 5)
+                    && elementFinalData.current.position.y + elementFinalData.current.size.height <= (elem.y + elem.height + 5)
+                    && dragElementRef.current) {
+                    dragElementRef.current.style.top = elem.y + elem.height - elementFinalData.current.size.height + 'px'
+                    elementFinalData.current.position.y = elem.y + elem.height - elementFinalData.current.size.height
+                    setObjectHorizontalAlignment(true)
+                    setHorizontalAlignPos({ top: elem.y + elem.height + 'px' })
                     return
                 }
             }

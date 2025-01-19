@@ -1,6 +1,5 @@
 import { CSSProperties, useEffect, useRef } from "react";
 import { type Slide, type Position } from "../../../store/types/PresentationTypes.ts";
-// import { useSlidesSelector } from "../../hooks/useAppSelector.ts";
 import { SlideObject } from "../slide-object/SlideObject.tsx";
 import styles from './Slide.module.css'
 
@@ -21,15 +20,18 @@ function Slide({ slide, scale, elementSelection }: SlideProps) {
     const slideRef = useRef<HTMLDivElement>(null)
     const slideStartRef = useRef<Position>({ x: 0, y: 0 })
 
-    const alignmentsRef = useRef<{ objectId: string, x: number, y: number }[]>([])
-    const getAlignments = (slideElement: Slide): { objectId: string, x: number, y: number }[] => {
-        let alignmentsData: { objectId: string, x: number, y: number }[] = []
+    const alignmentsRef = useRef<{ objectId: string, x: number, y: number, width: number, height: number }[]>([])
+
+    const getAlignments = (slideElement: Slide): { objectId: string, x: number, y: number, width: number, height: number }[] => {
+        let alignmentsData: { objectId: string, x: number, y: number, width: number, height: number }[] = []
 
         slideElement.objects.forEach((elem) => {
-            const newElemData: { objectId: string, x: number, y: number } = {
+            const newElemData: { objectId: string, x: number, y: number, width: number, height: number } = {
                 objectId: elem.id,
                 x: elem.position.x,
                 y: elem.position.y,
+                width: elem.size.width,
+                height: elem.size.height,
             }
             alignmentsData.push(newElemData)
         })
