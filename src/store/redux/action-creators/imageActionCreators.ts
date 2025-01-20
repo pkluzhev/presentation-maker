@@ -1,3 +1,4 @@
+import { Scale } from "../../types/PresentationTypes"
 import { ActionType } from "../actions"
 
 function addNewImage() {
@@ -13,7 +14,21 @@ function changeImage(newImage: string) {
     }
 }
 
+function changeVerticalScale() {
+    return {
+        type: ActionType.CHANGE_VERTICAL_SCALE,
+    }
+}
+
+function changeHorizontalScale() {
+    return {
+        type: ActionType.CHANGE_HORIZONTAL_SCALE,
+    }
+}
+
 export {
     addNewImage,
     changeImage,
+    changeVerticalScale,
+    changeHorizontalScale
 }

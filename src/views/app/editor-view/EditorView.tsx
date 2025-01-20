@@ -76,6 +76,10 @@ const EditorView = () => {
     if (event.altKey && event.keyCode === 86) {  // alt + V (вставка элементов)
       pasteElements()
     }
+    if (event.altKey && event.keyCode === 88) {  // alt + X (вырезать выбранные элементы с сохранением в буфер)
+      copyElements()
+      deleteElements()                        
+    }
     if (event.altKey && event.keyCode === 46) {
       deleteElements()                              // alt + delete (удаление выбранных элементов)
     }

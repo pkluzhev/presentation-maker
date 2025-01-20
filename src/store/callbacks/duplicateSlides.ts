@@ -22,14 +22,15 @@ function duplicateSlides(editor: Editor): Editor {
         })
     })
     const newSlides: Slide[] = structuredClone(editor.presentation.slides)
-
+    const newSlideSelection: string[] = []
     slideCopies.forEach(slide => {
         newSlides.push(slide)
+        newSlideSelection.push(slide.id)
     })
 
     return {
         ...editor,
-        slideSelection: [newSlides[newSlides.length - 1].id],
+        slideSelection: newSlideSelection,
         presentation: {
             ...editor.presentation,
             slides: newSlides,

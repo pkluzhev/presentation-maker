@@ -1,12 +1,6 @@
 import { type Editor } from "../types/EditorTypes.ts";
-import { ChangeImageAction } from "../redux/actions.ts";
-import { Scale } from "../types/PresentationTypes.ts";
 
-function changeImage(editor: Editor, action: ChangeImageAction): Editor {
-    const defaultScale: Scale = {
-        x: 1,
-        y: 1,
-    }
+function changeVerticalScale(editor: Editor): Editor {
     return {
         ...editor,
         presentation: {
@@ -23,8 +17,10 @@ function changeImage(editor: Editor, action: ChangeImageAction): Editor {
                         }
                         return {
                             ...object,
-                            src: action.payload,
-                            scale: defaultScale
+                            scale: {
+                                ...object.scale,
+                                x: object.scale.x * (-1)
+                            }
                         }
                     })
                 }
@@ -36,5 +32,5 @@ function changeImage(editor: Editor, action: ChangeImageAction): Editor {
 
 
 export {
-    changeImage,
+    changeVerticalScale,
 }

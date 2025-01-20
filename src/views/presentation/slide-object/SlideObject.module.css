@@ -6,6 +6,7 @@
   cursor: grab;
   border: solid 1px transparent;
   text-align: left;
+  transform-origin: center;
 }
 
 .slideObject:hover {
@@ -149,4 +150,16 @@
   bottom: -5px;
   left: calc(50% - 4px);
   cursor: ns-resize;
+}
+
+.resizePointRotate {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background: #4071db;
+  border: solid 1px #000000;
+  cursor: grab;
+  bottom: calc(100% + 20px);
+  left: calc(50% - 4px);
 }

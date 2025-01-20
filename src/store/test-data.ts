@@ -18,6 +18,10 @@ const elem4: ImageObject = {
     size: {
         width: 150,
         height: 150
+    },
+    scale: {
+        x: 1,
+        y: 1,
     }
 }
 const elem5: TextObject = {
@@ -67,6 +71,10 @@ const elem7: ImageObject = {
     size: {
         width: 80,
         height: 80
+    },
+    scale: {
+        x: 1,
+        y: 1,
     }
 }
 const slide1: Slide = {

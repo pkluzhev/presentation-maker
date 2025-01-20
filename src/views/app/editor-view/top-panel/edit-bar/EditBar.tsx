@@ -15,6 +15,9 @@ function EditBar() {
     const { setFontColor } = useAppActions()
     const { setTextAlign } = useAppActions()
 
+    const { changeVerticalScale } = useAppActions()
+    const { changeHorizontalScale } = useAppActions()
+
     const { openChangeImagePopup } = useAppActions()
     const { openSetSlideBackgroundImagePopup } = useAppActions()
     const { openSetBackgroundPopup } = useAppActions()
@@ -48,13 +51,13 @@ function EditBar() {
                     <div className={styles.editBarTitle}>Text — Edit mode</div>
                     <div className={styles.editBarMainContainer}>
                         <div className={styles.buttonWithDropdown}>
-                            <div title={'Align left'} className={isFontDropdownActive ? styles.buttonIconEditbarActive : styles.buttonIconEditbar} onClick={() => { setTextAlign("left") }}><div className={styles.buttonAlignLeft}></div></div>
+                            <div title={'Align left'} className={styles.buttonIconEditbar} onClick={() => { setTextAlign("left") }}><div className={styles.buttonAlignLeft}></div></div>
                         </div>
                         <div className={styles.buttonWithDropdown}>
-                            <div title={'Align center'} className={isFontDropdownActive ? styles.buttonIconEditbarActive : styles.buttonIconEditbar} onClick={() => { setTextAlign("center") }}><div className={styles.buttonAlignCenter}></div></div>
+                            <div title={'Align center'} className={styles.buttonIconEditbar} onClick={() => { setTextAlign("center") }}><div className={styles.buttonAlignCenter}></div></div>
                         </div>
                         <div className={styles.buttonWithDropdown}>
-                            <div title={'Align right'} className={isFontDropdownActive ? styles.buttonIconEditbarActive : styles.buttonIconEditbar} onClick={() => { setTextAlign("right") }}><div className={styles.buttonAlignRight}></div></div>
+                            <div title={'Align right'} className={styles.buttonIconEditbar} onClick={() => { setTextAlign("right") }}><div className={styles.buttonAlignRight}></div></div>
                         </div>
                         <span> | </span>
                         <div className={styles.buttonWithDropdown}>
@@ -105,14 +108,23 @@ function EditBar() {
             return (
                 <div className={styles.editBar}>
                     <div className={styles.editBarTitle}>Image — Edit mode</div>
-                    <Button className={styles.buttonEditbar} text={'Layer-Up'} onClick={() => { incSlideObjectLayer() }}></Button>
-                    <Button className={styles.buttonEditbar} text={'Layer-Down'} onClick={() => { decSlideObjectLayer() }}></Button>
-                    <span> | </span>
-                    <Button
-                        className={styles.selectButton}
-                        text={'Change image'}
-                        onClick={() => { openChangeImagePopup() }}
-                    />
+                    <div className={styles.editBarMainContainer}>
+
+                        <div className={styles.buttonWithDropdown}>
+                            <div title={'Change vertical scale'} className={styles.buttonIconEditbar} onClick={() => {changeVerticalScale() }}><div className={styles.buttonVerticalScale}></div></div>
+                        </div>
+                        <div className={styles.buttonWithDropdown}>
+                            <div title={'Change horizontal scale'} className={styles.buttonIconEditbar} onClick={() => {changeHorizontalScale() }}><div className={styles.buttonHorizontalScale}></div></div>
+                        </div>
+                        <Button
+                            className={styles.selectButton}
+                            text={'Change image'}
+                            onClick={() => { openChangeImagePopup() }}
+                        />
+                        <span> | </span>
+                        <Button className={styles.buttonEditbar} text={'Layer-Up'} onClick={() => { incSlideObjectLayer() }}></Button>
+                        <Button className={styles.buttonEditbar} text={'Layer-Down'} onClick={() => { decSlideObjectLayer() }}></Button>
+                    </div>
                 </div>
             )
         case "slide":

@@ -1,5 +1,5 @@
 import { OptionsBarState, type Editor } from "../types/EditorTypes"
-import { Position, Presentation, SlideObjectProperties } from "../types/PresentationTypes"
+import { Position, Presentation, SlideObjectProperties, Scale } from "../types/PresentationTypes"
 
 enum ActionType {
     DO_NOTHING = '',
@@ -42,6 +42,8 @@ enum ActionType {
 
     ADD_NEW_IMAGE = 'addNewImage',
     CHANGE_IMAGE = 'changeImage',
+    CHANGE_HORIZONTAL_SCALE = 'changeHorizontalScale',
+    CHANGE_VERTICAL_SCALE = 'changeVerticalScale',
 
     ADD_NEW_TEXT = 'addNewText',
     CHANGE_TEXT_VALUE = 'changeTextValue',
@@ -246,6 +248,13 @@ type SetTextAlignAction = {
     payload: "left" | "center" | "right",
 }
 
+type ChangeHorizontalScaleAction = {
+    type: ActionType.CHANGE_HORIZONTAL_SCALE,
+}
+
+type ChangeVerticalScaleAction = {
+    type: ActionType.CHANGE_VERTICAL_SCALE,
+}
 
 type openJSONAction = {
     type: ActionType.OPEN_JSON,
@@ -272,7 +281,8 @@ type EditorAction = UndoAction | RedoAction | EmptyAction | RenamePresentationAc
     | CopyElementsAction | PasteElementsAction
     | SetFontColorAction | SetFontWeightAction | SetFontSizeAction | SetFontFamilyAction | CloseSetBackgroundPopupAction 
     | OpenSetBackgroundPopupAction | SetSlideBackgroundGradientAction
-    | OpenSavePopupAction | CloseSavePopupAction | CreateNewPresentationAction | SetTextAlignAction
+    | OpenSavePopupAction | CloseSavePopupAction | CreateNewPresentationAction | SetTextAlignAction | ChangeHorizontalScaleAction
+    | ChangeVerticalScaleAction
 
 export {
     ActionType,
@@ -317,5 +327,7 @@ export {
     type OpenSavePopupAction,
     type CloseSavePopupAction,
     type CreateNewPresentationAction,
-    type SetTextAlignAction
+    type SetTextAlignAction,
+    type ChangeHorizontalScaleAction,
+    type ChangeVerticalScaleAction
 }

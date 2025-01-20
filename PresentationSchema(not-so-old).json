@@ -48,21 +48,6 @@
                 },
                 {
                     "properties": {
-                        "scale": {
-                            "properties": {
-                                "x": {
-                                    "type": "number"
-                                },
-                                "y": {
-                                    "type": "number"
-                                }
-                            },
-                            "required": [
-                                "x",
-                                "y"
-                            ],
-                            "type": "object"
-                        },
                         "src": {
                             "type": "string"
                         },
@@ -72,7 +57,6 @@
                         }
                     },
                     "required": [
-                        "scale",
                         "src",
                         "type"
                     ],
@@ -139,14 +123,6 @@
                         "fontWeight": {
                             "type": "number"
                         },
-                        "textAlign": {
-                            "enum": [
-                                "center",
-                                "left",
-                                "right"
-                            ],
-                            "type": "string"
-                        },
                         "type": {
                             "const": "text",
                             "type": "string"
@@ -160,7 +136,6 @@
                         "fontFamily",
                         "fontSize",
                         "fontWeight",
-                        "textAlign",
                         "type",
                         "value"
                     ],

@@ -21,7 +21,8 @@ type TextObject = SlideObjectProperties & {
 
 type ImageObject = SlideObjectProperties & {
     type: "image",
-    src: string
+    src: string,
+    scale: Scale
 }
 
 type SlideObjectProperties = {
@@ -38,6 +39,11 @@ type Position = {
 type Size = {
     width: number,
     height: number,
+}
+
+type Scale = {
+    x: number,
+    y: number,
 }
 
 type SolidBackground = {
@@ -68,6 +74,10 @@ const defaultImageElement: ImageObject = {
     size: {
         width: 200,
         height: 150
+    },
+    scale: {
+        x: 1,
+        y: 1,
     }
 }
 
@@ -100,6 +110,7 @@ export {
     type GradientBackground,
     type Position,
     type Size,
+    type Scale,
     type SlideObjectProperties,
 
     defaultImageElement,

@@ -31,6 +31,8 @@ import { incSlideObjectLayer } from "../callbacks/incSlideObjectLayer";
 import { changeSlideObjectPosition } from "../callbacks/changeSlideObjectPosition";
 import { changeSlideObjectPositionAndSize } from "../callbacks/changeSlideObjectPositionAndSize";
 import { addNewImage } from "../callbacks/addNewImage";
+import { changeVerticalScale } from "../callbacks/changeVerticalScale";
+import { changeHorizontalScale } from "../callbacks/changeHorizontalScale";
 import { changeImage } from "../callbacks/changeImage";
 import { addNewText } from "../callbacks/addNewText";
 import { changeTextValue } from "../callbacks/changeTextValue";
@@ -138,6 +140,11 @@ function editorReducer(editor: Editor = defaultEditor, action: EditorAction): Ed
             return setFontFamily(editor, action)
         case ActionType.SET_TEXT_ALIGN:
             return setTextAlign(editor, action)
+        case ActionType.CHANGE_VERTICAL_SCALE:
+            return changeVerticalScale(editor)
+        case ActionType.CHANGE_HORIZONTAL_SCALE:
+            return changeHorizontalScale(editor)
+
         default:
             return editor
     }

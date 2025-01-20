@@ -190,3 +190,23 @@
   position: relative;
   display: inline-block;
 }
+
+.buttonVerticalScale {
+  width: 16px;
+  height: 16px;
+  background: url('/src/store/images/scale_vertical.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  box-sizing: border-box;;
+}
+
+.buttonHorizontalScale {
+  width: 16px;
+  height: 16px;
+  background: url('/src/store/images/scale_horizontal.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  box-sizing: border-box;;
+}

@@ -16,4 +16,5 @@
   height: 100%;
   user-select: none;
   object-fit: fill;
+  transform-origin: center;
 }
