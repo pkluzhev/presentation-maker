@@ -67,9 +67,6 @@ const EditorView = () => {
     if ((event.ctrlKey || event.metaKey) && event.keyCode === 89) {  // ctrl + Y (reDO)
       onRedo()
     }
-    if (event.altKey && event.keyCode === 83) {  // alt + S (сохранение в локалсторадж)
-      saveToLocalStorage(presentation)
-    }
     if (event.altKey && event.keyCode === 67) {  // alt + C (копирвоание элементов)
       copyElements()
     }
